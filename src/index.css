@@ -176,6 +176,27 @@
   .animate-on-scroll.animate {
     @apply opacity-100 translate-y-0;
   }
+  
+  /* Green gradient text styles */
+  .green-gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-mindful-light via-mindful to-mindful-dark;
+  }
+  
+  .soft-green-gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-green-400 via-mindful to-emerald-600;
+  }
+  
+  .mindful-card {
+    @apply bg-gradient-to-br from-white to-mindful-light/20 dark:from-gray-800 dark:to-mindful-dark/30;
+  }
+  
+  .mindful-border {
+    @apply border-l-4 border-gradient-to-b from-mindful-light via-mindful to-mindful-dark;
+  }
+  
+  .mindful-glow {
+    text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+  }
 }
 
 @keyframes emoji-float {

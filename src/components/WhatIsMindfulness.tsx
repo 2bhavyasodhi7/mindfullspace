@@ -8,16 +8,16 @@ const WhatIsMindfulness = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="animate-on-scroll">
             <h2 className="text-4xl md:text-5xl font-bold mb-8 nike-headline">
-              WHAT IS <span className="text-mindful nike-highlight">MINDFULNESS?</span>
+              WHAT IS <span className="soft-green-gradient-text nike-highlight mindful-glow">MINDFULNESS?</span>
             </h2>
             
             <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 nike-body-text">
               Mindfulness is the practice of purposely focusing your attention on the present moment—and accepting it without judgment. It's about being fully engaged with whatever you're doing at the moment, free from distraction or judgment, and aware of your thoughts and feelings without getting caught up in them.
             </p>
             
-            <div className="bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 p-8 rounded-lg shadow-lg border-l-4 border-mindful">
+            <div className="mindful-card p-8 rounded-lg shadow-lg border-l-4 border-mindful">
               <p className="text-lg italic text-gray-700 dark:text-gray-300 mb-2 nike-quote">
-                "THE PRESENT MOMENT IS THE ONLY TIME OVER WHICH WE HAVE DOMINION."
+                "THE PRESENT MOMENT IS THE ONLY TIME OVER WHICH WE HAVE <span className="green-gradient-text">DOMINION</span>."
               </p>
               <p className="text-right text-gray-600 dark:text-gray-400 nike-quote-author">
                 - THÍCH NHẤT HẠNH

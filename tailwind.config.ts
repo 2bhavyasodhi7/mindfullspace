@@ -67,6 +67,8 @@ export default {
 					DEFAULT: '#10b981',
 					dark: '#0d9668',
 					light: '#d1fae5',
+					lighter: '#ecfdf5',
+					darker: '#065f46',
 				}
 			},
 			borderRadius: {
