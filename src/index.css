@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -74,6 +76,36 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Archivo', sans-serif;
+  }
+
+  /* Nike-inspired typography */
+  .nike-headline {
+    @apply font-bold uppercase tracking-tight;
+    letter-spacing: -0.02em;
+  }
+
+  .nike-highlight {
+    @apply font-extrabold;
+  }
+
+  .nike-body-text {
+    @apply font-medium leading-relaxed;
+    letter-spacing: 0.01em;
+  }
+
+  .nike-quote {
+    @apply font-semibold uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .nike-quote-author {
+    @apply font-medium;
+  }
+
+  .nike-button {
+    @apply uppercase font-bold tracking-wider;
+    letter-spacing: 0.05em;
   }
 }
 
@@ -89,7 +121,7 @@
   }
   
   .mindful-btn {
-    @apply bg-mindful text-white font-medium py-2 px-6 rounded-full hover:bg-mindful-dark transition-colors duration-300;
+    @apply bg-gradient-to-r from-mindful to-mindful-dark text-white font-medium py-2 px-6 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-[1.03] uppercase tracking-wider font-bold;
   }
   
   .mindful-section {
@@ -97,19 +129,19 @@
   }
   
   .mindful-heading {
-    @apply text-4xl md:text-5xl font-bold mb-6;
+    @apply text-4xl md:text-5xl font-bold mb-6 nike-headline;
   }
   
   .mindful-subheading {
-    @apply text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto;
+    @apply text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto nike-body-text;
   }
   
   .guru-card {
-    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:scale-105;
+    @apply bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105 border border-gray-100 dark:border-gray-700;
   }
   
   .guru-image {
-    @apply w-full h-48 object-cover;
+    @apply w-full h-48 object-cover transition-transform hover:scale-105 duration-500;
   }
   
   .guru-content {
@@ -117,22 +149,50 @@
   }
   
   .guru-name {
-    @apply text-xl font-semibold mb-2;
+    @apply text-xl font-semibold mb-2 nike-headline;
   }
   
   .guru-description {
-    @apply text-gray-600 dark:text-gray-300 text-sm mb-4;
+    @apply text-gray-600 dark:text-gray-300 text-sm mb-4 nike-body-text;
   }
   
   .faq-item {
-    @apply border-b border-gray-200 dark:border-gray-700 py-4;
+    @apply border-b border-gray-200 dark:border-gray-700 py-5;
   }
   
   .faq-question {
-    @apply flex justify-between items-center w-full text-left text-lg font-medium cursor-pointer;
+    @apply flex justify-between items-center w-full text-left text-lg font-medium cursor-pointer nike-headline;
   }
   
   .faq-answer {
-    @apply pt-2 text-gray-600 dark:text-gray-300;
+    @apply pt-3 text-gray-600 dark:text-gray-300 nike-body-text;
   }
+
+  /* Animation for scroll effects */
+  .animate-on-scroll {
+    @apply opacity-0 translate-y-8 transition-all duration-700;
+  }
+  
+  .animate-on-scroll.animate {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+@keyframes emoji-float {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+.animate-emoji-float {
+  animation: emoji-float 5s ease-out forwards;
+}
+
+@keyframes float-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-float-up {
+  animation: float-up 0.5s ease-out forwards;
 }
