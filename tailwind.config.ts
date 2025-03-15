@@ -63,11 +63,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				mindful: {
-					DEFAULT: '#4FD1C5',
-					dark: '#3EABA0',
-					light: '#B2F5EA',
-					lighter: '#E6FFFA',
-					darker: '#2C7A73',
+					DEFAULT: '#73A580',
+					dark: '#5C8467',
+					light: '#A6C1AD',
+					lighter: '#E8F0EA',
+					darker: '#4A6B53',
 				}
 			},
 			borderRadius: {
