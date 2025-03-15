@@ -37,16 +37,16 @@ const HeroSection = () => {
       
       <div className="container-custom text-center relative z-10">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight nike-headline">
-          FIND YOUR <span className="soft-green-gradient-text mindful-glow nike-highlight">INNER PEACE</span>
+          FIND YOUR <span className="text-mindful nike-highlight">INNER PEACE</span>
         </h1>
         
         <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-10 nike-body-text">
           Begin your journey to mindfulness and discover a calmer, more focused you. 
-          Our guided practices help you develop awareness and live in the <span className="green-gradient-text">present moment</span>.
+          Our guided practices help you develop awareness and live in the <span className="text-mindful">present moment</span>.
         </p>
         
         <Button 
-          className="nike-button bg-gradient-to-r from-mindful to-mindful-dark text-white px-8 py-6 rounded-full text-lg transform transition-transform hover:scale-105 hover:shadow-xl"
+          className="nike-button bg-mindful text-white px-8 py-6 rounded-full text-lg transform transition-transform hover:scale-105 hover:shadow-xl"
           onClick={handleStartJourney}
         >
           START YOUR JOURNEY
@@ -57,10 +57,10 @@ const HeroSection = () => {
       
       {showAudioPlayer && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-xl shadow-2xl max-w-md w-full animate-float-up border border-mindful/20">
+          <div className="bg-gray-900 p-6 rounded-xl shadow-2xl max-w-md w-full animate-float-up border border-mindful/20">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-white nike-headline">
-                <span className="soft-green-gradient-text">MINDFULNESS</span> MEDITATION
+                <span className="text-mindful">MINDFULNESS</span> MEDITATION
               </h3>
               <button 
                 onClick={closeAudioPlayer}
@@ -73,7 +73,7 @@ const HeroSection = () => {
               </button>
             </div>
             
-            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-lg p-4 mb-4 shadow-inner">
+            <div className="bg-gray-800 rounded-lg p-4 mb-4 shadow-inner">
               <div className="aspect-w-16 aspect-h-9 mb-3">
                 <ReactPlayer
                   ref={playerRef}
@@ -91,7 +91,7 @@ const HeroSection = () => {
               </div>
               
               <p className="text-center mt-4 text-gray-300 nike-body-text">
-                A calming meditation to help you center your thoughts and find <span className="green-gradient-text">peace</span>.
+                A calming meditation to help you center your thoughts and find <span className="text-mindful">peace</span>.
               </p>
             </div>
             

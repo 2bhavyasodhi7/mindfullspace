@@ -3,12 +3,12 @@ import React from 'react';
 
 const WhatIsMindfulness = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <section className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="animate-on-scroll">
             <h2 className="text-4xl md:text-5xl font-bold mb-8 nike-headline">
-              WHAT IS <span className="soft-green-gradient-text nike-highlight mindful-glow">MINDFULNESS?</span>
+              WHAT IS <span className="text-mindful nike-highlight">MINDFULNESS?</span>
             </h2>
             
             <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 nike-body-text">
@@ -17,7 +17,7 @@ const WhatIsMindfulness = () => {
             
             <div className="mindful-card p-8 rounded-lg shadow-lg border-l-4 border-mindful">
               <p className="text-lg italic text-gray-700 dark:text-gray-300 mb-2 nike-quote">
-                "THE PRESENT MOMENT IS THE ONLY TIME OVER WHICH WE HAVE <span className="green-gradient-text">DOMINION</span>."
+                "THE PRESENT MOMENT IS THE ONLY TIME OVER WHICH WE HAVE <span className="text-mindful">DOMINION</span>."
               </p>
               <p className="text-right text-gray-600 dark:text-gray-400 nike-quote-author">
                 - THÍCH NHẤT HẠNH
@@ -26,7 +26,7 @@ const WhatIsMindfulness = () => {
           </div>
           
           <div className="relative animate-on-scroll">
-            <div className="absolute -inset-4 bg-gradient-to-tr from-mindful/20 to-mindful-light/30 blur-lg rounded-xl"></div>
+            <div className="absolute -inset-4 bg-mindful/10 blur-lg rounded-xl"></div>
             <img 
               src="/public/lovable-uploads/7e575c2d-6979-450d-b7bd-502df750d57b.png" 
               alt="Person meditating" 

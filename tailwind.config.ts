@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -64,11 +63,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				mindful: {
-					DEFAULT: '#10b981',
-					dark: '#0d9668',
-					light: '#d1fae5',
-					lighter: '#ecfdf5',
-					darker: '#065f46',
+					DEFAULT: '#4FD1C5',
+					dark: '#3EABA0',
+					light: '#B2F5EA',
+					lighter: '#E6FFFA',
+					darker: '#2C7A73',
 				}
 			},
 			borderRadius: {

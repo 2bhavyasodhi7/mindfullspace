@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -121,7 +120,7 @@
   }
   
   .mindful-btn {
-    @apply bg-gradient-to-r from-mindful to-mindful-dark text-white font-medium py-2 px-6 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-[1.03] uppercase tracking-wider font-bold;
+    @apply bg-mindful text-white font-medium py-2 px-6 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-[1.03] uppercase tracking-wider font-bold;
   }
   
   .mindful-section {
@@ -137,7 +136,7 @@
   }
   
   .guru-card {
-    @apply bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105 border border-gray-100 dark:border-gray-700;
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105 border border-gray-100 dark:border-gray-700;
   }
   
   .guru-image {
@@ -177,25 +176,17 @@
     @apply opacity-100 translate-y-0;
   }
   
-  /* Green gradient text styles */
-  .green-gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-mindful-light via-mindful to-mindful-dark;
-  }
-  
-  .soft-green-gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-green-400 via-mindful to-emerald-600;
+  /* Flat color text styles instead of gradients */
+  .mindful-text {
+    @apply text-mindful;
   }
   
   .mindful-card {
-    @apply bg-gradient-to-br from-white to-mindful-light/20 dark:from-gray-800 dark:to-mindful-dark/30;
+    @apply bg-white dark:bg-gray-800;
   }
   
   .mindful-border {
-    @apply border-l-4 border-gradient-to-b from-mindful-light via-mindful to-mindful-dark;
-  }
-  
-  .mindful-glow {
-    text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+    @apply border-l-4 border-mindful;
   }
 }
 
