@@ -4,16 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Coming Soon",
-      description: "Login functionality will be available soon.",
+      title: "Login Successful",
+      description: "Welcome back to MindfulSpace!",
     });
+    navigate('/profile');
   };
 
   return (
