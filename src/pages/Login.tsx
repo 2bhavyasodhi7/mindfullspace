@@ -1,19 +1,30 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // For demo purposes, just set a demo user
+    localStorage.setItem('userName', email.split('@')[0]);
+    
     toast({
-      title: "Coming Soon",
-      description: "Login functionality will be available soon.",
+      title: "Login Successful",
+      description: "Welcome back to MindfulSpace!",
     });
+    
+    // Redirect to profile page
+    navigate('/profile');
   };
 
   return (
@@ -28,12 +39,26 @@ const Login = () => {
           <div className="space-y-4">
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="Enter your email" required />
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="Enter your email" 
+                required 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             
             <div>
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="••••••••" required />
+              <Input 
+                id="password" 
+                type="password" 
+                placeholder="••••••••" 
+                required 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
           </div>
           

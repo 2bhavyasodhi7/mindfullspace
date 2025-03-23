@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/ThemeProvider";
-import { Moon, Sun, Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { Moon, Sun, Menu, X, ChevronDown, ChevronUp, User } from 'lucide-react';
 import { 
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
@@ -23,6 +24,11 @@ const Navbar = () => {
   const toggleResources = () => {
     setIsResourcesOpen(!isResourcesOpen);
   };
+
+  // Check if user is logged in (has profile image in localStorage)
+  const isLoggedIn = localStorage.getItem('profileImage') !== null;
+  const profileImage = localStorage.getItem('profileImage');
+  const userName = localStorage.getItem('userName') || 'User';
 
   return (
     <nav className="bg-white dark:bg-gray-900 sticky top-0 z-50 shadow-sm">
@@ -75,6 +81,12 @@ const Navbar = () => {
                   <Link to="/articles" className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
                     Articles
                   </Link>
+                  <Link to="/yoga" className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    Yoga
+                  </Link>
+                  <Link to="/ai-chat" className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    AI Chat
+                  </Link>
                 </div>
               )}
             </div>
@@ -101,12 +113,46 @@ const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link to="/login">
-              <Button variant="outline">Login</Button>
-            </Link>
-            <Link to="/signup">
-              <Button className="bg-mindful hover:bg-mindful-dark">Sign Up</Button>
-            </Link>
+            {isLoggedIn ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={profileImage || undefined} />
+                      <AvatarFallback className="bg-mindful text-white">
+                        {userName.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="hidden lg:inline">{userName}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile">Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/ai-chat">AI Chat</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => {
+                    // Simple logout - clear localStorage
+                    localStorage.removeItem('profileImage');
+                    localStorage.removeItem('userName');
+                    window.location.href = '/';
+                  }}>
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="outline">Login</Button>
+                </Link>
+                <Link to="/signup">
+                  <Button className="bg-mindful hover:bg-mindful-dark">Sign Up</Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -129,6 +175,17 @@ const Navbar = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            
+            {isLoggedIn && (
+              <Link to="/profile" className="mr-2">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={profileImage || undefined} />
+                  <AvatarFallback className="bg-mindful text-white">
+                    <User className="h-4 w-4" />
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
+            )}
             
             <button onClick={toggleMenu} className="text-gray-700 dark:text-gray-200">
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -171,17 +228,31 @@ const Navbar = () => {
                   <Link to="/articles" className="block py-2 text-gray-700 dark:text-gray-200 hover:text-mindful dark:hover:text-mindful" onClick={toggleMenu}>
                     Articles
                   </Link>
+                  <Link to="/yoga" className="block py-2 text-gray-700 dark:text-gray-200 hover:text-mindful dark:hover:text-mindful" onClick={toggleMenu}>
+                    Yoga
+                  </Link>
+                  <Link to="/ai-chat" className="block py-2 text-gray-700 dark:text-gray-200 hover:text-mindful dark:hover:text-mindful" onClick={toggleMenu}>
+                    AI Chat
+                  </Link>
                 </div>
               )}
             </div>
             
             <div className="pt-4 flex space-x-4">
-              <Link to="/login" className="flex-1" onClick={toggleMenu}>
-                <Button variant="outline" className="w-full">Login</Button>
-              </Link>
-              <Link to="/signup" className="flex-1" onClick={toggleMenu}>
-                <Button className="w-full bg-mindful hover:bg-mindful-dark">Sign Up</Button>
-              </Link>
+              {isLoggedIn ? (
+                <Link to="/profile" className="flex-1" onClick={toggleMenu}>
+                  <Button className="w-full bg-mindful hover:bg-mindful-dark">Profile</Button>
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login" className="flex-1" onClick={toggleMenu}>
+                    <Button variant="outline" className="w-full">Login</Button>
+                  </Link>
+                  <Link to="/signup" className="flex-1" onClick={toggleMenu}>
+                    <Button className="w-full bg-mindful hover:bg-mindful-dark">Sign Up</Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
