@@ -4,19 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Sign Up Successful",
-      description: "Welcome to MindfulSpace! Your account has been created.",
+      title: "Coming Soon",
+      description: "Sign up functionality will be available soon.",
     });
-    navigate('/profile');
   };
 
   return (

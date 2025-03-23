@@ -17,7 +17,6 @@ import Articles from "./pages/Articles";
 import Rewards from "./pages/Rewards";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +40,6 @@ const App = () => (
                 <Route path="/rewards" element={<Rewards />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
