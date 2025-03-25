@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, BarChart3, BookOpen, Headphones, X, SkipForward, SkipBack, Clock } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import ReactPlayer from 'react-player';
-import { audioFiles1 } from './audioData1';
+import { audioFiles1, weeklyStats } from './audioData1';
 import useSound from 'use-sound';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
@@ -78,16 +78,6 @@ function App() {
       title: "Benefits of Daily Practice",
       url: "https://www.mayoclinic.org/tests-procedures/meditation/in-depth/meditation/art-20045858"
     }
-  ];
-
-  const weeklyStats = [
-    { day: 'Mon', hours: 1.5 },
-    { day: 'Tue', hours: 2.0 },
-    { day: 'Wed', hours: 1.0 },
-    { day: 'Thu', hours: 2.5 },
-    { day: 'Fri', hours: 1.8 },
-    { day: 'Sat', hours: 3.0 },
-    { day: 'Sun', hours: 2.2 },
   ];
 
   useEffect(() => {
