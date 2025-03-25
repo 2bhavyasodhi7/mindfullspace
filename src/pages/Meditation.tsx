@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import ReactPlayer from 'react-player';
 import { audioFiles1 } from './audioData1';
 import useSound from 'use-sound';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -15,12 +16,13 @@ function App() {
   const [selectedTimer, setSelectedTimer] = useState(0);
   const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
   const [currentClockTime, setCurrentClockTime] = useState(new Date());
+  const [meditationStats, setMeditationStats] = useState([]);
 
   const timerRef = useRef<NodeJS.Timeout>();
   const clockRef = useRef<NodeJS.Timeout>();
 
   const guidedMeditations = [
-    { title: "Morning Meditation", duration: "10:00" , url: "/music/guided meditaion/4-Minute Guided Mindfulness Meditation [TubeRipper.com].mp3"},
+    { title: "Morning Meditation", duration: "10:00", url: "/music/guided meditaion/4-Minute Guided Mindfulness Meditation [TubeRipper.com].mp3"},
     { title: "Stress Relief", duration: "15:00" },
     { title: "Deep Sleep", duration: "20:00" },
     { title: "Anxiety Relief", duration: "12:00" },
@@ -81,6 +83,10 @@ function App() {
   ];
 
   useEffect(() => {
+    setMeditationStats(weeklyStats);
+  }, []);
+
+  useEffect(() => {
     if (isTimerRunning) {
       clockRef.current = setInterval(() => {
         setCurrentTime(prev => {
@@ -111,47 +117,42 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 relative">
-      {/* Header Section */}
+    <div className="min-h-screen bg-gradient-to-br from-mindful-lighter to-white relative">
       <header className="container mx-auto px-4 pt-20 pb-32 flex flex-col md:flex-row items-center justify-between">
         <div className="md:w-1/2 text-center md:text-left">
-          <h1 className="text-6xl font-bold text-teal-500 mb-6">Meditation</h1>
-          <p className="text-black-600 text-lg mb-6">
+          <h1 className="text-6xl font-bold text-mindful mb-6 nike-headline">Meditation</h1>
+          <p className="text-gray-600 text-lg mb-6 nike-body-text">
             Meditation is a journey inward, a practice that allows you to find peace and clarity in the present moment. 
             Through regular meditation, you can reduce stress, improve focus, and cultivate a deeper understanding of yourself.
           </p>
           <div className="flex items-center gap-4 mb-6">
-            <div className="h-[1px] flex-1 bg-teal-300"></div>
-            <p className="text-teal-600 text-lg">Find your inner peace</p>
-            <div className="h-[1px] flex-1 bg-teal-300"></div>
+            <div className="h-[1px] flex-1 bg-mindful-light"></div>
+            <p className="text-mindful text-lg">Find your inner peace</p>
+            <div className="h-[1px] flex-1 bg-mindful-light"></div>
           </div>
         </div>
         <div className="md:w-1/2 mt-8 md:mt-0">
           <img 
-            src="\assets\meditation.jpg"
+            src="/assets/meditation.jpg"
             alt="Meditation"
             className="rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
           />
         </div>
       </header>
 
-      {/* Interactive Features Section */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-4xl font-bold text-teal-600 mb-12 text-center">Begin Your Journey</h2>
+        <h2 className="text-4xl font-bold text-mindful mb-12 text-center nike-headline">Begin Your Journey</h2>
         
-        {/* Feature Boxes Container */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {/* Guided Meditation Section */}
           <div>
             <div className="relative group mb-8">
               <button
                 onClick={() => setShowAudioPlayer(!showAudioPlayer)}
                 className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
-                <Headphones className="w-6 h-6" />
-                <span className="font-medium text-teal-700">Guided Meditation</span>
+                <Headphones className="w-6 h-6 text-mindful" />
+                <span className="font-medium text-mindful">Guided Meditation</span>
               </button>
-              {/* Hover Card */}
               <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
                 <div className="flex gap-4">
                   <img 
@@ -160,8 +161,8 @@ function App() {
                     className="w-24 h-24 rounded-lg object-cover"
                   />
                   <div className="text-left">
-                    <h3 className="font-semibold text-teal-800 mb-2">Guided Meditation</h3>
-                    <p className="text-teal-600 text-sm">
+                    <h3 className="font-semibold text-mindful-dark mb-2">Guided Meditation</h3>
+                    <p className="text-mindful text-sm">
                       Follow along with expert-led meditation sessions designed to help you relax, 
                       focus, and find inner peace.
                     </p>
@@ -170,7 +171,6 @@ function App() {
               </div>
             </div>
             
-            {/* Meditation List */}
             {showAudioPlayer && (
               <div className="grid gap-4 bg-white p-8 rounded-2xl shadow-lg">
                 {guidedMeditations.map((meditation, index) => (
@@ -179,32 +179,30 @@ function App() {
                     onClick={() => setCurrentAudioIndex(index)}
                     className={`flex items-center justify-between p-4 rounded-lg transition-all duration-300 ${
                       currentAudioIndex === index 
-                        ? 'bg-indigo-100 text-indigo-700' 
-                        : 'bg-teal-50 hover:bg-teal-100'
+                        ? 'bg-mindful-light text-mindful-dark' 
+                        : 'bg-mindful-lighter hover:bg-mindful-light'
                     }`}
                   >
                     <div className="flex items-center gap-4">
                       <Play className="w-5 h-5" />
                       <span className="font-medium">{meditation.title}</span>
                     </div>
-                    <span className="text-sm text-teal-500">{meditation.duration}</span>
+                    <span className="text-sm text-mindful-dark">{meditation.duration}</span>
                   </button>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Meditation Tracker Section */}
           <div>
             <div className="relative group mb-8">
               <button
                 onClick={() => setShowTracker(!showTracker)}
                 className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
-                <BarChart3 className="w-6 h-6" />
-                <span className="font-medium text-teal-700">Meditation Tracker</span>
+                <BarChart3 className="w-6 h-6 text-mindful" />
+                <span className="font-medium text-mindful">Meditation Tracker</span>
               </button>
-              {/* Hover Card */}
               <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
                 <div className="flex gap-4">
                   <img 
@@ -213,8 +211,8 @@ function App() {
                     className="w-24 h-24 rounded-lg object-cover"
                   />
                   <div className="text-left">
-                    <h3 className="font-semibold text-teal-800 mb-2">Track Your Progress</h3>
-                    <p className="text-teal-600 text-sm">
+                    <h3 className="font-semibold text-mindful-dark mb-2">Track Your Progress</h3>
+                    <p className="text-mindful text-sm">
                       Monitor your meditation journey, set goals, and maintain consistency 
                       with our easy-to-use tracking tools.
                     </p>
@@ -223,13 +221,11 @@ function App() {
               </div>
             </div>
 
-            {/* Tracker Content */}
             {showTracker && (
               <div className="bg-white p-8 rounded-2xl shadow-lg">
                 <div className="grid grid-cols-1 gap-8">
-                  {/* Timer Section */}
                   <div className="flex flex-col justify-center">
-                    <div className="text-6xl font-bold text-indigo-600 mb-4 text-center">
+                    <div className="text-6xl font-bold text-mindful mb-4 text-center">
                       {formatTime(currentTime)}
                     </div>
                     <div className="flex justify-center gap-4 mb-6">
@@ -238,7 +234,7 @@ function App() {
                           setIsTimerRunning(!isTimerRunning);
                           setSelectedTimer(0);
                         }}
-                        className="px-6 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors"
+                        className="px-6 py-2 bg-mindful text-white rounded-full hover:bg-mindful-dark transition-colors"
                       >
                         {isTimerRunning ? 'Pause' : 'Start'}
                       </button>
@@ -248,7 +244,7 @@ function App() {
                           setCurrentTime(0);
                           setSelectedTimer(0);
                         }}
-                        className="px-6 py-2 bg-teal-200 text-teal-700 rounded-full hover:bg-teal-300 transition-colors"
+                        className="px-6 py-2 bg-mindful-lighter text-mindful-dark rounded-full hover:bg-mindful-light transition-colors"
                       >
                         Reset
                       </button>
@@ -264,8 +260,8 @@ function App() {
                           }}
                           className={`p-4 rounded-xl transition-all duration-300 ${
                             selectedTimer === minutes
-                              ? 'bg-indigo-100 text-indigo-700'
-                              : 'bg-teal-50 hover:bg-teal-100'
+                              ? 'bg-mindful-light text-mindful-dark'
+                              : 'bg-mindful-lighter hover:bg-mindful-light'
                           }`}
                         >
                           <Clock className="w-6 h-6 mx-auto mb-2" />
@@ -275,14 +271,13 @@ function App() {
                     </div>
                   </div>
 
-                  {/* Clock Section */}
                   <div className="flex items-center justify-center">
-                    <div className="w-32 h-32 rounded-full border-8 border-indigo-600 flex items-center justify-center">
+                    <div className="w-32 h-32 rounded-full border-8 border-mindful flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-xl font-bold text-teal-800">
+                        <div className="text-xl font-bold text-mindful-dark">
                           {currentClockTime.toLocaleTimeString()}
                         </div>
-                        <div className="text-xs text-teal-500">
+                        <div className="text-xs text-mindful">
                           {currentClockTime.toLocaleDateString()}
                         </div>
                       </div>
@@ -293,17 +288,15 @@ function App() {
             )}
           </div>
 
-          {/* Meditation Techniques Section */}
           <div>
             <div className="relative group mb-8">
               <button
                 onClick={() => setShowTechniques(!showTechniques)}
                 className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
-                <BookOpen className="w-6 h-6" />
-                <span className="font-medium text-teal-700">Meditation Techniques</span>
+                <BookOpen className="w-6 h-6 text-mindful" />
+                <span className="font-medium text-mindful">Meditation Techniques</span>
               </button>
-              {/* Hover Card */}
               <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
                 <div className="flex gap-4">
                   <img 
@@ -312,8 +305,8 @@ function App() {
                     className="w-24 h-24 rounded-lg object-cover"
                   />
                   <div className="text-left">
-                    <h3 className="font-semibold text-teal-800 mb-2">Learn Techniques</h3>
-                    <p className="text-teal-600 text-sm">
+                    <h3 className="font-semibold text-mindful-dark mb-2">Learn Techniques</h3>
+                    <p className="text-mindful text-sm">
                       Discover various meditation methods and find the perfect 
                       practice that resonates with you.
                     </p>
@@ -322,7 +315,6 @@ function App() {
               </div>
             </div>
 
-            {/* Techniques Content */}
             {showTechniques && (
               <div className="bg-white p-8 rounded-2xl shadow-lg">
                 <div className="grid gap-6 mb-8">
@@ -337,16 +329,15 @@ function App() {
                         className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/0 p-6 flex flex-col justify-end">
-                        <h4 className="text-white text-xl font-semibold mb-2">{technique.title}</h4>
-                        <p className="text-white/80 text-sm">{technique.description}</p>
+                        <h4 className="text-white text-xl font-semibold mb-2 nike-headline">{technique.title}</h4>
+                        <p className="text-white/80 text-sm nike-body-text">{technique.description}</p>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Related Articles */}
                 <div className="border-t pt-6">
-                  <h4 className="text-xl font-semibold text-teal-800 mb-4">Related Articles</h4>
+                  <h4 className="text-xl font-semibold text-mindful-dark mb-4 nike-headline">Related Articles</h4>
                   <div className="grid gap-4">
                     {articles.map((article, index) => (
                       <a
@@ -354,10 +345,10 @@ function App() {
                         href={article.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-4 p-4 bg-teal-50 rounded-lg hover:bg-teal-100 transition-colors"
+                        className="flex items-center gap-4 p-4 bg-mindful-lighter rounded-lg hover:bg-mindful-light transition-colors"
                       >
-                        <BookOpen className="w-5 h-5 text-indigo-600" />
-                        <span className="text-teal-700 hover:text-indigo-600 transition-colors">
+                        <BookOpen className="w-5 h-5 text-mindful-dark" />
+                        <span className="text-mindful-dark hover:text-mindful-darker transition-colors">
                           {article.title}
                         </span>
                       </a>
@@ -369,24 +360,36 @@ function App() {
           </div>
         </div>
 
-        {/* Stats Section */}
         <div className="bg-white p-8 rounded-2xl shadow-lg">
-          <h2 className="text-2xl font-bold text-teal-800 mb-8">Your Stats</h2>
+          <h2 className="text-2xl font-bold text-mindful-dark mb-8 nike-headline">Your Stats</h2>
           <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
+            <ChartContainer
+              config={{
+                hours: {
+                  label: "Meditation Hours",
+                  color: "#73A580"
+                }
+              }}
+              className="mt-4"
+            >
               <BarChart data={weeklyStats}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E8F0EA" />
                 <XAxis dataKey="day" />
-                <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
-                <Tooltip />
-                <Bar dataKey="hours" fill="#4F46E5" />
+                <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft', fill: '#73A580' }} />
+                <ChartTooltip 
+                  content={
+                    <ChartTooltipContent 
+                      labelFormatter={(value) => `${value} Hours`}
+                    />
+                  }
+                />
+                <Bar dataKey="hours" fill="#73A580" />
               </BarChart>
-            </ResponsiveContainer>
+            </ChartContainer>
           </div>
         </div>
       </section>
 
-      {/* Audio Player Bar */}
       {showAudioPlayer && (
         <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-40">
           <div className="container mx-auto flex items-center justify-between">
@@ -397,30 +400,30 @@ function App() {
                 className="w-12 h-12 rounded-lg object-cover"
               />
               <div>
-                <h4 className="font-medium text-teal-800">
+                <h4 className="font-medium text-mindful-dark nike-headline">
                   {guidedMeditations[currentAudioIndex].title}
                 </h4>
-                <p className="text-sm text-teal-500">Guided Meditation</p>
+                <p className="text-sm text-mindful">Guided Meditation</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <button 
                 onClick={() => setCurrentAudioIndex(prev => Math.max(0, prev - 1))}
-                className="p-2 hover:bg-teal-100 rounded-full"
+                className="p-2 hover:bg-mindful-lighter rounded-full"
               >
-                <SkipBack className="w-5 h-5" />
+                <SkipBack className="w-5 h-5 text-mindful-dark" />
               </button>
               <button 
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="p-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors"
+                className="p-3 bg-mindful text-white rounded-full hover:bg-mindful-dark transition-colors"
               >
                 {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
               </button>
               <button 
                 onClick={() => setCurrentAudioIndex(prev => Math.min(guidedMeditations.length - 1, prev + 1))}
-                className="p-2 hover:bg-teal-100 rounded-full"
+                className="p-2 hover:bg-mindful-lighter rounded-full"
               >
-                <SkipForward className="w-5 h-5" />
+                <SkipForward className="w-5 h-5 text-mindful-dark" />
               </button>
             </div>
             <button 
@@ -428,9 +431,9 @@ function App() {
                 setShowAudioPlayer(false);
                 setIsPlaying(false);
               }}
-              className="p-2 hover:bg-teal-100 rounded-full"
+              className="p-2 hover:bg-mindful-lighter rounded-full"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 text-mindful-dark" />
             </button>
           </div>
         </div>
