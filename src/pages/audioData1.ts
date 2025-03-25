@@ -26,3 +26,14 @@ export const audioFiles1 = [
     url: "/music/guided-meditation-6.mp3"
   }
 ];
+
+// Initialize with zero values
+export const weeklyStats = [
+  { day: 'Mon', hours: 0 },
+  { day: 'Tue', hours: 0 },
+  { day: 'Wed', hours: 0 },
+  { day: 'Thu', hours: 0 },
+  { day: 'Fri', hours: 0 },
+  { day: 'Sat', hours: 0 },
+  { day: 'Sun', hours: 0 },
+];

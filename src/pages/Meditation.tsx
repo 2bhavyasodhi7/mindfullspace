@@ -16,7 +16,15 @@ function App() {
   const [selectedTimer, setSelectedTimer] = useState(0);
   const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
   const [currentClockTime, setCurrentClockTime] = useState(new Date());
-  const [meditationStats, setMeditationStats] = useState([]);
+  const [meditationStats, setMeditationStats] = useState([
+    { day: 'Mon', hours: 0 },
+    { day: 'Tue', hours: 0 },
+    { day: 'Wed', hours: 0 },
+    { day: 'Thu', hours: 0 },
+    { day: 'Fri', hours: 0 },
+    { day: 'Sat', hours: 0 },
+    { day: 'Sun', hours: 0 },
+  ]);
 
   const timerRef = useRef<NodeJS.Timeout>();
   const clockRef = useRef<NodeJS.Timeout>();
@@ -140,7 +148,7 @@ function App() {
         </div>
       </header>
 
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-16 mb-32">
         <h2 className="text-4xl font-bold text-mindful mb-12 text-center nike-headline">Begin Your Journey</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -372,7 +380,7 @@ function App() {
               }}
               className="mt-4"
             >
-              <BarChart data={weeklyStats}>
+              <BarChart data={meditationStats}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E8F0EA" />
                 <XAxis dataKey="day" />
                 <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft', fill: '#73A580' }} />
