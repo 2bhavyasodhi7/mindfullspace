@@ -1,121 +1,443 @@
-
-import React, { useState, useEffect } from 'react';
-import { Headphones, BarChart3, BookOpen } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Play, Pause, BarChart3, BookOpen, Headphones, X, SkipForward, SkipBack, Clock } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import ReactPlayer from 'react-player';
-import { weeklyStats } from './audioData1';
+import { audioFiles1, weeklyStats } from './audioData1';
 import useSound from 'use-sound';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
-import MeditationHeader from './meditation/components/MeditationHeader';
-import GuidedMeditationList from './meditation/components/GuidedMeditationList';
-import MeditationTimer from './meditation/components/MeditationTimer';
-import MeditationTechniquesSection from './meditation/components/MeditationTechniquesSection';
-import MeditationStats from './meditation/components/MeditationStats';
-import GuidedMeditationPlayer from './meditation/components/GuidedMeditationPlayer';
-import FeatureButton from './meditation/components/FeatureButton';
-import { useTimer } from './meditation/hooks/useTimer';
-import { 
-  guidedMeditations, 
-  meditationTechniques, 
-  articles, 
-  featureHoverContent 
-} from './meditation/data/meditationData';
-
-function Meditation() {
+function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
   const [showTracker, setShowTracker] = useState(false);
   const [showTechniques, setShowTechniques] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [selectedTimer, setSelectedTimer] = useState(0);
   const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
-  const [meditationStats, setMeditationStats] = useState(weeklyStats);
+  const [currentClockTime, setCurrentClockTime] = useState(new Date());
+  const [meditationStats, setMeditationStats] = useState([
+    { day: 'Mon', hours: 0 },
+    { day: 'Tue', hours: 0 },
+    { day: 'Wed', hours: 0 },
+    { day: 'Thu', hours: 0 },
+    { day: 'Fri', hours: 0 },
+    { day: 'Sat', hours: 0 },
+    { day: 'Sun', hours: 0 },
+  ]);
 
-  const timer = useTimer();
+  const timerRef = useRef<NodeJS.Timeout>();
+  const clockRef = useRef<NodeJS.Timeout>();
+
+  const guidedMeditations = [
+    { title: "Morning Meditation", duration: "10:00", url: "/music/guided meditaion/4-Minute Guided Mindfulness Meditation [TubeRipper.com].mp3"},
+    { title: "Stress Relief", duration: "15:00" },
+    { title: "Deep Sleep", duration: "20:00" },
+    { title: "Anxiety Relief", duration: "12:00" },
+    { title: "Focus Enhancement", duration: "8:00" },
+    { title: "Gratitude Practice", duration: "10:00" }
+  ];
+
+  const meditationTechniques = [
+    {
+      title: "Mindfulness Meditation",
+      description: "Focus on the present moment through breath awareness",
+      image: "/assets/medi2.jpg"
+    },
+    {
+      title: "Loving-Kindness Meditation",
+      description: "Cultivate compassion and positive feelings towards others",
+      image: "/assets/kindmedi.jpg"
+    },
+    {
+      title: "Body Scan Meditation",
+      description: "Progressive relaxation through body awareness",
+      image: "/assets/bodyscan.jpg"
+    },
+    {
+      title: "Transcendental Meditation",
+      description: "Silent mantra meditation for deep relaxation",
+      image: "/assets/medi3.jpg"
+    }
+  ];
+
+  const articles = [
+    {
+      title: "The Science Behind Meditation",
+      url: "https://www.healthline.com/nutrition/12-benefits-of-meditation"
+    },
+    {
+      title: "Getting Started with Meditation",
+      url: "https://www.mindful.org/how-to-meditate/"
+    },
+    {
+      title: "Different Types of Meditation",
+      url: "https://www.verywellmind.com/types-of-meditation-for-stress-relief-3144989"
+    },
+    {
+      title: "Benefits of Daily Practice",
+      url: "https://www.mayoclinic.org/tests-procedures/meditation/in-depth/meditation/art-20045858"
+    }
+  ];
 
   useEffect(() => {
     setMeditationStats(weeklyStats);
   }, []);
 
+  useEffect(() => {
+    if (isTimerRunning) {
+      clockRef.current = setInterval(() => {
+        setCurrentTime(prev => {
+          if (selectedTimer > 0 && prev >= selectedTimer * 60) {
+            setIsTimerRunning(false);
+            clearInterval(clockRef.current);
+            return 0;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(clockRef.current);
+  }, [isTimerRunning, selectedTimer]);
+
+  useEffect(() => {
+    const clockInterval = setInterval(() => {
+      setCurrentClockTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(clockInterval);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-mindful-lighter to-white relative">
-      <MeditationHeader />
+      <header className="container mx-auto px-4 pt-20 pb-32 flex flex-col md:flex-row items-center justify-between">
+        <div className="md:w-1/2 text-center md:text-left">
+          <h1 className="text-6xl font-bold text-mindful mb-6 nike-headline">Meditation</h1>
+          <p className="text-gray-600 text-lg mb-6 nike-body-text">
+            Meditation is a journey inward, a practice that allows you to find peace and clarity in the present moment. 
+            Through regular meditation, you can reduce stress, improve focus, and cultivate a deeper understanding of yourself.
+          </p>
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-[1px] flex-1 bg-mindful-light"></div>
+            <p className="text-mindful text-lg">Find your inner peace</p>
+            <div className="h-[1px] flex-1 bg-mindful-light"></div>
+          </div>
+        </div>
+        <div className="md:w-1/2 mt-8 md:mt-0">
+          <img 
+            src="/assets/meditation.jpg"
+            alt="Meditation"
+            className="rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
+          />
+        </div>
+      </header>
 
       <section className="container mx-auto px-4 py-16 mb-32">
         <h2 className="text-4xl font-bold text-mindful mb-12 text-center nike-headline">Begin Your Journey</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <div>
-            <FeatureButton 
-              icon={<Headphones className="w-6 h-6 text-mindful" />}
-              title="Guided Meditation"
-              isActive={showAudioPlayer}
-              onClick={() => setShowAudioPlayer(!showAudioPlayer)}
-              hoverContent={featureHoverContent.guidedMeditation}
-            />
+            <div className="relative group mb-8">
+              <button
+                onClick={() => setShowAudioPlayer(!showAudioPlayer)}
+                className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                <Headphones className="w-6 h-6 text-mindful" />
+                <span className="font-medium text-mindful">Guided Meditation</span>
+              </button>
+              <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
+                <div className="flex gap-4">
+                  <img 
+                    src="https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?auto=format&fit=crop&w=200&q=80"
+                    alt="Guided Meditation"
+                    className="w-24 h-24 rounded-lg object-cover"
+                  />
+                  <div className="text-left">
+                    <h3 className="font-semibold text-mindful-dark mb-2">Guided Meditation</h3>
+                    <p className="text-mindful text-sm">
+                      Follow along with expert-led meditation sessions designed to help you relax, 
+                      focus, and find inner peace.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
             
             {showAudioPlayer && (
-              <GuidedMeditationList 
-                guidedMeditations={guidedMeditations}
-                currentAudioIndex={currentAudioIndex}
-                setCurrentAudioIndex={setCurrentAudioIndex}
-              />
+              <div className="grid gap-4 bg-white p-8 rounded-2xl shadow-lg">
+                {guidedMeditations.map((meditation, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentAudioIndex(index)}
+                    className={`flex items-center justify-between p-4 rounded-lg transition-all duration-300 ${
+                      currentAudioIndex === index 
+                        ? 'bg-mindful-light text-mindful-dark' 
+                        : 'bg-mindful-lighter hover:bg-mindful-light'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <Play className="w-5 h-5" />
+                      <span className="font-medium">{meditation.title}</span>
+                    </div>
+                    <span className="text-sm text-mindful-dark">{meditation.duration}</span>
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 
           <div>
-            <FeatureButton 
-              icon={<BarChart3 className="w-6 h-6 text-mindful" />}
-              title="Meditation Tracker"
-              isActive={showTracker}
-              onClick={() => setShowTracker(!showTracker)}
-              hoverContent={featureHoverContent.meditationTracker}
-            />
+            <div className="relative group mb-8">
+              <button
+                onClick={() => setShowTracker(!showTracker)}
+                className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                <BarChart3 className="w-6 h-6 text-mindful" />
+                <span className="font-medium text-mindful">Meditation Tracker</span>
+              </button>
+              <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
+                <div className="flex gap-4">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=200&q=80"
+                    alt="Meditation Tracker"
+                    className="w-24 h-24 rounded-lg object-cover"
+                  />
+                  <div className="text-left">
+                    <h3 className="font-semibold text-mindful-dark mb-2">Track Your Progress</h3>
+                    <p className="text-mindful text-sm">
+                      Monitor your meditation journey, set goals, and maintain consistency 
+                      with our easy-to-use tracking tools.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {showTracker && (
-              <MeditationTimer 
-                currentTime={timer.currentTime}
-                isTimerRunning={timer.isTimerRunning}
-                setIsTimerRunning={timer.setIsTimerRunning}
-                currentClockTime={timer.currentClockTime}
-                selectedTimer={timer.selectedTimer}
-                setSelectedTimer={timer.setSelectedTimer}
-                setCurrentTime={timer.setCurrentTime}
-                formatTime={timer.formatTime}
-              />
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
+                <div className="grid grid-cols-1 gap-8">
+                  <div className="flex flex-col justify-center">
+                    <div className="text-6xl font-bold text-mindful mb-4 text-center">
+                      {formatTime(currentTime)}
+                    </div>
+                    <div className="flex justify-center gap-4 mb-6">
+                      <button
+                        onClick={() => {
+                          setIsTimerRunning(!isTimerRunning);
+                          setSelectedTimer(0);
+                        }}
+                        className="px-6 py-2 bg-mindful text-white rounded-full hover:bg-mindful-dark transition-colors"
+                      >
+                        {isTimerRunning ? 'Pause' : 'Start'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsTimerRunning(false);
+                          setCurrentTime(0);
+                          setSelectedTimer(0);
+                        }}
+                        className="px-6 py-2 bg-mindful-lighter text-mindful-dark rounded-full hover:bg-mindful-light transition-colors"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      {[5, 10, 15, 20].map((minutes) => (
+                        <button
+                          key={minutes}
+                          onClick={() => {
+                            setSelectedTimer(minutes);
+                            setCurrentTime(0);
+                            setIsTimerRunning(true);
+                          }}
+                          className={`p-4 rounded-xl transition-all duration-300 ${
+                            selectedTimer === minutes
+                              ? 'bg-mindful-light text-mindful-dark'
+                              : 'bg-mindful-lighter hover:bg-mindful-light'
+                          }`}
+                        >
+                          <Clock className="w-6 h-6 mx-auto mb-2" />
+                          <span className="block text-sm font-medium">{minutes} min</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-center">
+                    <div className="w-32 h-32 rounded-full border-8 border-mindful flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-mindful-dark">
+                          {currentClockTime.toLocaleTimeString()}
+                        </div>
+                        <div className="text-xs text-mindful">
+                          {currentClockTime.toLocaleDateString()}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
 
           <div>
-            <FeatureButton 
-              icon={<BookOpen className="w-6 h-6 text-mindful" />}
-              title="Meditation Techniques"
-              isActive={showTechniques}
-              onClick={() => setShowTechniques(!showTechniques)}
-              hoverContent={featureHoverContent.meditationTechniques}
-            />
+            <div className="relative group mb-8">
+              <button
+                onClick={() => setShowTechniques(!showTechniques)}
+                className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              >
+                <BookOpen className="w-6 h-6 text-mindful" />
+                <span className="font-medium text-mindful">Meditation Techniques</span>
+              </button>
+              <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
+                <div className="flex gap-4">
+                  <img 
+                    src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=200&q=80"
+                    alt="Meditation Techniques"
+                    className="w-24 h-24 rounded-lg object-cover"
+                  />
+                  <div className="text-left">
+                    <h3 className="font-semibold text-mindful-dark mb-2">Learn Techniques</h3>
+                    <p className="text-mindful text-sm">
+                      Discover various meditation methods and find the perfect 
+                      practice that resonates with you.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {showTechniques && (
-              <MeditationTechniquesSection 
-                meditationTechniques={meditationTechniques}
-                articles={articles}
-              />
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
+                <div className="grid gap-6 mb-8">
+                  {meditationTechniques.map((technique, index) => (
+                    <div 
+                      key={index}
+                      className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <img 
+                        src={technique.image}
+                        alt={technique.title}
+                        className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/0 p-6 flex flex-col justify-end">
+                        <h4 className="text-white text-xl font-semibold mb-2 nike-headline">{technique.title}</h4>
+                        <p className="text-white/80 text-sm nike-body-text">{technique.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="border-t pt-6">
+                  <h4 className="text-xl font-semibold text-mindful-dark mb-4 nike-headline">Related Articles</h4>
+                  <div className="grid gap-4">
+                    {articles.map((article, index) => (
+                      <a
+                        key={index}
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-4 p-4 bg-mindful-lighter rounded-lg hover:bg-mindful-light transition-colors"
+                      >
+                        <BookOpen className="w-5 h-5 text-mindful-dark" />
+                        <span className="text-mindful-dark hover:text-mindful-darker transition-colors">
+                          {article.title}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
 
-        <MeditationStats meditationStats={meditationStats} />
+        <div className="bg-white p-8 rounded-2xl shadow-lg">
+          <h2 className="text-2xl font-bold text-mindful-dark mb-8 nike-headline">Your Stats</h2>
+          <div className="h-80">
+            <ChartContainer
+              config={{
+                hours: {
+                  label: "Meditation Hours",
+                  color: "#73A580"
+                }
+              }}
+              className="mt-4"
+            >
+              <BarChart data={meditationStats}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#E8F0EA" />
+                <XAxis dataKey="day" />
+                <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft', fill: '#73A580' }} />
+                <ChartTooltip 
+                  content={
+                    <ChartTooltipContent 
+                      labelFormatter={(value) => `${value} Hours`}
+                    />
+                  }
+                />
+                <Bar dataKey="hours" fill="#73A580" />
+              </BarChart>
+            </ChartContainer>
+          </div>
+        </div>
       </section>
 
       {showAudioPlayer && (
-        <GuidedMeditationPlayer 
-          guidedMeditations={guidedMeditations}
-          currentAudioIndex={currentAudioIndex}
-          setCurrentAudioIndex={setCurrentAudioIndex}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          setShowAudioPlayer={setShowAudioPlayer}
-        />
+        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-40">
+          <div className="container mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <img 
+                src="https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?auto=format&fit=crop&w=100&q=80"
+                alt="Current Meditation"
+                className="w-12 h-12 rounded-lg object-cover"
+              />
+              <div>
+                <h4 className="font-medium text-mindful-dark nike-headline">
+                  {guidedMeditations[currentAudioIndex].title}
+                </h4>
+                <p className="text-sm text-mindful">Guided Meditation</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setCurrentAudioIndex(prev => Math.max(0, prev - 1))}
+                className="p-2 hover:bg-mindful-lighter rounded-full"
+              >
+                <SkipBack className="w-5 h-5 text-mindful-dark" />
+              </button>
+              <button 
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="p-3 bg-mindful text-white rounded-full hover:bg-mindful-dark transition-colors"
+              >
+                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+              </button>
+              <button 
+                onClick={() => setCurrentAudioIndex(prev => Math.min(guidedMeditations.length - 1, prev + 1))}
+                className="p-2 hover:bg-mindful-lighter rounded-full"
+              >
+                <SkipForward className="w-5 h-5 text-mindful-dark" />
+              </button>
+            </div>
+            <button 
+              onClick={() => {
+                setShowAudioPlayer(false);
+                setIsPlaying(false);
+              }}
+              className="p-2 hover:bg-mindful-lighter rounded-full"
+            >
+              <X className="w-5 h-5 text-mindful-dark" />
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
 }
 
-export default Meditation;
+export default App;
