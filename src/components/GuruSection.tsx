@@ -19,31 +19,31 @@ const GuruSection = () => {
     {
       name: "Osho",
       description: "A revolutionary spiritual teacher who brought dynamic meditation techniques to the modern world.",
-      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/14/OSHO_21.jpg",
+      imageUrl: "src/pages/images/osho.jpg",
       websiteUrl: "https://www.osho.com/"
     },
     {
       name: "Sadhguru",
       description: "Blending ancient yogic wisdom with contemporary understanding to offer practical solutions for modern life.",
-      imageUrl: "https://isha.sadhguru.org/yoga/wp-content/uploads/2021/01/sadhguru-isha-foundation.jpg",
+      imageUrl: "src/pages/images/sadhguru.jpg",
       websiteUrl: "https://isha.sadhguru.org/"
     },
     {
       name: "Thich Nhat Hanh",
       description: "Vietnamese Zen Buddhist monk known for his mindfulness teachings and peaceful advocacy.",
-      imageUrl: "https://plumvillage.org/wp-content/uploads/2022/01/thay-sitting.jpg",
+      imageUrl: "src/pages/images/Thich Nhat Hanh.jpg",
       websiteUrl: "https://plumvillage.org/"
     },
     {
       name: "Dalai Lama",
       description: "Spiritual leader of Tibetan Buddhism who shares messages of compassion, peace, and mindfulness worldwide.",
-      imageUrl: "https://www.dalailama.com/assets/news/2019/2019-09-17/dalai-lama-speaking-to-a-group-of-indians-at-his-residence-in-dharamsala-hp-india-on-september-16-2019-photo-by-tenzin-choejor-1.jpg",
+      imageUrl: "src/pages/images/Dalai Lama.jpg",
       websiteUrl: "https://www.dalailama.com/"
     },
     {
       name: "Eckhart Tolle",
       description: "Spiritual teacher known for his messages about living in the present moment and finding inner peace.",
-      imageUrl: "https://eckharttolle.com/wp-content/uploads/2021/05/et-photo@2x.jpg",
+      imageUrl: "src/pages/images/Eckhart Tolle.jpg",
       websiteUrl: "https://eckharttolle.com/"
     }
   ];
