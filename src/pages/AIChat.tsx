@@ -30,8 +30,9 @@ const AIChat = () => {
 
   const generateGeminiResponse = async (prompt: string) => {
     try {
-      const API_KEY = "AIzaSyALPJtV_B5Z0hXP-c8axP_HCBYql4B7QkU"; // Updated API key
-      const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent";
+      const API_KEY = "AIzaSyALPJtV_B5Z0hXP-c8axP_HCBYql4B7QkU";
+      // Updated to use gemini-2.0-flash model instead of gemini-1.0-pro
+      const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
       
       const response = await fetch(`${API_URL}?key=${API_KEY}`, {
         method: "POST",
