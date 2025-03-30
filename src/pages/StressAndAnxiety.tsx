@@ -1,10 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Slider } from '@/components/ui/slider';
-import { Heart, Activity, Smile, Frown, Meh, ThumbsUp, Clock, Timer } from 'lucide-react';
+import { 
+  Heart, 
+  Activity, 
+  Smile, 
+  Frown, 
+  Meh, 
+  ThumbsUp, 
+  Clock, 
+  Timer,
+  BookOpen,
+  User,
+  Menu,
+  Wind,
+  Brain,
+  Play,
+  Pause,
+  X,
+  SkipBack,
+  SkipForward
+} from 'lucide-react';
 
 const StressAndAnxiety = () => {
   const [activeTab, setActiveTab] = useState('stress');
