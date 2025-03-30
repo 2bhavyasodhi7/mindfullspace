@@ -30,7 +30,7 @@ const AIChat = () => {
 
   const generateGeminiResponse = async (prompt: string) => {
     try {
-      const API_KEY = "AIzaSyBJ0wUB5iHGpuLzmuyR4Ubq0lUnzzW1W6s";
+      const API_KEY = "AIzaSyALPJtV_B5Z0hXP-c8axP_HCBYql4B7QkU"; // Updated API key
       const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent";
       
       const response = await fetch(`${API_URL}?key=${API_KEY}`, {
@@ -62,6 +62,9 @@ const AIChat = () => {
       
       if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
         return data.candidates[0].content.parts[0].text;
+      } else if (data.error) {
+        console.error('API Error:', data.error);
+        return `I'm sorry, I encountered an error: ${data.error.message || 'Unknown error'}. Please try again later.`;
       } else {
         console.error('Unexpected API response structure:', data);
         return "I'm sorry, I couldn't generate a response at the moment. Please try again later.";

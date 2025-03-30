@@ -1,646 +1,247 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Moon,
-  Brain,
-  HeartPulse,
-  Book,
-  Newspaper,
-  User,
+  Volume2,
+  VolumeX,
+  Clock,
   Play,
   Pause,
-  Volume2,
-  BookOpen,
-  Cloud,
-  Settings,
-  KeyRound,
-  BarChart2,
-  Globe,
-  LogOut,
-  Timer,
   SkipBack,
   SkipForward,
   X,
-  Clock
 } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import ReactPlayer from 'react-player';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Slider } from '@/components/ui/slider';
+import { Progress } from '@/components/ui/progress';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { audioFiles } from './audioData';
-import useSound from 'use-sound';
 
-// Mock data for charts
-const sleepData = [
-  { day: 'Mon', hours: 7 },
-  { day: 'Tue', hours: 8 },
-  { day: 'Wed', hours: 6 },
-  { day: 'Thu', hours: 7.5 },
-  { day: 'Fri', hours: 8 },
-  { day: 'Sat', hours: 9 },
-  { day: 'Sun', hours: 7.5 }
-];
-
-const nsdrVideos = [
-  {
-    id: 1,
-    title: 'Introduction to NSDR',
-    thumbnail: '/assets/nsdr2.jpg',
-    url: 'https://youtu.be/D08e9UZFKdE?si=FBSVdscY11OxYGAf'
-  },
-  {
-    id: 2,
-    title: 'NSDR for Beginners',
-    thumbnail: '/assets/nsdr1.jpg',
-    url: 'https://youtu.be/D08e9UZFKdE?si=FBSVdscY11OxYGAf'
-  },
-  {
-    id: 3,
-    title: 'Advanced NSDR Techniques',
-    thumbnail: '/assets/nsdr3.jpg',
-    url: 'https://youtu.be/hEypv90GzDE?si=j2dk2M-r6h99Wcn0'
-  },
-  {
-    id: 4,
-    title: 'NSDR Science Explained',
-    thumbnail: '/assets/nsdr4.jpg',
-    url: 'https://youtu.be/hTDQaYxdTBM?si=RrQwv6U6RLALBDEB'
-  }
-];
-
-function NavItem({ icon, text, active = false }) {
-  return (
-    <a
-      href="#"
-      className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all hover:bg-mindful-lighter ${
-        active ? 'text-mindful-dark' : 'text-gray-600 hover:text-mindful-dark'
-      }`}
-    >
-      {icon}
-      <span>{text}</span>
-    </a>
-  );
+interface SleepTimer {
+  isRunning: boolean;
+  startTime: Date | null;
+  elapsedTime: number;
 }
 
-function ArticlesDropdown() {
-  return (
-    <div className="relative group">
-      <a href="#" className="flex items-center space-x-1 px-3 py-2 rounded-lg text-gray-600 hover:text-mindful-dark hover:bg-mindful-lighter">
-        <Newspaper className="h-5 w-5" />
-        <span>Articles</span>
-      </a>
-      <div className="absolute right-0 top-full mt-2 w-[800px] bg-white rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-6">
-        <div className="flex items-start">
-          <div className="flex-shrink-0">
-            <h3 className="text-lg font-semibold text-mindful-dark mb-2">Explore Articles</h3>
-            <p className="text-gray-600 max-w-xs">Discover insights and tips for better sleep and wellness.</p>
-          </div>
-          <div className="ml-8 grid grid-cols-2 gap-6">
-            <ArticleCard
-              image="\assets\justsleep.jpg"
-              title="Sleep"
-              href="#sleep-articles"
-            />
-            <ArticleCard
-              image="https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&q=80&w=300"
-              title="Meditation"
-              href="#meditation-articles"
-            />
-            <ArticleCard
-              image="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=300"
-              title="Stress"
-              href="#stress-articles"
-            />
-            <ArticleCard
-              image="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&q=80&w=300"
-              title="Gratitude"
-              href="#gratitude-articles"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ArticleCard({ image, title, href }) {
-  return (
-    <a href={href} className="block group">
-      <div className="aspect-video rounded-lg overflow-hidden mb-2">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
-        />
-      </div>
-      <p className="text-lg font-medium text-gray-900 group-hover:text-mindful-dark">
-        {title}
-      </p>
-    </a>
-  );
-}
-
-function ProfileDropdown() {
-  return (
-    <div className="relative group">
-      <a href="#" className="flex items-center space-x-1 px-3 py-2 rounded-lg text-gray-600 hover:text-mindful-dark hover:bg-mindful-lighter">
-        <User className="h-5 w-5" />
-        <span>Profile</span>
-      </a>
-      <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-        <div className="py-2">
-          <ProfileMenuItem icon={<Settings />} text="Account Details" href="#account" />
-          <ProfileMenuItem icon={<KeyRound />} text="Change Password" href="#password" />
-          <ProfileMenuItem icon={<BarChart2 />} text="Your Stats" href="#stats" />
-          <ProfileMenuItem icon={<Globe />} text="Language" href="#language" />
-          <ProfileMenuItem icon={<LogOut />} text="Logout" href="#logout" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProfileMenuItem({ icon, text, href }) {
-  return (
-    <a
-      href={href}
-      className="flex items-center space-x-3 px-4 py-2 text-gray-700 hover:bg-mindful-lighter hover:text-mindful-dark transition-colors"
-    >
-      {React.cloneElement(icon, { className: "h-5 w-5" })}
-      <span>{text}</span>
-    </a>
-  );
-}
-
-function FeatureCard({ icon, title, description, onClick, hoverContent }) {
-  return (
-    <div className="relative group">
-      <div
-        onClick={onClick}
-        className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1 cursor-pointer"
-      >
-        <div className="w-16 h-16 bg-mindful-lighter rounded-full flex items-center justify-center text-mindful-dark mb-6">
-          {icon}
-        </div>
-        <h3 className="text-xl font-semibold text-mindful-dark mb-3">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-      </div>
-      {hoverContent && (
-        <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10">
-          <div className="p-6 flex items-start space-x-6">
-            <p className="text-gray-600 flex-1">{hoverContent.text}</p>
-            <img
-              src={hoverContent.image}
-              alt={title}
-              className="w-32 h-32 rounded-lg object-cover"
-            />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function AudioCard({ title, duration, onClick }) {
-  return (
-    <div
-      onClick={onClick}
-      className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer"
-    >
-      <div className="flex items-center justify-between mb-4">
-        <div className="w-12 h-12 bg-mindful-lighter rounded-full flex items-center justify-center text-mindful-dark">
-          <Play className="w-6 h-6" />
-        </div>
-        <span className="text-sm text-gray-500">{duration}</span>
-      </div>
-      <h4 className="text-lg font-medium text-gray-900">{title}</h4>
-    </div>
-  );
-}
-
-function VideoCard({ title, thumbnail, url }) {
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow"
-    >
-      <div className="aspect-video rounded-lg overflow-hidden mb-4">
-        <img
-          src={thumbnail}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <h4 className="text-lg font-medium text-gray-900 hover:text-mindful-dark transition-colors">
-        {title}
-      </h4>
-    </a>
-  );
-}
-
-function App() {
-  const [currentView, setCurrentView] = useState('main');
+const Sleep = () => {
+  const [selectedCategory, setSelectedCategory] = useState('sleepStories');
+  const [selectedAudio, setSelectedAudio] = useState(audioFiles.sleepStories[0]);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentAudio, setCurrentAudio] = useState(null);
-  const [showPlayer, setShowPlayer] = useState(false);
-  const [sleepTimer, setSleepTimer] = useState({ isRunning: false, startTime: null, duration: 0 });
+  const [volume, setVolume] = useState(0.5);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [showStats, setShowStats] = useState(false);
+  const [sleepTimer, setSleepTimer] = useState<SleepTimer>({
+    isRunning: false,
+    startTime: null,
+    elapsedTime: 0,
+  });
 
-  const startSleepTimer = () => {
-    setSleepTimer({
-      isRunning: true,
-      startTime: new Date(),
-      duration: 0
-    });
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const animationRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      if (isPlaying) {
+        audioRef.current.play();
+        animationRef.current = requestAnimationFrame(whilePlaying);
+      } else {
+        audioRef.current.pause();
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+          animationRef.current = null;
+        }
+      }
+    }
+  }, [isPlaying, volume, selectedAudio]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      const handleLoadedMetadata = () => {
+        setDuration(audioRef.current ? audioRef.current.duration : 0);
+      };
+
+      const handleTimeUpdate = () => {
+        setCurrentTime(audioRef.current ? audioRef.current.currentTime : 0);
+      };
+
+      audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+      audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
+
+      return () => {
+        audioRef.current?.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        audioRef.current?.removeEventListener('timeupdate', handleTimeUpdate);
+      };
+    }
+  }, [selectedAudio]);
+
+  useEffect(() => {
+    if (sleepTimer.isRunning) {
+      const intervalId = setInterval(() => {
+        setSleepTimer(prev => ({
+          ...prev,
+          elapsedTime: Date.now() - (prev.startTime?.getTime() || Date.now()),
+        }));
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [sleepTimer.isRunning]);
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
   };
 
-  const stopSleepTimer = () => {
-    if (sleepTimer.startTime) {
-      const endTime = new Date();
-      const duration = (endTime.getTime() - sleepTimer.startTime.getTime()) / (1000 * 60 * 60); // Convert to hours
-      setSleepTimer({
-        isRunning: false,
-        startTime: null,
-        duration: duration
-      });
+  const toggleTimer = () => {
+    if (sleepTimer.isRunning) {
+      setSleepTimer({ isRunning: false, startTime: null, elapsedTime: 0 });
+    } else {
+      setSleepTimer({ isRunning: true, startTime: new Date(), elapsedTime: 0 });
     }
+  };
+
+  const whilePlaying = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+    animationRef.current = requestAnimationFrame(whilePlaying);
+  };
+
+  const handleVolumeChange = (value: number[]) => {
+    setVolume(value[0] / 100);
+  };
+
+  const skipForward = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime += 10;
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const skipBackward = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime -= 10;
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-mindful-lighter to-white">
-      {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-sm fixed w-full z-50 border-b border-mindful-lighter">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <a href="#" className="flex items-center space-x-2 text-mindful font-semibold">
-                <Moon className="h-6 w-6" />
-                <span>App</span>
-              </a>
-              <div className="hidden md:flex items-center space-x-8">
-                <NavItem icon={<Moon className="h-5 w-5" />} text="Sleep" active />
-                <NavItem icon={<Brain className="h-5 w-5" />} text="Meditation" />
-                <NavItem icon={<HeartPulse className="h-5 w-5" />} text="Stress & Anxiety" />
-              </div>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <ArticlesDropdown />
-              <NavItem icon={<Book className="h-5 w-5" />} text="Journal" />
-              <ProfileDropdown />
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="pt-24 pb-12 px-4">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto py-8 px-4 md:px-8">
+        <div className="flex flex-col md:flex-row items-start justify-between mb-8">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-mindful mb-6">
-              Good Sleep Benefits
+            <h1 className="text-3xl md:text-4xl font-bold text-mindful-dark flex items-center">
+              <Moon className="mr-2 text-mindful" /> Sleep Better
             </h1>
-            <p className="text-gray-600 text-lg mb-8">
-              Discover the science behind a good night's sleep and how it can transform your life.
-              Our expert-curated content helps you achieve the rest you deserve.
+            <p className="text-gray-600 mt-2 max-w-2xl">
+              Improve your sleep quality with our collection of sleep stories, soundscapes, and non-sleep deep rest (NSDR) sessions.
             </p>
-            <button className="bg-mindful hover:bg-mindful-dark text-white px-8 py-3 rounded-full font-semibold transform transition hover:scale-105 hover:shadow-lg">
-              Explore Now
-            </button>
           </div>
-          <div className="relative">
-            <img
-              src="https://images.unsplash.com/photo-1541480601022-2308c0f02487?auto=format&fit=crop&q=80&w=800"
-              alt="Peaceful sleep"
-              className="rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-transform duration-300"
-            />
+          
+          <div className="mt-4 md:mt-0 flex items-center">
+            <Button 
+              onClick={toggleTimer} 
+              variant="outline" 
+              className="mr-2 bg-white"
+            >
+              <Clock className="mr-2 h-4 w-4" />
+              {sleepTimer.isRunning ? 'Stop Timer' : 'Start Sleep Timer'}
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="bg-white"
+              onClick={() => setShowStats(true)}
+            >
+              View Sleep Stats
+            </Button>
           </div>
         </div>
-      </section>
+        
+        <Tabs defaultValue="sleepStories" className="w-full mb-8">
+          <TabsList className="grid grid-cols-3">
+            <TabsTrigger value="sleepStories" onClick={() => setSelectedCategory('sleepStories')}>Sleep Stories</TabsTrigger>
+            <TabsTrigger value="nsdr" onClick={() => setSelectedCategory('nsdr')}>NSDR</TabsTrigger>
+            <TabsTrigger value="soundscapes" onClick={() => setSelectedCategory('soundscapes')}>Soundscapes</TabsTrigger>
+          </TabsList>
+          
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {audioFiles[selectedCategory as keyof typeof audioFiles].map((audio) => (
+              <Card key={audio.id} onClick={() => setSelectedAudio(audio)} className="cursor-pointer hover:shadow-md transition-shadow duration-300">
+                <CardHeader>
+                  <CardTitle>{audio.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-500">Duration: {audio.duration}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </Tabs>
 
-      {/* Main Content */}
-      {currentView === 'main' && (
-        <section className="py-16 px-4 bg-white/50">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-mindful mb-12">
-              The Easiest Way to Sleep
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <FeatureCard
-                icon={<BookOpen className="w-8 h-8" />}
-                title="Sleep Stories"
-                description="Drift off to calming bedtime stories"
-                onClick={() => setCurrentView('sleepStories')}
-                hoverContent={{
-                  text: "Sleep stories help you relax and drift off naturally. They use calming narratives and soothing voices to help quiet your mind.",
-                  image: "/assets/justsleep.jpg"
-                }}
+        <Card className="mt-8">
+          <CardContent className="flex flex-col items-center">
+            <audio ref={audioRef} src={selectedAudio.url} preload="metadata" />
+            <div className="w-full flex items-center justify-between text-sm text-gray-500 mt-2">
+              <span>{formatTime(currentTime)}</span>
+              <span>{formatTime(duration)}</span>
+            </div>
+            <Progress value={(currentTime / duration) * 100} className="w-full h-2 mt-1" />
+            
+            <div className="flex items-center gap-4 mt-4">
+              <Button variant="outline" size="icon" onClick={skipBackward}>
+                <SkipBack className="h-5 w-5" />
+              </Button>
+              <Button variant="outline" size="icon" onClick={togglePlay}>
+                {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+              </Button>
+              <Button variant="outline" size="icon" onClick={skipForward}>
+                <SkipForward className="h-5 w-5" />
+              </Button>
+            </div>
+            
+            <div className="w-full mt-4">
+              <div className="flex items-center justify-between text-sm text-gray-500">
+                <VolumeX className="h-4 w-4" />
+                <Volume2 className="h-4 w-4" />
+              </div>
+              <Slider
+                defaultValue={[volume * 100]}
+                max={100}
+                step={1}
+                onValueChange={handleVolumeChange}
+                className="w-full"
               />
-              <FeatureCard
-                icon={<Brain className="w-8 h-8" />}
-                title="NSDR"
-                description="Non-Sleep Deep Rest techniques"
-                onClick={() => setCurrentView('nsdr')}
-                hoverContent={{
-                  text: "Non-Sleep Deep Rest (NSDR) is a powerful technique that helps you achieve deep relaxation while maintaining consciousness.",
-                  image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=300"
-                }}
-              />
-              <FeatureCard
-                icon={<Cloud className="w-8 h-8" />}
-                title="Soundscapes"
-                description="Ambient sounds for better sleep"
-                onClick={() => setCurrentView('soundscapes')}
-                hoverContent={{
-                  text: "Immerse yourself in carefully crafted ambient soundscapes designed to create the perfect environment for sleep.",
-                  image: "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&q=80&w=300"
-                }}
-              />
-              <FeatureCard
-                icon={<Clock className="w-8 h-8" />}
-                title="Sleep Tracking"
-                description="Monitor your sleep patterns"
-                onClick={() => setCurrentView('sleepTracking')}
-                hoverContent={{
-                  text: "Track your sleep patterns to understand and improve your sleep quality. Get insights into your sleep duration and consistency.",
-                  image: "https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&q=80&w=300"
-                }}
-              />
             </div>
-          </div>
-        </section>
-      )}
+          </CardContent>
+        </Card>
 
-      {/* Sleep Stories View */}
-      {currentView === 'sleepStories' && (
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            <button
-              onClick={() => setCurrentView('main')}
-              className="mb-8 text-mindful hover:text-mindful-dark flex items-center space-x-2"
-            >
-              <SkipBack className="w-4 h-4" />
-              <span>Back</span>
-            </button>
-            <h2 className="text-3xl font-bold text-mindful-dark mb-8">Sleep Stories</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {audioFiles.sleepStories.map((audio) => (
-                <AudioCard
-                  key={audio.id}
-                  title={audio.title}
-                  duration={audio.duration}
-                  onClick={() => {
-                    setCurrentAudio(audio);
-                    setShowPlayer(true);
-                    setIsPlaying(true);
-                  }}
-                />
-              ))}
+        <Sheet open={showStats} onOpenChange={setShowStats}>
+          <SheetTrigger asChild>
+            <Button variant="outline" className="mt-4">
+              View Sleep Stats
+            </Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Sleep Statistics</SheetTitle>
+            </SheetHeader>
+            <div className="mt-4">
+              <p>Here you can view your sleep statistics.</p>
             </div>
-            <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
-                Sleep Stories Usage Stats
-              </h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={sleepData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="day" />
-                    <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
-                    <Tooltip />
-                    <Bar dataKey="hours" fill="#73A580" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* NSDR View */}
-      {currentView === 'nsdr' && (
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            <button
-              onClick={() => setCurrentView('main')}
-              className="mb-8 text-mindful hover:text-mindful-dark flex items-center space-x-2"
-            >
-              <SkipBack className="w-4 h-4" />
-              <span>Back</span>
-            </button>
-            <h2 className="text-3xl font-bold text-mindful-dark mb-8">NSDR Sessions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
-              {audioFiles.nsdr.map((audio) => (
-                <AudioCard
-                  key={audio.id}
-                  title={audio.title}
-                  duration={audio.duration}
-                  onClick={() => {
-                    setCurrentAudio(audio);
-                    setShowPlayer(true);
-                    setIsPlaying(true);
-                  }}
-                />
-              ))}
-            </div>
-            <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
-              Recommended Videos
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-              {nsdrVideos.map((video) => (
-                <VideoCard key={video.id} {...video} />
-              ))}
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
-                NSDR Usage Stats
-              </h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={sleepData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="day" />
-                    <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
-                    <Tooltip />
-                    <Bar dataKey="hours" fill="#73A580" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Soundscapes View */}
-      {currentView === 'soundscapes' && (
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            <button
-              onClick={() => setCurrentView('main')}
-              className="mb-8 text-mindful hover:text-mindful-dark flex items-center space-x-2"
-            >
-              <SkipBack className="w-4 h-4" />
-              <span>Back</span>
-            </button>
-            <h2 className="text-3xl font-bold text-mindful-dark mb-8">Soundscapes</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {audioFiles.soundscapes.map((audio) => (
-                <AudioCard
-                  key={audio.id}
-                  title={audio.title}
-                  duration={audio.duration}
-                  onClick={() => {
-                    setCurrentAudio(audio);
-                    setShowPlayer(true);
-                    setIsPlaying(true);
-                  }}
-                />
-              ))}
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
-                Soundscapes Usage Stats
-              </h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={sleepData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="day" />
-                    <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
-                    <Tooltip />
-                    <Bar dataKey="hours" fill="#73A580" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Sleep Tracking View */}
-      {currentView === 'sleepTracking' && (
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            <button
-              onClick={() => setCurrentView('main')}
-              className="mb-8 text-mindful hover:text-mindful-dark flex items-center space-x-2"
-            >
-              <SkipBack className="w-4 h-4" />
-              <span>Back</span>
-            </button>
-            <h2 className="text-3xl font-bold text-mindful-dark mb-8">Sleep Tracking</h2>
-            <div className="bg-white rounded-2xl p-8 shadow-xl mb-8">
-              <div className="flex items-center justify-center space-x-8">
-                <button
-                  onClick={startSleepTimer}
-                  disabled={sleepTimer.isRunning}
-                  className={`px-8 py-4 rounded-lg font-semibold ${
-                    sleepTimer.isRunning
-                      ? 'bg-gray-200 text-gray-500'
-                      : 'bg-mindful text-white hover:bg-mindful-dark'
-                  }`}
-                >
-                  Start Sleep Timer
-                </button>
-                <button
-                  onClick={stopSleepTimer}
-                  disabled={!sleepTimer.isRunning}
-                  className={`px-8 py-4 rounded-lg font-semibold ${
-                    !sleepTimer.isRunning
-                      ? 'bg-gray-200 text-gray-500'
-                      : 'bg-red-600 text-white hover:bg-red-700'
-                  }`}
-                >
-                  Stop Sleep Timer
-                </button>
-              </div>
-              {sleepTimer.duration > 0 && (
-                <p className="text-center mt-4 text-lg text-gray-700">
-                  Last sleep duration: {sleepTimer.duration.toFixed(2)} hours
-                </p>
-              )}
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
-                Sleep Stats Per Day
-              </h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={sleepData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="day" />
-                    <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
-                    <Tooltip />
-                    <Bar dataKey="hours" fill="#73A580" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Audio Player */}
-      {showPlayer && currentAudio && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-mindful-lighter">
-          <div className="max-w-7xl mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <audio
-                  id="audio-player"
-                  src={currentAudio.url}
-                  autoPlay={isPlaying}
-                  onEnded={() => setIsPlaying(false)}
-                />
-                <button
-                  onClick={() => {
-                    const audioElement = document.getElementById('audio-player') as HTMLAudioElement;
-                    if (isPlaying) {
-                      audioElement.pause();
-                    } else {
-                      audioElement.play();
-                    }
-                    setIsPlaying(!isPlaying);
-                  }}
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-mindful text-white hover:bg-mindful-dark transition-colors"
-                >
-                  {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
-                </button>
-                <div className="text-gray-800">
-                  <p className="font-medium">{currentAudio.title}</p>
-                  <p className="text-sm text-gray-500">{currentAudio.duration}</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Volume2 className="w-6 h-6 text-gray-600" />
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.1"
-                  defaultValue="1"
-                  className="w-24"
-                  onChange={(e) => {
-                    const audioElement = document.getElementById('audio-player') as HTMLAudioElement;
-                    audioElement.volume = parseFloat(e.target.value);
-                  }}
-                />
-                <button
-                  className="p-2 text-gray-600 hover:text-mindful"
-                  onClick={() => {
-                    const audioElement = document.getElementById('audio-player') as HTMLAudioElement;
-                    audioElement.pause();
-                    setShowPlayer(false);
-                    setCurrentAudio(null);
-                    setIsPlaying(false);
-                  }}
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
   );
-}
+};
 
-export default App;
+export default Sleep;
