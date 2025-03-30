@@ -13,7 +13,7 @@ const GuruSection = () => {
     {
       name: "Andrew Huberman",
       description: "Neuroscientist exploring the intersection of mindfulness and brain function, bringing scientific rigor to ancient practices.",
-      imageUrl: "/public/lovable-uploads/f1bb2302-4b82-4073-a64d-9de93a305103.png",
+      imageUrl: "src/pages/images/Andrew Huberman.jpg",
       websiteUrl: "https://hubermanlab.com/"
     },
     {
