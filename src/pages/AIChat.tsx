@@ -26,9 +26,54 @@ const AIChat = () => {
     }
   ]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSendMessage = () => {
-    if (input.trim() === '') return;
+  const generateGeminiResponse = async (prompt: string) => {
+    try {
+      const API_KEY = "AIzaSyBJ0wUB5iHGpuLzmuyR4Ubq0lUnzzW1W6s";
+      const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent";
+      
+      const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [
+                {
+                  text: `You are a mindfulness assistant. Respond to the following in a calm, supportive manner with practical advice: ${prompt}`
+                }
+              ]
+            }
+          ],
+          generationConfig: {
+            temperature: 0.7,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 1000,
+          },
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+        return data.candidates[0].content.parts[0].text;
+      } else {
+        console.error('Unexpected API response structure:', data);
+        return "I'm sorry, I couldn't generate a response at the moment. Please try again later.";
+      }
+    } catch (error) {
+      console.error('Error calling Gemini API:', error);
+      return "I'm sorry, I encountered an error. Please try again later.";
+    }
+  };
+
+  const handleSendMessage = async () => {
+    if (input.trim() === '' || isLoading) return;
     
     const newUserMessage: Message = {
       id: Date.now().toString(),
@@ -39,17 +84,30 @@ const AIChat = () => {
     
     setMessages(prev => [...prev, newUserMessage]);
     setInput('');
+    setIsLoading(true);
     
-    // Simulate bot response
-    setTimeout(() => {
-      const botResponse: Message = {
+    try {
+      // Get response from Gemini API
+      const botResponse = await generateGeminiResponse(input);
+      
+      const newBotMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: 'This is a placeholder response. In the future, this will be connected to an AI backend.',
+        content: botResponse,
         sender: 'bot',
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, botResponse]);
-    }, 1000);
+      
+      setMessages(prev => [...prev, newBotMessage]);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to get response from the AI. Please try again.",
+        variant: "destructive"
+      });
+      console.error('Error in chat:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -160,8 +218,7 @@ const AIChat = () => {
                   sleep improvement, and more.
                 </p>
                 <p>
-                  This is a placeholder for the AI chat interface. In the future, 
-                  this will be connected to an AI backend.
+                  Powered by Google's Gemini AI model to provide mindfulness assistance.
                 </p>
               </div>
             </TabsContent>
@@ -267,25 +324,31 @@ const AIChat = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               className="flex-1"
+              disabled={isLoading}
             />
             <Button 
               variant="outline" 
               size="icon" 
               onClick={handleVoiceInput}
               className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
+              disabled={isLoading}
             >
               <Mic className="h-5 w-5" />
             </Button>
             <Button 
               onClick={handleSendMessage}
               className="bg-mindful hover:bg-mindful-dark"
-              disabled={input.trim() === ''}
+              disabled={input.trim() === '' || isLoading}
             >
-              <Send className="h-5 w-5" />
+              {isLoading ? (
+                <div className="h-5 w-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+              ) : (
+                <Send className="h-5 w-5" />
+              )}
             </Button>
           </div>
           <p className="text-xs text-center mt-2 text-gray-500 dark:text-gray-400">
-            MindfulChat is a work in progress. Responses are simulated.
+            Powered by Google Gemini
           </p>
         </div>
       </div>

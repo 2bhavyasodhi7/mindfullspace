@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Moon,
@@ -49,7 +50,6 @@ const nsdrVideos = [
     id: 2,
     title: 'NSDR for Beginners',
     thumbnail: '/assets/nsdr1.jpg',
-
     url: 'https://youtu.be/D08e9UZFKdE?si=FBSVdscY11OxYGAf'
   },
   {
@@ -70,8 +70,8 @@ function NavItem({ icon, text, active = false }) {
   return (
     <a
       href="#"
-      className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all hover:bg-teal-50 ${
-        active ? 'text-teal-600' : 'text-gray-600 hover:text-teal-600'
+      className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all hover:bg-mindful-lighter ${
+        active ? 'text-mindful-dark' : 'text-gray-600 hover:text-mindful-dark'
       }`}
     >
       {icon}
@@ -83,14 +83,14 @@ function NavItem({ icon, text, active = false }) {
 function ArticlesDropdown() {
   return (
     <div className="relative group">
-      <a href="#" className="flex items-center space-x-1 px-3 py-2 rounded-lg text-gray-600 hover:text-teal-600 hover:bg-teal-50">
+      <a href="#" className="flex items-center space-x-1 px-3 py-2 rounded-lg text-gray-600 hover:text-mindful-dark hover:bg-mindful-lighter">
         <Newspaper className="h-5 w-5" />
         <span>Articles</span>
       </a>
       <div className="absolute right-0 top-full mt-2 w-[800px] bg-white rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 p-6">
         <div className="flex items-start">
           <div className="flex-shrink-0">
-            <h3 className="text-lg font-semibold text-teal-900 mb-2">Explore Articles</h3>
+            <h3 className="text-lg font-semibold text-mindful-dark mb-2">Explore Articles</h3>
             <p className="text-gray-600 max-w-xs">Discover insights and tips for better sleep and wellness.</p>
           </div>
           <div className="ml-8 grid grid-cols-2 gap-6">
@@ -131,7 +131,7 @@ function ArticleCard({ image, title, href }) {
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
         />
       </div>
-      <p className="text-lg font-medium text-gray-900 group-hover:text-teal-600">
+      <p className="text-lg font-medium text-gray-900 group-hover:text-mindful-dark">
         {title}
       </p>
     </a>
@@ -141,7 +141,7 @@ function ArticleCard({ image, title, href }) {
 function ProfileDropdown() {
   return (
     <div className="relative group">
-      <a href="#" className="flex items-center space-x-1 px-3 py-2 rounded-lg text-gray-600 hover:text-teal-600 hover:bg-teal-50">
+      <a href="#" className="flex items-center space-x-1 px-3 py-2 rounded-lg text-gray-600 hover:text-mindful-dark hover:bg-mindful-lighter">
         <User className="h-5 w-5" />
         <span>Profile</span>
       </a>
@@ -162,7 +162,7 @@ function ProfileMenuItem({ icon, text, href }) {
   return (
     <a
       href={href}
-      className="flex items-center space-x-3 px-4 py-2 text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors"
+      className="flex items-center space-x-3 px-4 py-2 text-gray-700 hover:bg-mindful-lighter hover:text-mindful-dark transition-colors"
     >
       {React.cloneElement(icon, { className: "h-5 w-5" })}
       <span>{text}</span>
@@ -177,10 +177,10 @@ function FeatureCard({ icon, title, description, onClick, hoverContent }) {
         onClick={onClick}
         className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1 cursor-pointer"
       >
-        <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center text-teal-600 mb-6">
+        <div className="w-16 h-16 bg-mindful-lighter rounded-full flex items-center justify-center text-mindful-dark mb-6">
           {icon}
         </div>
-        <h3 className="text-xl font-semibold text-teal-900 mb-3">{title}</h3>
+        <h3 className="text-xl font-semibold text-mindful-dark mb-3">{title}</h3>
         <p className="text-gray-600">{description}</p>
       </div>
       {hoverContent && (
@@ -206,7 +206,7 @@ function AudioCard({ title, duration, onClick }) {
       className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer"
     >
       <div className="flex items-center justify-between mb-4">
-        <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center text-teal-600">
+        <div className="w-12 h-12 bg-mindful-lighter rounded-full flex items-center justify-center text-mindful-dark">
           <Play className="w-6 h-6" />
         </div>
         <span className="text-sm text-gray-500">{duration}</span>
@@ -231,7 +231,7 @@ function VideoCard({ title, thumbnail, url }) {
           className="w-full h-full object-cover"
         />
       </div>
-      <h4 className="text-lg font-medium text-gray-900 hover:text-teal-600 transition-colors">
+      <h4 className="text-lg font-medium text-gray-900 hover:text-mindful-dark transition-colors">
         {title}
       </h4>
     </a>
@@ -266,25 +266,25 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-mindful-lighter to-white">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-sm fixed w-full z-50 border-b border-teal-100">
+      <nav className="bg-white/80 backdrop-blur-sm fixed w-full z-50 border-b border-mindful-lighter">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-8">
-              <a href="#" className="flex items-center space-x-2 text-teal-600 font-semibold">
+              <a href="#" className="flex items-center space-x-2 text-mindful font-semibold">
                 <Moon className="h-6 w-6" />
                 <span>App</span>
               </a>
               <div className="hidden md:flex items-center space-x-8">
-                <NavItem icon={<Moon />} text="Sleep" active />
-                <NavItem icon={<Brain />} text="Meditation" />
-                <NavItem icon={<HeartPulse />} text="Stress & Anxiety" />
+                <NavItem icon={<Moon className="h-5 w-5" />} text="Sleep" active />
+                <NavItem icon={<Brain className="h-5 w-5" />} text="Meditation" />
+                <NavItem icon={<HeartPulse className="h-5 w-5" />} text="Stress & Anxiety" />
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <ArticlesDropdown />
-              <NavItem icon={<Book />} text="Journal" />
+              <NavItem icon={<Book className="h-5 w-5" />} text="Journal" />
               <ProfileDropdown />
             </div>
           </div>
@@ -295,14 +295,14 @@ function App() {
       <section className="pt-24 pb-12 px-4">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-teal-400 mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-mindful mb-6">
               Good Sleep Benefits
             </h1>
             <p className="text-gray-600 text-lg mb-8">
               Discover the science behind a good night's sleep and how it can transform your life.
               Our expert-curated content helps you achieve the rest you deserve.
             </p>
-            <button className="bg-gradient-to-r from-teal-400 to-blue-500 text-white px-8 py-3 rounded-full font-semibold transform transition hover:scale-105 hover:shadow-lg">
+            <button className="bg-mindful hover:bg-mindful-dark text-white px-8 py-3 rounded-full font-semibold transform transition hover:scale-105 hover:shadow-lg">
               Explore Now
             </button>
           </div>
@@ -320,7 +320,7 @@ function App() {
       {currentView === 'main' && (
         <section className="py-16 px-4 bg-white/50">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-teal-400 mb-12">
+            <h2 className="text-3xl font-bold text-center text-mindful mb-12">
               The Easiest Way to Sleep
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -375,12 +375,12 @@ function App() {
           <div className="max-w-7xl mx-auto">
             <button
               onClick={() => setCurrentView('main')}
-              className="mb-8 text-teal-600 hover:text-teal-700 flex items-center space-x-2"
+              className="mb-8 text-mindful hover:text-mindful-dark flex items-center space-x-2"
             >
               <SkipBack className="w-4 h-4" />
               <span>Back</span>
             </button>
-            <h2 className="text-3xl font-bold text-teal-900 mb-8">Sleep Stories</h2>
+            <h2 className="text-3xl font-bold text-mindful-dark mb-8">Sleep Stories</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               {audioFiles.sleepStories.map((audio) => (
                 <AudioCard
@@ -396,7 +396,7 @@ function App() {
               ))}
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold text-teal-900 mb-6">
+              <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
                 Sleep Stories Usage Stats
               </h3>
               <div className="h-64">
@@ -406,7 +406,7 @@ function App() {
                     <XAxis dataKey="day" />
                     <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
                     <Tooltip />
-                    <Bar dataKey="hours" fill="#8b5cf6" />
+                    <Bar dataKey="hours" fill="#73A580" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -421,12 +421,12 @@ function App() {
           <div className="max-w-7xl mx-auto">
             <button
               onClick={() => setCurrentView('main')}
-              className="mb-8 text-teal-600 hover:text-teal-700 flex items-center space-x-2"
+              className="mb-8 text-mindful hover:text-mindful-dark flex items-center space-x-2"
             >
               <SkipBack className="w-4 h-4" />
               <span>Back</span>
             </button>
-            <h2 className="text-3xl font-bold text-teal-900 mb-8">NSDR Sessions</h2>
+            <h2 className="text-3xl font-bold text-mindful-dark mb-8">NSDR Sessions</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
               {audioFiles.nsdr.map((audio) => (
                 <AudioCard
@@ -441,7 +441,7 @@ function App() {
                 />
               ))}
             </div>
-            <h3 className="text-2xl font-semibold text-teal-900 mb-6">
+            <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
               Recommended Videos
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
@@ -450,7 +450,7 @@ function App() {
               ))}
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold text-teal-900 mb-6">
+              <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
                 NSDR Usage Stats
               </h3>
               <div className="h-64">
@@ -460,7 +460,7 @@ function App() {
                     <XAxis dataKey="day" />
                     <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
                     <Tooltip />
-                    <Bar dataKey="hours" fill="#8b5cf6" />
+                    <Bar dataKey="hours" fill="#73A580" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -475,12 +475,12 @@ function App() {
           <div className="max-w-7xl mx-auto">
             <button
               onClick={() => setCurrentView('main')}
-              className="mb-8 text-teal-600 hover:text-teal-700 flex items-center space-x-2"
+              className="mb-8 text-mindful hover:text-mindful-dark flex items-center space-x-2"
             >
               <SkipBack className="w-4 h-4" />
               <span>Back</span>
             </button>
-            <h2 className="text-3xl font-bold text-teal-900 mb-8">Soundscapes</h2>
+            <h2 className="text-3xl font-bold text-mindful-dark mb-8">Soundscapes</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               {audioFiles.soundscapes.map((audio) => (
                 <AudioCard
@@ -496,7 +496,7 @@ function App() {
               ))}
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold text-teal-900 mb-6">
+              <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
                 Soundscapes Usage Stats
               </h3>
               <div className="h-64">
@@ -506,7 +506,7 @@ function App() {
                     <XAxis dataKey="day" />
                     <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
                     <Tooltip />
-                    <Bar dataKey="hours" fill="#8b5cf6" />
+                    <Bar dataKey="hours" fill="#73A580" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -521,12 +521,12 @@ function App() {
           <div className="max-w-7xl mx-auto">
             <button
               onClick={() => setCurrentView('main')}
-              className="mb-8 text-teal-600 hover:text-teal-700 flex items-center space-x-2"
+              className="mb-8 text-mindful hover:text-mindful-dark flex items-center space-x-2"
             >
               <SkipBack className="w-4 h-4" />
               <span>Back</span>
             </button>
-            <h2 className="text-3xl font-bold text-teal-900 mb-8">Sleep Tracking</h2>
+            <h2 className="text-3xl font-bold text-mindful-dark mb-8">Sleep Tracking</h2>
             <div className="bg-white rounded-2xl p-8 shadow-xl mb-8">
               <div className="flex items-center justify-center space-x-8">
                 <button
@@ -535,7 +535,7 @@ function App() {
                   className={`px-8 py-4 rounded-lg font-semibold ${
                     sleepTimer.isRunning
                       ? 'bg-gray-200 text-gray-500'
-                      : 'bg-teal-600 text-white hover:bg-teal-700'
+                      : 'bg-mindful text-white hover:bg-mindful-dark'
                   }`}
                 >
                   Start Sleep Timer
@@ -559,7 +559,7 @@ function App() {
               )}
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold text-teal-900 mb-6">
+              <h3 className="text-2xl font-semibold text-mindful-dark mb-6">
                 Sleep Stats Per Day
               </h3>
               <div className="h-64">
@@ -569,7 +569,7 @@ function App() {
                     <XAxis dataKey="day" />
                     <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
                     <Tooltip />
-                    <Bar dataKey="hours" fill="#8b5cf6" />
+                    <Bar dataKey="hours" fill="#73A580" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -580,7 +580,7 @@ function App() {
 
       {/* Audio Player */}
       {showPlayer && currentAudio && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-teal-100">
+        <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-mindful-lighter">
           <div className="max-w-7xl mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -600,7 +600,7 @@ function App() {
                     }
                     setIsPlaying(!isPlaying);
                   }}
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-teal-600 text-white hover:bg-teal-700 transition-colors"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-mindful text-white hover:bg-mindful-dark transition-colors"
                 >
                   {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
                 </button>
@@ -624,7 +624,7 @@ function App() {
                   }}
                 />
                 <button
-                  className="p-2 text-gray-600 hover:text-teal-600"
+                  className="p-2 text-gray-600 hover:text-mindful"
                   onClick={() => {
                     const audioElement = document.getElementById('audio-player') as HTMLAudioElement;
                     audioElement.pause();
