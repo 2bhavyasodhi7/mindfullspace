@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Moon,
@@ -256,7 +255,7 @@ function App() {
   const stopSleepTimer = () => {
     if (sleepTimer.startTime) {
       const endTime = new Date();
-      const duration = (endTime - sleepTimer.startTime) / (1000 * 60 * 60); // Convert to hours
+      const duration = (endTime.getTime() - sleepTimer.startTime.getTime()) / (1000 * 60 * 60); // Convert to hours
       setSleepTimer({
         isRunning: false,
         startTime: null,
