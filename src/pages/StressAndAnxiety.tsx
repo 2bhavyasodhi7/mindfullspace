@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Slider } from '@/components/ui/slider';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
 import { 
   Heart, 
   Activity, 
@@ -284,14 +285,10 @@ const StressAndAnxiety = () => {
                         onPlay={() => setCurrentAudio(`quick-relief-${audio.id}`)}
                         showJumpControls={true}
                         layout="stacked-reverse"
-                        customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
-                        customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                        customControlsSection={defaultControlsSection}
+                        customProgressBarSection={defaultProgressBarSection}
                         className="audio-player-custom rounded-md"
-                        style={{ 
-                          backgroundColor: '#f3f4f6', 
-                          borderRadius: '0.5rem',
-                          boxShadow: 'none'
-                        }}
+                        style={audioPlayerStyles}
                       />
                     </div>
                   ))}
@@ -338,14 +335,10 @@ const StressAndAnxiety = () => {
                         onPlay={() => setCurrentAudio(`breathing-${audio.id}`)}
                         showJumpControls={true}
                         layout="stacked-reverse"
-                        customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
-                        customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                        customControlsSection={defaultControlsSection}
+                        customProgressBarSection={defaultProgressBarSection}
                         className="audio-player-custom rounded-md"
-                        style={{ 
-                          backgroundColor: '#f3f4f6', 
-                          borderRadius: '0.5rem',
-                          boxShadow: 'none'
-                        }}
+                        style={audioPlayerStyles}
                       />
                     </div>
                   ))}

@@ -5,6 +5,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { weeklyStats } from '../../audioData1';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
 
 const MeditationOptions = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -168,8 +169,8 @@ const MeditationOptions = () => {
                         onPlay={() => setCurrentAudioIndex(index)}
                         showJumpControls={true}
                         layout="stacked-reverse"
-                        customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
-                        customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                        customControlsSection={defaultControlsSection}
+                        customProgressBarSection={defaultProgressBarSection}
                         className="audio-player-custom rounded-md"
                         style={{ 
                           backgroundColor: currentAudioIndex === index ? 'rgba(115, 165, 128, 0.2)' : '#f3f4f6', 

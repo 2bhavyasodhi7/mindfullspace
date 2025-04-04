@@ -19,6 +19,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { audioFiles } from '../pages/audioData';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
+import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
 
 interface SleepTimer {
   isRunning: boolean;
@@ -190,14 +191,10 @@ const Sleep = () => {
                     src={audio.url}
                     showJumpControls={true}
                     layout="stacked"
-                    customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
-                    customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                    customControlsSection={defaultControlsSection}
+                    customProgressBarSection={defaultProgressBarSection}
                     className="audio-player-custom rounded-md"
-                    style={{ 
-                      backgroundColor: '#f3f4f6', 
-                      borderRadius: '0.5rem',
-                      boxShadow: 'none'
-                    }}
+                    style={audioPlayerStyles}
                   />
                 </CardContent>
               </Card>
