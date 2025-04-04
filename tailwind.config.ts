@@ -21,7 +21,13 @@ export default {
 		extend: {
 			fontFamily: {
 				'serif': ['Merriweather', 'serif'],
-				'sans': ['Open Sans', 'sans-serif']
+				'sans': ['Open Sans', 'sans-serif'],
+				'stay-calm': ['"Stay Calm"', 'sans-serif'],
+				'calming': ['Calming', 'serif'],
+				'ff-yoga': ['"FF Yoga"', 'serif'],
+				'close-eyes': ['"Close Eyes"', 'cursive'],
+				'raleway': ['Raleway', 'sans-serif'],
+				'tan-mon-cheri': ['"Tan Mon Cheri"', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

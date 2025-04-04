@@ -14,8 +14,36 @@ interface MoodEntry {
   note: string;
 }
 
+interface SemiCircleChartProps {
+  percentage: number;
+  color: string;
+  label: string;
+  value: string | number;
+}
+
 const MOOD_LABELS = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy'];
 const ENERGY_LABELS = ['Exhausted', 'Tired', 'Neutral', 'Energetic', 'Very Energetic'];
+
+const SemiCircleChart: React.FC<SemiCircleChartProps> = ({ percentage, color, label, value }) => {
+  const rotation = percentage * 1.8; // 180 degrees * percentage/100
+
+  return (
+    <div className="flex flex-col items-center text-center">
+      <div className="semi-circle-chart">
+        <div className="semi-circle-background"></div>
+        <div 
+          className="semi-circle-fill" 
+          style={{ 
+            backgroundColor: color,
+            transform: `rotate(${rotation}deg)` 
+          }}
+        ></div>
+        <div className="chart-label font-raleway">{value}</div>
+      </div>
+      <p className="mt-2 text-sm text-gray-600 font-stay-calm">{label}</p>
+    </div>
+  );
+};
 
 const MoodTracker = () => {
   const { toast } = useToast();
@@ -36,7 +64,12 @@ const MoodTracker = () => {
         setMoodEntries(JSON.parse(savedEntries));
       } catch (e) {
         console.error("Error loading mood entries", e);
+        // Initialize with empty array if there was an error
+        localStorage.setItem('moodEntries', JSON.stringify([]));
       }
+    } else {
+      // Initialize with empty array if no entries exist
+      localStorage.setItem('moodEntries', JSON.stringify([]));
     }
   }, []);
   
@@ -197,16 +230,16 @@ const MoodTracker = () => {
       {/* Left side - Mood input */}
       <Card className="border-mindful-light">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-mindful-dark">How are you feeling today?</CardTitle>
-          <p className="text-gray-600 text-sm">
+          <CardTitle className="text-2xl font-bold text-mindful-dark font-calming">How are you feeling today?</CardTitle>
+          <p className="text-gray-600 text-sm font-raleway">
             Track your mood and energy levels to identify patterns over time.
           </p>
         </CardHeader>
         
         <CardContent className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-base">Mood</Label>
-            <div className="flex justify-between text-xs text-gray-500 px-2">
+            <Label className="text-base font-ff-yoga">Mood</Label>
+            <div className="flex justify-between text-xs text-gray-500 px-2 font-raleway">
               {MOOD_LABELS.map((label, i) => (
                 <span key={label} className={i === mood ? 'font-bold text-mindful' : ''}>
                   {label}
@@ -231,8 +264,8 @@ const MoodTracker = () => {
           </div>
           
           <div className="space-y-3">
-            <Label className="text-base">Energy Level</Label>
-            <div className="flex justify-between text-xs text-gray-500 px-2">
+            <Label className="text-base font-ff-yoga">Energy Level</Label>
+            <div className="flex justify-between text-xs text-gray-500 px-2 font-raleway">
               {ENERGY_LABELS.map((label, i) => (
                 <span key={label} className={i === energy ? 'font-bold text-mindful' : ''}>
                   {label}
@@ -257,19 +290,19 @@ const MoodTracker = () => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="mood-note">Note (optional)</Label>
+            <Label htmlFor="mood-note" className="font-ff-yoga">Note (optional)</Label>
             <textarea
               id="mood-note"
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="What's influencing your mood today?"
-              className="w-full p-2 border border-mindful-light rounded-md text-sm min-h-[80px]"
+              className="w-full p-2 border border-mindful-light rounded-md text-sm min-h-[80px] font-raleway"
             />
           </div>
           
           <Button
             onClick={saveMoodEntry}
-            className="w-full bg-mindful hover:bg-mindful-dark"
+            className="w-full"
           >
             {todayEntry ? 'Update Today\'s Mood' : 'Save Today\'s Mood'}
           </Button>
@@ -281,12 +314,12 @@ const MoodTracker = () => {
         <Card className="border-mindful-light">
           <CardHeader className="pb-2">
             <div className="flex justify-between items-center">
-              <CardTitle className="text-xl font-bold text-mindful-dark">Mood Calendar</CardTitle>
+              <CardTitle className="text-xl font-bold text-mindful-dark font-calming">Mood Calendar</CardTitle>
               <div className="flex items-center space-x-1">
                 <Button variant="ghost" size="sm" onClick={handlePreviousMonth} className="h-8 w-8 p-0">
                   &lt;
                 </Button>
-                <span className="text-sm font-medium">
+                <span className="text-sm font-medium font-raleway">
                   {getMonthName(selectedMonth)}
                 </span>
                 <Button variant="ghost" size="sm" onClick={handleNextMonth} className="h-8 w-8 p-0">
@@ -299,7 +332,7 @@ const MoodTracker = () => {
           <CardContent>
             <div className="grid grid-cols-7 gap-px">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                <div key={day} className="text-center text-xs font-medium py-1">
+                <div key={day} className="text-center text-xs font-medium py-1 font-raleway">
                   {day}
                 </div>
               ))}
@@ -307,7 +340,7 @@ const MoodTracker = () => {
             </div>
             
             <div className="mt-4 flex justify-between">
-              <div className="flex space-x-3 text-xs">
+              <div className="flex space-x-3 text-xs font-raleway">
                 <div className="flex items-center">
                   <div className="w-3 h-3 rounded-full bg-red-200 mr-1"></div>
                   <span>Very Sad</span>
@@ -335,49 +368,69 @@ const MoodTracker = () => {
         
         <Card className="border-mindful-light">
           <CardHeader>
-            <CardTitle className="text-xl font-bold text-mindful-dark">Mood Insights</CardTitle>
+            <CardTitle className="text-xl font-bold text-mindful-dark font-calming">Mood Insights</CardTitle>
           </CardHeader>
           
           <CardContent>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center p-3 bg-mindful-lighter rounded-lg">
-                <div className="text-2xl font-bold text-mindful-dark">{stats.totalEntries}</div>
-                <div className="text-xs text-gray-600 mt-1">Total Entries</div>
-              </div>
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              <SemiCircleChart 
+                percentage={stats.totalEntries > 0 ? 100 : 0} 
+                color="#73A580" 
+                label="Total Entries" 
+                value={stats.totalEntries} 
+              />
               
-              <div className="text-center p-3 bg-mindful-lighter rounded-lg">
-                <div className="text-2xl font-bold text-mindful-dark">
-                  {stats.avgMood.toFixed(1)}
-                  <span className="text-lg ml-1">
-                    {stats.avgMood < 1 ? '😢' : 
-                     stats.avgMood < 2 ? '😔' : 
-                     stats.avgMood < 3 ? '😐' : 
-                     stats.avgMood < 4 ? '🙂' : '😄'}
-                  </span>
-                </div>
-                <div className="text-xs text-gray-600 mt-1">Avg Mood</div>
-              </div>
+              <SemiCircleChart 
+                percentage={(stats.avgMood / 4) * 100} 
+                color={
+                  stats.avgMood < 1 ? '#FCA5A5' : 
+                  stats.avgMood < 2 ? '#FDBA74' : 
+                  stats.avgMood < 3 ? '#FDE68A' : 
+                  stats.avgMood < 4 ? '#A3E635' : '#86EFAC'
+                } 
+                label="Avg Mood" 
+                value={
+                  <>
+                    {stats.avgMood.toFixed(1)}
+                    <span className="text-lg ml-1">
+                      {stats.avgMood < 1 ? '😢' : 
+                      stats.avgMood < 2 ? '😔' : 
+                      stats.avgMood < 3 ? '😐' : 
+                      stats.avgMood < 4 ? '🙂' : '😄'}
+                    </span>
+                  </>
+                } 
+              />
               
-              <div className="text-center p-3 bg-mindful-lighter rounded-lg">
-                <div className="text-2xl font-bold text-mindful-dark">
-                  {stats.avgEnergy.toFixed(1)}
-                  <span className="text-lg ml-1">
-                    {stats.avgEnergy < 1 ? '😴' : 
-                     stats.avgEnergy < 2 ? '🥱' : 
-                     stats.avgEnergy < 3 ? '😐' : 
-                     stats.avgEnergy < 4 ? '💪' : '⚡'}
-                  </span>
-                </div>
-                <div className="text-xs text-gray-600 mt-1">Avg Energy</div>
-              </div>
+              <SemiCircleChart 
+                percentage={(stats.avgEnergy / 4) * 100} 
+                color={
+                  stats.avgEnergy < 1 ? '#CBD5E1' : 
+                  stats.avgEnergy < 2 ? '#BAE6FD' : 
+                  stats.avgEnergy < 3 ? '#A5F3FC' : 
+                  stats.avgEnergy < 4 ? '#5EEAD4' : '#34D399'
+                } 
+                label="Avg Energy" 
+                value={
+                  <>
+                    {stats.avgEnergy.toFixed(1)}
+                    <span className="text-lg ml-1">
+                      {stats.avgEnergy < 1 ? '😴' : 
+                      stats.avgEnergy < 2 ? '🥱' : 
+                      stats.avgEnergy < 3 ? '😐' : 
+                      stats.avgEnergy < 4 ? '💪' : '⚡'}
+                    </span>
+                  </>
+                } 
+              />
             </div>
             
             {moodEntries.length === 0 ? (
-              <div className="text-center py-4 text-gray-500 text-sm">
+              <div className="text-center py-4 text-gray-500 text-sm font-raleway">
                 Start tracking your mood to see insights
               </div>
             ) : (
-              <div className="mt-4 text-sm text-gray-600 space-y-2">
+              <div className="mt-4 text-sm text-gray-600 space-y-2 font-raleway">
                 <p className="flex items-center">
                   <Calendar className="h-4 w-4 mr-2 text-mindful" />
                   <span>

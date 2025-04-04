@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap');
+/* Note: Stay Calm, Calming, FF Yoga, Close Eyes, and Tan Mon Cheri may need custom font imports */
+
 /* Your existing CSS here */
 
 /* Custom styles for React H5 Audio Player */
@@ -102,3 +108,107 @@
   @apply text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white font-serif;
 }
 
+/* Apple-style button */
+.apple-button {
+  @apply inline-flex items-center justify-center rounded-full px-5 py-3 font-sans font-medium text-base transition-all duration-300 backdrop-blur-md;
+  letter-spacing: -0.01em;
+  min-width: 28px;
+  border-radius: 980px;
+}
+
+/* Primary Apple-style button */
+.apple-button-primary {
+  @apply bg-mindful text-white hover:bg-mindful-dark shadow-sm;
+}
+
+/* Secondary Apple-style button */
+.apple-button-secondary {
+  @apply bg-white/10 text-mindful border border-mindful/30 hover:bg-mindful/5;
+  backdrop-filter: blur(20px);
+}
+
+/* Font mixture classes */
+.font-stay-calm {
+  font-family: 'Stay Calm', 'Raleway', sans-serif;
+}
+
+.font-calming {
+  font-family: 'Calming', 'Merriweather', serif;
+}
+
+.font-ff-yoga {
+  font-family: 'FF Yoga', 'Merriweather', serif;
+}
+
+.font-close-eyes {
+  font-family: 'Close Eyes', 'Raleway', cursive;
+}
+
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
+}
+
+.font-tan-mon-cheri {
+  font-family: 'Tan Mon Cheri', 'Raleway', sans-serif;
+}
+
+/* Font mixture utilities */
+.heading-primary {
+  @apply font-calming;
+}
+
+.heading-secondary {
+  @apply font-ff-yoga;
+}
+
+.text-body {
+  @apply font-raleway;
+}
+
+.text-accent {
+  @apply font-close-eyes;
+}
+
+.text-nav {
+  @apply font-tan-mon-cheri;
+}
+
+/* Add semicircular chart styles */
+.semi-circle-chart {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.semi-circle-background {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  clip: rect(0, 200px, 100px, 0);
+  top: 0;
+  left: 0;
+}
+
+.semi-circle-fill {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  clip: rect(0, 200px, 100px, 0);
+  transform-origin: center bottom;
+  transition: transform 1s ease-out;
+}
+
+.chart-label {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
