@@ -17,6 +17,8 @@ import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { audioFiles } from '../pages/audioData';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 interface SleepTimer {
   isRunning: boolean;
@@ -148,7 +150,7 @@ const Sleep = () => {
           
           <div className="mt-4 md:mt-0 flex items-center">
             <Button 
-              onClick={toggleTimer} 
+              onClick={() => toggleTimer()} 
               variant="outline" 
               className="mr-2 bg-white"
             >
@@ -175,61 +177,35 @@ const Sleep = () => {
           
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {audioFiles[selectedCategory as keyof typeof audioFiles].map((audio) => (
-              <Card key={audio.id} onClick={() => setSelectedAudio(audio)} className="cursor-pointer hover:shadow-md transition-shadow duration-300">
+              <Card key={audio.id} 
+                onClick={() => setSelectedAudio(audio)} 
+                className={`cursor-pointer hover:shadow-md transition-shadow duration-300 ${selectedAudio.id === audio.id ? 'border-2 border-mindful' : ''}`}
+              >
                 <CardHeader>
                   <CardTitle>{audio.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-500">Duration: {audio.duration}</p>
+                  <p className="text-sm text-gray-500 mb-4">Duration: {audio.duration}</p>
+                  <AudioPlayer
+                    src={audio.url}
+                    showJumpControls={true}
+                    layout="stacked"
+                    customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
+                    customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                    className="audio-player-custom rounded-md"
+                    style={{ 
+                      backgroundColor: '#f3f4f6', 
+                      borderRadius: '0.5rem',
+                      boxShadow: 'none'
+                    }}
+                  />
                 </CardContent>
               </Card>
             ))}
           </div>
         </Tabs>
 
-        <Card className="mt-8">
-          <CardContent className="flex flex-col items-center">
-            <audio ref={audioRef} src={selectedAudio.url} preload="metadata" />
-            <div className="w-full flex items-center justify-between text-sm text-gray-500 mt-2">
-              <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(duration)}</span>
-            </div>
-            <Progress value={(currentTime / duration) * 100} className="w-full h-2 mt-1" />
-            
-            <div className="flex items-center gap-4 mt-4">
-              <Button variant="outline" size="icon" onClick={skipBackward}>
-                <SkipBack className="h-5 w-5" />
-              </Button>
-              <Button variant="outline" size="icon" onClick={togglePlay}>
-                {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-              </Button>
-              <Button variant="outline" size="icon" onClick={skipForward}>
-                <SkipForward className="h-5 w-5" />
-              </Button>
-            </div>
-            
-            <div className="w-full mt-4">
-              <div className="flex items-center justify-between text-sm text-gray-500">
-                <VolumeX className="h-4 w-4" />
-                <Volume2 className="h-4 w-4" />
-              </div>
-              <Slider
-                defaultValue={[volume * 100]}
-                max={100}
-                step={1}
-                onValueChange={handleVolumeChange}
-                className="w-full"
-              />
-            </div>
-          </CardContent>
-        </Card>
-
         <Sheet open={showStats} onOpenChange={setShowStats}>
-          <SheetTrigger asChild>
-            <Button variant="outline" className="mt-4">
-              View Sleep Stats
-            </Button>
-          </SheetTrigger>
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Sleep Statistics</SheetTitle>

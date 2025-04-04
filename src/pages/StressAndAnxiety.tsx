@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Slider } from '@/components/ui/slider';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 import { 
   Heart, 
   Activity, 
@@ -33,28 +35,27 @@ const StressAndAnxiety = () => {
   const [breathingPhase, setBreathingPhase] = useState<'in' | 'out'>('in');
   const [breathingProgress, setBreathingProgress] = useState(0);
 
-  // Mock data for usage statistics
   const weeklyStats = {
     relief: [2.5, 1.8, 3.2, 2.1, 1.5, 2.8, 3.5],
     breathing: [1.8, 2.2, 1.5, 2.8, 3.1, 2.5, 2.0]
   };
 
   const quickReliefAudios = [
-    { id: 1, title: 'Ocean Waves', duration: '5:30' },
-    { id: 2, title: 'Rain Sounds', duration: '6:15' },
-    { id: 3, title: 'Forest Ambience', duration: '4:45' },
-    { id: 4, title: 'Gentle Stream', duration: '5:00' },
-    { id: 5, title: 'Wind Chimes', duration: '4:30' },
-    { id: 6, title: 'Bird Songs', duration: '5:15' }
+    { id: 1, title: 'Ocean Waves', duration: '5:30', url: '/music/ocean-waves.mp3' },
+    { id: 2, title: 'Rain Sounds', duration: '6:15', url: '/music/rain-sounds.mp3' },
+    { id: 3, title: 'Forest Ambience', duration: '4:45', url: '/music/forest-ambience.mp3' },
+    { id: 4, title: 'Gentle Stream', duration: '5:00', url: '/music/gentle-stream.mp3' },
+    { id: 5, title: 'Wind Chimes', duration: '4:30', url: '/music/wind-chimes.mp3' },
+    { id: 6, title: 'Bird Songs', duration: '5:15', url: '/music/bird-songs.mp3' }
   ];
 
   const breathingAudios = [
-    { id: 1, title: '4-7-8 Breathing', duration: '8:00' },
-    { id: 2, title: 'Box Breathing', duration: '10:00' },
-    { id: 3, title: 'Deep Breathing', duration: '7:30' },
-    { id: 4, title: 'Calm Breath', duration: '6:45' },
-    { id: 5, title: 'Energy Breath', duration: '5:30' },
-    { id: 6, title: 'Sleep Breath', duration: '9:15' }
+    { id: 1, title: '4-7-8 Breathing', duration: '8:00', url: '/music/breathing/478-breathing.mp3' },
+    { id: 2, title: 'Box Breathing', duration: '10:00', url: '/music/breathing/box-breathing.mp3' },
+    { id: 3, title: 'Deep Breathing', duration: '7:30', url: '/music/breathing/deep-breathing.mp3' },
+    { id: 4, title: 'Calm Breath', duration: '6:45', url: '/music/breathing/calm-breath.mp3' },
+    { id: 5, title: 'Energy Breath', duration: '5:30', url: '/music/breathing/energy-breath.mp3' },
+    { id: 6, title: 'Sleep Breath', duration: '9:15', url: '/music/breathing/sleep-breath.mp3' }
   ];
 
   const practicalWays = [
@@ -70,7 +71,6 @@ const StressAndAnxiety = () => {
     { title: 'Therapeutic Techniques', description: 'Professional guidance' }
   ];
 
-  // Breathing exercise timer
   useEffect(() => {
     if (activeSection === 'breathing') {
       const interval = setInterval(() => {
@@ -151,7 +151,6 @@ const StressAndAnxiety = () => {
           </p>
         </div>
 
-        {/* Hero Section */}
         <div className="pt-8 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="md:w-1/2 space-y-6">
@@ -176,7 +175,6 @@ const StressAndAnxiety = () => {
           </div>
         </div>
 
-        {/* Main Content */}
         <div className="bg-white/80 backdrop-blur-sm py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center text-mindful mb-12">
@@ -184,7 +182,6 @@ const StressAndAnxiety = () => {
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-              {/* Quick Relief Section */}
               <div className="relative group">
                 <button
                   onClick={() => setActiveSection(activeSection === 'quick-relief' ? null : 'quick-relief')}
@@ -196,7 +193,6 @@ const StressAndAnxiety = () => {
                   <span className="font-medium">Quick Relief</span>
                 </button>
 
-                {/* Quick Relief Hover Box */}
                 <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 
                   absolute left-1/2 -translate-x-1/2 mt-4 w-[400px] bg-white rounded-xl shadow-lg 
                   transition-all duration-200 p-6 z-20">
@@ -214,7 +210,6 @@ const StressAndAnxiety = () => {
                 </div>
               </div>
 
-              {/* Breathing Section */}
               <div className="relative group">
                 <button
                   onClick={() => setActiveSection(activeSection === 'breathing' ? null : 'breathing')}
@@ -226,7 +221,6 @@ const StressAndAnxiety = () => {
                   <span className="font-medium">Breathing</span>
                 </button>
 
-                {/* Breathing Hover Box */}
                 <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 
                   absolute left-1/2 -translate-x-1/2 mt-4 w-[400px] bg-white rounded-xl shadow-lg 
                   transition-all duration-200 p-6 z-20">
@@ -244,7 +238,6 @@ const StressAndAnxiety = () => {
                 </div>
               </div>
 
-              {/* Practical Ways Section */}
               <div className="relative group">
                 <button
                   onClick={() => setActiveSection(activeSection === 'practical' ? null : 'practical')}
@@ -256,7 +249,6 @@ const StressAndAnxiety = () => {
                   <span className="font-medium">Practical Ways</span>
                 </button>
 
-                {/* Practical Ways Hover Box */}
                 <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 
                   absolute left-1/2 -translate-x-1/2 mt-4 w-[400px] bg-white rounded-xl shadow-lg 
                   transition-all duration-200 p-6 z-20">
@@ -275,32 +267,33 @@ const StressAndAnxiety = () => {
               </div>
             </div>
 
-            {/* Quick Relief Content */}
             {activeSection === 'quick-relief' && (
               <div className="mt-16 max-w-5xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {quickReliefAudios.map((audio) => (
-                    <button
+                    <div
                       key={audio.id}
-                      onClick={() => {
-                        setCurrentAudio(`quick-relief-${audio.id}`);
-                        setIsPlaying(true);
-                      }}
-                      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow
-                        flex flex-col items-center space-y-4"
+                      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
                     >
-                      <div className="w-16 h-16 rounded-full bg-mindful-lighter flex items-center justify-center text-mindful">
-                        {currentAudio === `quick-relief-${audio.id}` && isPlaying ? (
-                          <Pause size={24} />
-                        ) : (
-                          <Play size={24} />
-                        )}
-                      </div>
-                      <div className="text-center">
+                      <div className="text-center mb-4">
                         <h3 className="font-medium text-gray-900">{audio.title}</h3>
                         <p className="text-sm text-gray-500">{audio.duration}</p>
                       </div>
-                    </button>
+                      <AudioPlayer
+                        src={audio.url}
+                        onPlay={() => setCurrentAudio(`quick-relief-${audio.id}`)}
+                        showJumpControls={true}
+                        layout="stacked-reverse"
+                        customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
+                        customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                        className="audio-player-custom rounded-md"
+                        style={{ 
+                          backgroundColor: '#f3f4f6', 
+                          borderRadius: '0.5rem',
+                          boxShadow: 'none'
+                        }}
+                      />
+                    </div>
                   ))}
                 </div>
 
@@ -311,10 +304,8 @@ const StressAndAnxiety = () => {
               </div>
             )}
 
-            {/* Breathing Content */}
             {activeSection === 'breathing' && (
               <div className="mt-16 max-w-5xl mx-auto">
-                {/* Breathing Clock */}
                 <div className="mb-12 flex justify-center">
                   <div className="relative w-48 h-48">
                     <div className="absolute inset-0 rounded-full border-4 border-mindful-lighter" />
@@ -334,27 +325,29 @@ const StressAndAnxiety = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {breathingAudios.map((audio) => (
-                    <button
+                    <div
                       key={audio.id}
-                      onClick={() => {
-                        setCurrentAudio(`breathing-${audio.id}`);
-                        setIsPlaying(true);
-                      }}
-                      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow
-                        flex flex-col items-center space-y-4"
+                      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
                     >
-                      <div className="w-16 h-16 rounded-full bg-mindful-lighter flex items-center justify-center text-mindful-dark">
-                        {currentAudio === `breathing-${audio.id}` && isPlaying ? (
-                          <Pause size={24} />
-                        ) : (
-                          <Play size={24} />
-                        )}
-                      </div>
-                      <div className="text-center">
+                      <div className="text-center mb-4">
                         <h3 className="font-medium text-gray-900">{audio.title}</h3>
                         <p className="text-sm text-gray-500">{audio.duration}</p>
                       </div>
-                    </button>
+                      <AudioPlayer
+                        src={audio.url}
+                        onPlay={() => setCurrentAudio(`breathing-${audio.id}`)}
+                        showJumpControls={true}
+                        layout="stacked-reverse"
+                        customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
+                        customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                        className="audio-player-custom rounded-md"
+                        style={{ 
+                          backgroundColor: '#f3f4f6', 
+                          borderRadius: '0.5rem',
+                          boxShadow: 'none'
+                        }}
+                      />
+                    </div>
                   ))}
                 </div>
 
@@ -365,7 +358,6 @@ const StressAndAnxiety = () => {
               </div>
             )}
 
-            {/* Practical Ways Content */}
             {activeSection === 'practical' && (
               <div className="mt-16 max-w-5xl mx-auto">
                 <div className="space-y-4">
@@ -398,41 +390,6 @@ const StressAndAnxiety = () => {
           </div>
         </div>
 
-        {/* Audio Player Bar */}
-        {currentAudio && (
-          <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t">
-            <div className="max-w-7xl mx-auto px-4 py-4">
-              <div className="flex items-center space-x-6">
-                <button
-                  onClick={() => setIsPlaying(false)}
-                  className="text-gray-600 hover:text-gray-900"
-                >
-                  <X size={24} />
-                </button>
-                <button className="text-gray-600 hover:text-gray-900">
-                  <SkipBack size={24} />
-                </button>
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-10 h-10 rounded-full bg-mindful text-white flex items-center justify-center
-                    hover:bg-mindful-dark transition-colors"
-                >
-                  {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                </button>
-                <button className="text-gray-600 hover:text-gray-900">
-                  <SkipForward size={24} />
-                </button>
-                <div className="flex-1">
-                  <div className="h-2 bg-gray-200 rounded-full">
-                    <div className="h-full w-1/3 bg-mindful rounded-full" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
         <footer className="bg-gradient-to-b from-transparent to-white/80 py-8">
           <div className="max-w-7xl mx-auto px-4 text-center text-gray-600">
             <p>© 2024 Mindfulness App. All rights reserved.</p>

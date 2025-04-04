@@ -1,9 +1,11 @@
-// src/pages/Articles.tsx
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search } from 'lucide-react';
+import { Search, Headphones, XCircle } from 'lucide-react';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 interface Article {
   id: string;
@@ -39,6 +41,7 @@ const Articles = () => {
   ]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredArticles, setFilteredArticles] = useState<Article[]>(articles);
+  const [activeAudio, setActiveAudio] = useState<string | null>(null);
 
   useEffect(() => {
     const results = articles.filter(article =>
@@ -47,13 +50,6 @@ const Articles = () => {
     );
     setFilteredArticles(results);
   }, [searchTerm, articles]);
-
-  const handleAudioNarration = (articleId: string) => {
-    const audioElement = document.getElementById(`audio-${articleId}`) as HTMLAudioElement | null;
-    if (audioElement) {
-      audioElement.play();
-    }
-  };
 
   return (
     <section className="container-custom py-12">
@@ -76,15 +72,46 @@ const Articles = () => {
             <div className="p-6">
               <h2 className="text-xl font-semibold mb-2 nike-headline">{article.title}</h2>
               <p className="text-gray-700 dark:text-gray-300 mb-4 nike-body-text">{article.content.substring(0, 100)}...</p>
+              
+              {activeAudio === article.id ? (
+                <div className="mb-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-sm font-medium text-mindful">Audio Narration</h3>
+                    <button 
+                      onClick={() => setActiveAudio(null)}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      <XCircle size={16} />
+                    </button>
+                  </div>
+                  <AudioPlayer
+                    src={article.audioUrl}
+                    showJumpControls={true}
+                    layout="stacked-reverse"
+                    customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
+                    customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                    className="audio-player-custom rounded-md"
+                    style={{ 
+                      backgroundColor: '#f3f4f6', 
+                      borderRadius: '0.5rem',
+                      boxShadow: 'none'
+                    }}
+                  />
+                </div>
+              ) : null}
+              
               <div className="flex justify-between items-center">
-                <Button onClick={() => handleAudioNarration(article.id)} className="bg-mindful hover:bg-mindful-dark text-white nike-button">
+                <Button 
+                  onClick={() => setActiveAudio(activeAudio === article.id ? null : article.id)} 
+                  className="bg-mindful hover:bg-mindful-dark text-white nike-button"
+                >
+                  <Headphones className="mr-2" size={16} />
                   Listen
                 </Button>
                 <Link to={`/article/${article.id}`} className="text-mindful hover:underline">
                   Read More
                 </Link>
               </div>
-              <audio id={`audio-${article.id}`} src={article.audioUrl} preload="none"></audio>
             </div>
           </div>
         ))}

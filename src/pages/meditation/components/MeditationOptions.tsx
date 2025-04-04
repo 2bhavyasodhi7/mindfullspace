@@ -1,9 +1,10 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, BarChart3, BookOpen, Headphones, X, SkipForward, SkipBack, Clock } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { weeklyStats } from '../../audioData1';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 const MeditationOptions = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -30,11 +31,11 @@ const MeditationOptions = () => {
 
   const guidedMeditations = [
     { title: "Morning Meditation", duration: "10:00", url: "/music/guided meditaion/4-Minute Guided Mindfulness Meditation [TubeRipper.com].mp3"},
-    { title: "Stress Relief", duration: "15:00" },
-    { title: "Deep Sleep", duration: "20:00" },
-    { title: "Anxiety Relief", duration: "12:00" },
-    { title: "Focus Enhancement", duration: "8:00" },
-    { title: "Gratitude Practice", duration: "10:00" }
+    { title: "Stress Relief", duration: "15:00", url: "/music/sample-audio.mp3" },
+    { title: "Deep Sleep", duration: "20:00", url: "/music/sample-audio.mp3" },
+    { title: "Anxiety Relief", duration: "12:00", url: "/music/sample-audio.mp3" },
+    { title: "Focus Enhancement", duration: "8:00", url: "/music/sample-audio.mp3" },
+    { title: "Gratitude Practice", duration: "10:00", url: "/music/sample-audio.mp3" }
   ];
 
   const meditationTechniques = [
@@ -149,21 +150,35 @@ const MeditationOptions = () => {
             {showAudioPlayer && (
               <div className="grid gap-4 bg-white p-8 rounded-2xl shadow-lg">
                 {guidedMeditations.map((meditation, index) => (
-                  <button
+                  <div
                     key={index}
-                    onClick={() => setCurrentAudioIndex(index)}
-                    className={`flex items-center justify-between p-4 rounded-lg transition-all duration-300 ${
+                    className={`rounded-lg transition-all duration-300 ${
                       currentAudioIndex === index 
                         ? 'bg-mindful-light text-mindful-dark' 
                         : 'bg-mindful-lighter hover:bg-mindful-light'
                     }`}
                   >
-                    <div className="flex items-center gap-4">
-                      <Play className="w-5 h-5" />
-                      <span className="font-medium">{meditation.title}</span>
+                    <div className="p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="font-medium">{meditation.title}</span>
+                        <span className="text-sm text-mindful-dark">{meditation.duration}</span>
+                      </div>
+                      <AudioPlayer
+                        src={meditation.url}
+                        onPlay={() => setCurrentAudioIndex(index)}
+                        showJumpControls={true}
+                        layout="stacked-reverse"
+                        customControlsSection={["MAIN_CONTROLS", "VOLUME_CONTROLS"]}
+                        customProgressBarSection={["PROGRESS_BAR", "CURRENT_TIME", "DURATION"]}
+                        className="audio-player-custom rounded-md"
+                        style={{ 
+                          backgroundColor: currentAudioIndex === index ? 'rgba(115, 165, 128, 0.2)' : '#f3f4f6', 
+                          borderRadius: '0.5rem',
+                          boxShadow: 'none'
+                        }}
+                      />
                     </div>
-                    <span className="text-sm text-mindful-dark">{meditation.duration}</span>
-                  </button>
+                  </div>
                 ))}
               </div>
             )}
@@ -364,55 +379,6 @@ const MeditationOptions = () => {
           </div>
         </div>
       </section>
-
-      {showAudioPlayer && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-40">
-          <div className="container mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <img 
-                src="https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?auto=format&fit=crop&w=100&q=80"
-                alt="Current Meditation"
-                className="w-12 h-12 rounded-lg object-cover"
-              />
-              <div>
-                <h4 className="font-medium text-mindful-dark nike-headline">
-                  {guidedMeditations[currentAudioIndex].title}
-                </h4>
-                <p className="text-sm text-mindful">Guided Meditation</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <button 
-                onClick={() => setCurrentAudioIndex(prev => Math.max(0, prev - 1))}
-                className="p-2 hover:bg-mindful-lighter rounded-full"
-              >
-                <SkipBack className="w-5 h-5 text-mindful-dark" />
-              </button>
-              <button 
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="p-3 bg-mindful text-white rounded-full hover:bg-mindful-dark transition-colors"
-              >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-              </button>
-              <button 
-                onClick={() => setCurrentAudioIndex(prev => Math.min(guidedMeditations.length - 1, prev + 1))}
-                className="p-2 hover:bg-mindful-lighter rounded-full"
-              >
-                <SkipForward className="w-5 h-5 text-mindful-dark" />
-              </button>
-            </div>
-            <button 
-              onClick={() => {
-                setShowAudioPlayer(false);
-                setIsPlaying(false);
-              }}
-              className="p-2 hover:bg-mindful-lighter rounded-full"
-            >
-              <X className="w-5 h-5 text-mindful-dark" />
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 };
