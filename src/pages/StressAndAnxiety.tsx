@@ -168,7 +168,7 @@ const StressAndAnxiety = () => {
             </div>
             <div className="md:w-1/2 mt-8 md:mt-0">
               <img 
-                src="\assets\medi 4.jpg"
+                src="src/pages/images/stress_page_first.jpg"
                 alt="Peaceful meditation"
                 className="rounded-2xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-300"
               />
@@ -203,7 +203,7 @@ const StressAndAnxiety = () => {
                       <p className="text-gray-600">Instant calm through soothing sounds and guided relaxation.</p>
                     </div>
                     <img 
-                      src="https://images.unsplash.com/photo-1528716321680-815a8cdb8cbe?auto=format&fit=crop&w=200&q=80"
+                      src="src/pages/images/QUICK_RILIEF.jpg"
                       alt="Quick relief"
                       className="w-32 h-32 rounded-lg object-cover"
                     />
@@ -231,7 +231,7 @@ const StressAndAnxiety = () => {
                       <p className="text-gray-600">Master your breath to reduce stress and anxiety.</p>
                     </div>
                     <img 
-                      src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=200&q=80"
+                      src="src/pages/images/BREATHING.jpg"
                       alt="Breathing"
                       className="w-32 h-32 rounded-lg object-cover"
                     />
@@ -259,7 +259,7 @@ const StressAndAnxiety = () => {
                       <p className="text-gray-600">Simple, effective techniques for daily stress management.</p>
                     </div>
                     <img 
-                      src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=200&q=80"
+                      src="src/pages/images/PRACTICAL_WAYS.jpg"
                       alt="Practical ways"
                       className="w-32 h-32 rounded-lg object-cover"
                     />
@@ -373,7 +373,7 @@ const StressAndAnxiety = () => {
 
                 <div className="mt-12">
                   <img 
-                    src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1500&q=80"
+                    src="src/pages/images/STRESS_PAGE_END_PHOTO.jpg"
                     alt="Peaceful nature"
                     className="w-full h-[20vh] object-cover rounded-2xl"
                   />
