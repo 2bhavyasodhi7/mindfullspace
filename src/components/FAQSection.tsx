@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Brain, Flower, Clock, BookOpen, Users, Heart, Church, Briefcase, HelpCircle, CheckCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
@@ -187,7 +186,7 @@ const FAQSection = () => {
           href="/meditation" 
           className="bg-mindful hover:bg-mindful-dark text-white rounded-full px-6 py-3 shadow-lg flex items-center transition-all duration-300 hover:scale-105"
         >
-          <Lotus className="mr-2 h-5 w-5" />
+          <Flower className="mr-2 h-5 w-5" />
           Start Practicing
         </a>
       </div>
