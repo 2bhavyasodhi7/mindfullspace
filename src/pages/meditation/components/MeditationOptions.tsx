@@ -43,22 +43,22 @@ const MeditationOptions = () => {
     {
       title: "Mindfulness Meditation",
       description: "Focus on the present moment through breath awareness",
-      image: "/assets/medi2.jpg"
+      image: "src/pages/images/MINDFULLNESS_MEDITATION.jpg"
     },
     {
       title: "Loving-Kindness Meditation",
       description: "Cultivate compassion and positive feelings towards others",
-      image: "/assets/kindmedi.jpg"
+      image: "src/pages/images/LOVING_KINDNESS.jpg"
     },
     {
       title: "Body Scan Meditation",
       description: "Progressive relaxation through body awareness",
-      image: "/assets/bodyscan.jpg"
+      image: "src/pages/images/BODY_SCAN.jpg"
     },
     {
       title: "Transcendental Meditation",
       description: "Silent mantra meditation for deep relaxation",
-      image: "/assets/medi3.jpg"
+      image: "src/pages/images/TRANSCEDENTAL.jpg"
     }
   ];
 
@@ -197,7 +197,7 @@ const MeditationOptions = () => {
               <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
                 <div className="flex gap-4">
                   <img 
-                    src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&w=200&q=80"
+                    src="src/pages/images/TRACK_YOUR_PROGRESS.jpg"
                     alt="Meditation Tracker"
                     className="w-24 h-24 rounded-lg object-cover"
                   />
@@ -291,7 +291,7 @@ const MeditationOptions = () => {
               <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
                 <div className="flex gap-4">
                   <img 
-                    src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=200&q=80"
+                    src="src/pages/images/LEARN_MEDITATION.jpg"
                     alt="Meditation Techniques"
                     className="w-24 h-24 rounded-lg object-cover"
                   />
