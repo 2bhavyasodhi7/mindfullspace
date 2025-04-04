@@ -63,29 +63,29 @@ const Yoga = () => {
 
   const yogaClasses: YogaClass[] = [
     // Weekday classes
-    { id: "1", time: "5:00–6:00 AM", type: "Hatha", instructor: "Sarah", difficulty: "Beginner", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "2", time: "6:00–7:00 AM", type: "Vinyasa", instructor: "Michael", difficulty: "Intermediate", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "3", time: "7:00–8:00 AM", type: "Power", instructor: "Elena", difficulty: "Advanced", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "4", time: "8:00–9:00 AM", type: "Yin", instructor: "David", difficulty: "Beginner", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "5", time: "4:00–5:00 PM", type: "Restorative", instructor: "Sophia", difficulty: "Beginner", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "6", time: "5:00–6:00 PM", type: "Hatha", instructor: "James", difficulty: "Intermediate", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "7", time: "6:00–7:00 PM", type: "Vinyasa", instructor: "Anna", difficulty: "Advanced", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "8", time: "7:00–8:00 PM", type: "Restorative", instructor: "Marcus", difficulty: "Beginner", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "1", time: "5:00–6:00 AM", type: "Hatha", instructor: "A", difficulty: "Beginner", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "2", time: "6:00–7:00 AM", type: "Vinyasa", instructor: "B", difficulty: "Intermediate", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "3", time: "7:00–8:00 AM", type: "Power", instructor: "C", difficulty: "Advanced", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "4", time: "8:00–9:00 AM", type: "Yin", instructor: "D", difficulty: "Beginner", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "5", time: "4:00–5:00 PM", type: "Restorative", instructor: "E", difficulty: "Beginner", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "6", time: "5:00–6:00 PM", type: "Hatha", instructor: "F", difficulty: "Intermediate", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "7", time: "6:00–7:00 PM", type: "Vinyasa", instructor: "G", difficulty: "Advanced", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "8", time: "7:00–8:00 PM", type: "Restorative", instructor: "H", difficulty: "Beginner", duration: "60 min", day: "weekday", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
     
     // Weekend classes
-    { id: "9", time: "5:00–6:00 AM", type: "Vinyasa", instructor: "Elena", difficulty: "Intermediate", duration: "60 min", day: "weekend", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "10", time: "6:00–7:00 AM", type: "Power", instructor: "David", difficulty: "Advanced", duration: "60 min", day: "weekend", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
-    { id: "11", time: "7:00–8:00 AM", type: "Yin", instructor: "Sophia", difficulty: "Beginner", duration: "60 min", day: "weekend", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "9", time: "5:00–6:00 AM", type: "Vinyasa", instructor: "I", difficulty: "Intermediate", duration: "60 min", day: "weekend", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "10", time: "6:00–7:00 AM", type: "Power", instructor: "J", difficulty: "Advanced", duration: "60 min", day: "weekend", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
+    { id: "11", time: "7:00–8:00 AM", type: "Yin", instructor: "K", difficulty: "Beginner", duration: "60 min", day: "weekend", zoomLink: "https://us02web.zoom.us/j/87063555371?pwd=WlVzOWRkRkRCWUp1UkJmdFE4VWxhZz09", zoomId: "870 6355 5371", zoomPassword: "yoga" },
   ];
 
   // Sample recorded sessions for the library
   const recordedSessions = [
-    { id: "r1", title: "Morning Flow", instructor: "Sarah", type: "Vinyasa", duration: "45 min", difficulty: "Beginner", image: "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8eW9nYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" },
-    { id: "r2", title: "Evening Relaxation", instructor: "David", type: "Restorative", duration: "30 min", difficulty: "Beginner", image: "https://images.unsplash.com/photo-1510894347713-fc3ed6fdf539?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHlvZ2F8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" },
-    { id: "r3", title: "Power Yoga", instructor: "Elena", type: "Power", duration: "60 min", difficulty: "Advanced", image: "https://images.unsplash.com/photo-1599447292286-92546feed3c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHlvZ2F8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" },
-    { id: "r4", title: "Gentle Stretch", instructor: "Sophia", type: "Yin", duration: "40 min", difficulty: "Beginner", image: "https://images.unsplash.com/photo-1549576490-b0b4831ef60a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8eW9nYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" },
-    { id: "r5", title: "Balance & Strength", instructor: "Michael", type: "Hatha", duration: "50 min", difficulty: "Intermediate", image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8eW9nYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" },
-    { id: "r6", title: "Mindful Movement", instructor: "Anna", type: "Vinyasa", duration: "45 min", difficulty: "Intermediate", image: "https://images.unsplash.com/photo-1573590330099-d6c7355ec595?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8eW9nYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" },
+    { id: "r1", title: "Morning Flow", instructor: "A", type: "Vinyasa", duration: "45 min", difficulty: "Beginner", image: "https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8eW9nYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" },
+    { id: "r2", title: "Evening Relaxation", instructor: "B", type: "Restorative", duration: "30 min", difficulty: "Beginner", image: "https://images.unsplash.com/photo-1510894347713-fc3ed6fdf539?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHlvZ2F8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" },
+    { id: "r3", title: "Power Yoga", instructor: "C", type: "Power", duration: "60 min", difficulty: "Advanced", image: "src/pages/images/POWER_YOGA.jpg" },
+    { id: "r4", title: "Gentle Stretch", instructor: "D", type: "Yin", duration: "40 min", difficulty: "Beginner", image: "https://images.unsplash.com/photo-1549576490-b0b4831ef60a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8eW9nYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" },
+    { id: "r5", title: "Balance & Strength", instructor: "E", type: "Hatha", duration: "50 min", difficulty: "Intermediate", image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8eW9nYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" },
+    { id: "r6", title: "Mindful Movement", instructor: "F", type: "Vinyasa", duration: "45 min", difficulty: "Intermediate", image: "https://images.unsplash.com/photo-1573590330099-d6c7355ec595?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8eW9nYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" },
   ];
 
   // Filter yoga classes based on selections
@@ -548,8 +548,8 @@ const Yoga = () => {
             <Card>
               <div className="h-48 overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHlvZ2ElMjBpbnN0cnVjdG9yfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
-                  alt="Sarah"
+                  src="src/pages/images/INSTRUCTOR_1.jpg"
+                  alt="Instructor-1"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -574,8 +574,8 @@ const Yoga = () => {
             <Card>
               <div className="h-48 overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
-                  alt="Michael"
+                  src="src/pages/images/INSTRUCTOR_2.jpg"
+                  alt="Instructor-2"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -600,8 +600,8 @@ const Yoga = () => {
             <Card>
               <div className="h-48 overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8d29tYW4lMjBwb3J0cmFpdHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                  alt="Elena"
+                  src="src/pages/images/INSTRUCTOR_3.jpg"
+                  alt="Instructor-3"
                   className="w-full h-full object-cover"
                 />
               </div>
