@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Brain, Lotus, Clock, BookOpen, Users, Heart, Church, Briefcase, HelpCircle, CheckCircle } from 'lucide-react';
+import { ChevronDown, ChevronUp, Brain, Flower, Clock, BookOpen, Users, Heart, Church, Briefcase, HelpCircle, CheckCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { 
   Accordion,
@@ -28,7 +28,7 @@ const FAQSection = () => {
     {
       question: "How is mindfulness different from meditation?",
       answer: "Meditation is a structured practice, while mindfulness can be practiced anytime in daily life by staying aware and present in the moment.",
-      icon: <Lotus className="h-6 w-6 text-mindful" />
+      icon: <Flower className="h-6 w-6 text-mindful" />
     },
     {
       question: "What are the benefits of mindfulness?",
