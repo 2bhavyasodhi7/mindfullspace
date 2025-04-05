@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Brain, Flower, Clock, BookOpen, Users, Heart, Church, Briefcase, HelpCircle, CheckCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
@@ -91,6 +92,16 @@ const FAQSection = () => {
   
   return (
     <section className="py-16 bg-gray-50 dark:bg-gray-900 relative" id="faq">
+      {/* Add the forest image banner above the FAQ content */}
+      <div className="w-full mb-12 overflow-hidden">
+        <img 
+          src="/lovable-uploads/031154ed-69c2-4cb3-b86e-8c724f0e1364.png" 
+          alt="Forest with question mark formed by trees"
+          className="w-full h-64 md:h-80 lg:h-96 object-cover object-center"
+          loading="lazy"
+        />
+      </div>
+      
       <div className="container-custom">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">

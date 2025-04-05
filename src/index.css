@@ -3,212 +3,167 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap');
-/* Note: Stay Calm, Calming, FF Yoga, Close Eyes, and Tan Mon Cheri may need custom font imports */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
 
-/* Your existing CSS here */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-/* Custom styles for React H5 Audio Player */
-.audio-player-custom .rhap_container {
-  box-shadow: none;
-  padding: 10px;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+
+    --mindful: #73A580;
+    --mindful-dark: #5D8469;
+    --mindful-darker: #3e574b;
+    --mindful-light: #A3C2AB;
+    --mindful-lighter: #E8F2EB;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+  }
 }
 
-.audio-player-custom .rhap_progress-section {
-  margin-bottom: 5px;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
 }
 
-.audio-player-custom .rhap_progress-bar {
-  height: 4px;
+@layer components {
+  /* Container utility */
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Typography utilities */
+  .mindful-heading {
+    @apply text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight;
+  }
+  .mindful-subheading {
+    @apply text-xl text-gray-600 mt-4;
+  }
+
+  /* Section utility */
+  .mindful-section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  /* Semi-circle chart styling */
+  .semi-circle-chart {
+    @apply relative w-24 h-12 overflow-hidden;
+  }
+  
+  .semi-circle-background {
+    @apply absolute top-0 left-0 w-full h-full bg-gray-100 dark:bg-gray-700 rounded-t-full;
+  }
+  
+  .semi-circle-fill {
+    @apply absolute top-0 left-0 w-full h-full rounded-t-full origin-bottom transform rotate-180;
+  }
+  
+  .chart-label {
+    @apply absolute top-0 left-0 w-full h-full flex items-center justify-center text-lg font-medium;
+  }
+  
+  /* Apple-style button */
+  .apple-button {
+    @apply inline-flex items-center justify-center px-6 py-3 font-medium text-sm rounded-full
+           bg-mindful text-white transition-all duration-300 ease-in-out
+           hover:bg-mindful-dark shadow-sm hover:shadow-md
+           transform hover:scale-105 active:scale-95;
+  }
+  
+  .apple-button-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 font-medium text-sm rounded-full
+           bg-white text-mindful border border-mindful/30 transition-all duration-300 ease-in-out
+           hover:bg-mindful/10 shadow-sm hover:shadow-md
+           transform hover:scale-105 active:scale-95;
+  }
 }
 
-.audio-player-custom .rhap_progress-indicator {
-  width: 12px;
-  height: 12px;
-  top: -4px;
-  background: #73A580; /* mindful color */
+/* Font Family Definitions */
+.font-stay-calm {
+  font-family: 'Stay Calm', 'Arial', sans-serif;
 }
 
-.audio-player-custom .rhap_progress-filled {
-  background-color: #73A580; /* mindful color */
+.font-calming {
+  font-family: 'Calming', 'Georgia', serif;
 }
 
-.audio-player-custom .rhap_controls-section {
-  margin-top: 0;
+.font-raleway {
+  font-family: 'Raleway', 'Arial', sans-serif;
 }
 
-.audio-player-custom .rhap_main-controls-button {
-  color: #73A580; /* mindful color */
+.font-ff-yoga {
+  font-family: 'FF Yoga', 'Georgia', serif;
 }
 
-.audio-player-custom .rhap_volume-controls {
-  justify-content: flex-end;
+.font-tan-mon-cheri {
+  font-family: 'Tan Mon Cheri', 'Arial', sans-serif;
 }
 
-.audio-player-custom .rhap_volume-indicator {
-  background: #73A580; /* mindful color */
-}
-
-.audio-player-custom .rhap_time {
-  font-size: 12px;
-  color: #555;
-}
-
-.audio-player-custom .rhap_button-clear {
-  color: #73A580; /* mindful color */
-}
-
-.audio-player-custom .rhap_button-clear:hover {
-  color: #5b8368; /* darker mindful color */
-}
-
-/* FAQ Section Custom Styles */
-.faq-item {
-  @apply mb-4 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800 transition-all duration-300;
-}
-
-.faq-item:hover {
-  @apply shadow-md transform -translate-y-1;
-}
-
-.faq-question {
-  @apply w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none;
-}
-
-.faq-answer {
-  @apply p-4 bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-base leading-relaxed animate-accordion-down;
-}
-
-/* Custom animations for FAQ section */
+/* Animation for fade in */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.animate-on-scroll.animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Font styles for FAQ section */
-.mindful-heading {
-  @apply text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white font-serif;
-}
-
-/* Apple-style button */
-.apple-button {
-  @apply inline-flex items-center justify-center rounded-full px-5 py-3 font-sans font-medium text-base transition-all duration-300 backdrop-blur-md;
-  letter-spacing: -0.01em;
-  min-width: 28px;
-  border-radius: 980px;
-}
-
-/* Primary Apple-style button */
-.apple-button-primary {
-  @apply bg-mindful text-white hover:bg-mindful-dark shadow-sm;
-}
-
-/* Secondary Apple-style button */
-.apple-button-secondary {
-  @apply bg-white/10 text-mindful border border-mindful/30 hover:bg-mindful/5;
-  backdrop-filter: blur(20px);
-}
-
-/* Font mixture classes */
-.font-stay-calm {
-  font-family: 'Stay Calm', 'Raleway', sans-serif;
-}
-
-.font-calming {
-  font-family: 'Calming', 'Merriweather', serif;
-}
-
-.font-ff-yoga {
-  font-family: 'FF Yoga', 'Merriweather', serif;
-}
-
-.font-close-eyes {
-  font-family: 'Close Eyes', 'Raleway', cursive;
-}
-
-.font-raleway {
-  font-family: 'Raleway', sans-serif;
-}
-
-.font-tan-mon-cheri {
-  font-family: 'Tan Mon Cheri', 'Raleway', sans-serif;
-}
-
-/* Font mixture utilities */
-.heading-primary {
-  @apply font-calming;
-}
-
-.heading-secondary {
-  @apply font-ff-yoga;
-}
-
-.text-body {
-  @apply font-raleway;
-}
-
-.text-accent {
-  @apply font-close-eyes;
-}
-
-.text-nav {
-  @apply font-tan-mon-cheri;
-}
-
-/* Add semicircular chart styles */
-.semi-circle-chart {
-  position: relative;
-  width: 200px;
-  height: 100px;
-  overflow: hidden;
-  margin: 0 auto;
-}
-
-.semi-circle-background {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: #f0f0f0;
-  clip: rect(0, 200px, 100px, 0);
-  top: 0;
-  left: 0;
-}
-
-.semi-circle-fill {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  clip: rect(0, 200px, 100px, 0);
-  transform-origin: center bottom;
-  transition: transform 1s ease-out;
-}
-
-.chart-label {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: bold;
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }

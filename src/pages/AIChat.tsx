@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +8,7 @@ import {
   PanelLeft, Wand2, Settings, Plus, Search, Calendar, 
   Clock, ChevronRight, Volume2, Award, Share2
 } from 'lucide-react';
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -147,10 +146,11 @@ const AIChat = () => {
     }
   };
 
-  const generateGeminiResponse = async (prompt: string) => {
+  // Updated to use Grok API instead of Gemini
+  const generateGrokResponse = async (prompt: string) => {
     try {
-      const API_KEY = "AIzaSyALPJtV_B5Z0hXP-c8axP_HCBYql4B7QkU";
-      const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+      const API_KEY = "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";
+      const API_URL = "https://api.groq.com/openai/v1/chat/completions";
       
       // Adjust prompt based on selected AI personality
       let personalityPrefix = "";
@@ -168,35 +168,33 @@ const AIChat = () => {
           personalityPrefix = "Respond in a calm, supportive manner. ";
       }
       
-      const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${API_KEY}` 
         },
         body: JSON.stringify({
-          contents: [
+          model: "llama3-70b-8192",
+          messages: [
+            {
+              role: "system",
+              content: `${personalityPrefix}You are a mindfulness assistant named MindfulChat. ${currentMood ? `The user is feeling ${currentMood} today. ` : ''}Respond to the following with practical mindfulness advice. Keep responses concise and actionable.`
+            },
             {
               role: "user",
-              parts: [
-                {
-                  text: `${personalityPrefix}You are a mindfulness assistant. ${currentMood ? `The user is feeling ${currentMood} today. ` : ''}Respond to the following in a supportive manner with practical advice: ${prompt}`
-                }
-              ]
+              content: prompt
             }
           ],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1000,
-          },
+          temperature: 0.7,
+          max_tokens: 800,
         }),
       });
 
       const data = await response.json();
       
-      if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-        return data.candidates[0].content.parts[0].text;
+      if (data.choices && data.choices[0]?.message?.content) {
+        return data.choices[0].message.content;
       } else if (data.error) {
         console.error('API Error:', data.error);
         return `I'm sorry, I encountered an error: ${data.error.message || 'Unknown error'}. Please try again later.`;
@@ -205,7 +203,7 @@ const AIChat = () => {
         return "I'm sorry, I couldn't generate a response at the moment. Please try again later.";
       }
     } catch (error) {
-      console.error('Error calling Gemini API:', error);
+      console.error('Error calling Grok API:', error);
       return "I'm sorry, I encountered an error. Please try again later.";
     }
   };
@@ -225,8 +223,8 @@ const AIChat = () => {
     setIsLoading(true);
     
     try {
-      // Get response from Gemini API
-      const botResponse = await generateGeminiResponse(input);
+      // Get response from Grok API
+      const botResponse = await generateGrokResponse(input);
       
       const newBotMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -696,14 +694,22 @@ const AIChat = () => {
               placeholder="Type your message..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyPress}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage();
+                }
+              }}
               className="flex-1 rounded-full border-mindful/30 focus-visible:ring-mindful"
               disabled={isLoading}
             />
             <Button 
               variant="outline" 
               size="icon" 
-              onClick={handleVoiceInput}
+              onClick={() => toast({
+                title: "Voice Input",
+                description: "Voice input functionality will be available soon.",
+              })}
               className="rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
               disabled={isLoading}
             >
@@ -722,7 +728,7 @@ const AIChat = () => {
             </Button>
           </div>
           <p className="text-xs text-center mt-2 text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1">
-            <Bot className="h-3 w-3" /> Powered by Google Gemini
+            <Bot className="h-3 w-3" /> Powered by Grok AI
           </p>
         </div>
       </div>

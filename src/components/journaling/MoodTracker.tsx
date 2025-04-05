@@ -224,6 +224,23 @@ const MoodTracker = () => {
   };
   
   const stats = calculateStats();
+
+  // Fix: Ensure value prop is always a string or number
+  const renderMoodEmoji = (value: number): string => {
+    if (value < 1) return '😢';
+    if (value < 2) return '😔'; 
+    if (value < 3) return '😐';
+    if (value < 4) return '🙂';
+    return '😄';
+  };
+  
+  const renderEnergyEmoji = (value: number): string => {
+    if (value < 1) return '😴';
+    if (value < 2) return '🥱'; 
+    if (value < 3) return '😐';
+    if (value < 4) return '💪';
+    return '⚡';
+  };
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -302,9 +319,12 @@ const MoodTracker = () => {
           
           <Button
             onClick={saveMoodEntry}
-            className="w-full"
+            className="w-full bg-mindful hover:bg-mindful-dark text-white rounded-full shadow-md transition-all duration-300"
           >
-            {todayEntry ? 'Update Today\'s Mood' : 'Save Today\'s Mood'}
+            {moodEntries.find(entry => entry.date === new Date().toISOString().split('T')[0]) 
+              ? 'Update Today\'s Mood' 
+              : 'Save Today\'s Mood'
+            }
           </Button>
         </CardContent>
       </Card>
@@ -389,17 +409,7 @@ const MoodTracker = () => {
                   stats.avgMood < 4 ? '#A3E635' : '#86EFAC'
                 } 
                 label="Avg Mood" 
-                value={
-                  <>
-                    {stats.avgMood.toFixed(1)}
-                    <span className="text-lg ml-1">
-                      {stats.avgMood < 1 ? '😢' : 
-                      stats.avgMood < 2 ? '😔' : 
-                      stats.avgMood < 3 ? '😐' : 
-                      stats.avgMood < 4 ? '🙂' : '😄'}
-                    </span>
-                  </>
-                } 
+                value={`${stats.avgMood.toFixed(1)} ${renderMoodEmoji(stats.avgMood)}`}
               />
               
               <SemiCircleChart 
@@ -411,17 +421,7 @@ const MoodTracker = () => {
                   stats.avgEnergy < 4 ? '#5EEAD4' : '#34D399'
                 } 
                 label="Avg Energy" 
-                value={
-                  <>
-                    {stats.avgEnergy.toFixed(1)}
-                    <span className="text-lg ml-1">
-                      {stats.avgEnergy < 1 ? '😴' : 
-                      stats.avgEnergy < 2 ? '🥱' : 
-                      stats.avgEnergy < 3 ? '😐' : 
-                      stats.avgEnergy < 4 ? '💪' : '⚡'}
-                    </span>
-                  </>
-                } 
+                value={`${stats.avgEnergy.toFixed(1)} ${renderEnergyEmoji(stats.avgEnergy)}`}
               />
             </div>
             
