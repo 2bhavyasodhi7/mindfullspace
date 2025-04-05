@@ -21,6 +21,123 @@ import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Yoga from "./pages/Yoga";
 import AIChat from "./pages/AIChat";
+import "./App.css";
+
+// Custom styles for audio player
+const customStyles = `
+  .rhap_container {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .rhap_progress-section {
+    margin-bottom: 5px;
+  }
+  
+  .rhap_progress-bar {
+    height: 4px;
+  }
+  
+  .rhap_progress-indicator {
+    width: 12px;
+    height: 12px;
+    top: -4px;
+    background-color: var(--mindful);
+  }
+  
+  .rhap_progress-filled {
+    background-color: var(--mindful);
+  }
+  
+  .rhap_controls-section {
+    margin-top: 0;
+  }
+  
+  .rhap_main-controls-button {
+    color: var(--mindful);
+  }
+  
+  .rhap_volume-button {
+    color: var(--mindful);
+  }
+  
+  .rhap_volume-bar {
+    height: 4px;
+  }
+  
+  .rhap_volume-indicator {
+    width: 12px;
+    height: 12px;
+    top: -4px;
+    background-color: var(--mindful);
+  }
+  
+  .article-audio-player .rhap_container {
+    background-color: rgba(115, 165, 128, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  
+  /* Semi-circle chart styling */
+  .semi-circle-chart {
+    position: relative;
+    width: 120px;
+    height: 60px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  
+  .semi-circle-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 120px;
+    border-top-right-radius: 120px;
+    background-color: #f3f4f6;
+  }
+  
+  .dark .semi-circle-background {
+    background-color: #374151;
+  }
+  
+  .semi-circle-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 120px;
+    border-top-right-radius: 120px;
+    background: linear-gradient(to right, #73A580, #A6C1AD);
+    transform-origin: bottom center;
+    transform: rotate(calc(var(--percent) * 1.8deg - 90deg));
+  }
+  
+  .semi-circle-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    padding-bottom: 4px;
+  }
+  
+  .semi-circle-percentage {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+`;
 
 const queryClient = new QueryClient();
 
@@ -28,6 +145,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="light">
       <TooltipProvider>
+        <style>{customStyles}</style>
         <Toaster />
         <Sonner />
         <BrowserRouter>
