@@ -1,342 +1,316 @@
 
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Play, Pause, BookOpen, Clock, MessageCircle, Share2, ThumbsUp, Bookmark } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams, Link } from 'react-router-dom';
+import { ArrowLeft, Headphones, XCircle, Calendar, Clock, Tag, User, ThumbsUp, ThumbsDown, Share } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { useToast } from "@/components/ui/use-toast";
+import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
 
-// Mock article data
-const articles = [
-  {
-    id: '1',
-    title: 'Rewire Your Brain: The Power of Neuroplasticity in Mindfulness',
-    excerpt: 'Learn how mindfulness practices can literally reshape your brain for better mental health and cognitive performance.',
-    content: `
-      <h1>Rewire Your Brain: The Power of Neuroplasticity in Mindfulness</h1>
-      
-      <p>For decades, scientists believed that the brain was fixed and unchangeable after early childhood. But groundbreaking research in neuroplasticity has revealed that our brains can change throughout our lives, forming new neural connections in response to our experiences, thoughts, and behaviors.</p>
-      
-      <p>Mindfulness meditation has emerged as one of the most powerful tools to harness this neuroplasticity, offering a way to literally reshape our brains for improved mental health, emotional regulation, and cognitive performance.</p>
-      
-      <h2>The Science Behind Brain Change</h2>
-      
-      <p>When you practice mindfulness meditation consistently, you're not just feeling calmer in the moment—you're actually changing the physical structure of your brain. Studies using MRI scans have shown several remarkable changes in the brains of long-term meditators:</p>
-      
-      <ul>
-        <li><strong>Increased gray matter</strong> in the prefrontal cortex, associated with higher-order brain functions like awareness, concentration, and decision-making</li>
-        <li><strong>Reduced size of the amygdala</strong>, the brain's alarm system associated with stress and fear responses</li>
-        <li><strong>Enhanced connectivity</strong> between brain regions that process attention and emotion regulation</li>
-      </ul>
-      
-      <h2>How Meditation Changes Your Brain</h2>
-      
-      <p>Even short periods of regular meditation practice (8 weeks of daily practice) can lead to measurable changes in brain structure and function. Here's how different mindfulness practices affect your brain:</p>
-      
-      <h3>Focused Attention Meditation</h3>
-      
-      <p>When you focus on your breath or a specific object, you're training the prefrontal cortex—strengthening neural networks associated with sustained attention and concentration. Each time your mind wanders and you bring it back, it's like doing a rep at the mental gym.</p>
-      
-      <h3>Open Monitoring Meditation</h3>
-      
-      <p>Practices that involve observing thoughts without attachment help create distance between stimuli and response. This strengthens connections between the prefrontal cortex and the limbic system, improving emotional regulation and reducing reactivity.</p>
-      
-      <h3>Loving-Kindness Meditation</h3>
-      
-      <p>Compassion-focused practices activate and strengthen circuits in the brain associated with empathy and positive emotions, particularly the insula and the anterior cingulate cortex.</p>
-      
-      <h2>Practical Applications of Neuroplasticity</h2>
-      
-      <p>Understanding neuroplasticity allows us to be more intentional about how we shape our brains:</p>
-      
-      <ol>
-        <li><strong>Habit formation and breaking:</strong> Repeated thoughts and behaviors create neural pathways that become stronger over time. Mindfulness helps us observe unhelpful patterns and create new, healthier ones.</li>
-        <li><strong>Stress resilience:</strong> Regular meditation strengthens the prefrontal cortex's ability to regulate the amygdala, improving our ability to respond to stress rather than react.</li>
-        <li><strong>Cognitive enhancement:</strong> The improved attention and working memory that come from meditation practice can enhance learning, creativity, and problem-solving abilities.</li>
-      </ol>
-      
-      <h2>Getting Started with Brain-Changing Meditation</h2>
-      
-      <p>To harness neuroplasticity through meditation:</p>
-      
-      <ul>
-        <li><strong>Start small:</strong> Even 5-10 minutes daily can lead to measurable brain changes over time</li>
-        <li><strong>Be consistent:</strong> Regular practice is more important than long sessions</li>
-        <li><strong>Be patient:</strong> Neuroplastic changes take time—stick with it even when progress seems slow</li>
-        <li><strong>Practice mindfulness throughout your day:</strong> Extend your meditation practice into daily activities</li>
-      </ul>
-      
-      <h2>The Bottom Line</h2>
-      
-      <p>Your brain is constantly being shaped by your experiences and thoughts. Mindfulness meditation gives you a tool to actively participate in this process, helping you cultivate a brain that's wired for greater well-being, emotional balance, and cognitive performance.</p>
-      
-      <p>Remember that neuroplasticity works both ways—what you repeatedly do, think, and focus on shapes your brain. Choose mindfulness, and you choose to build a brain that supports your highest potential.</p>
-    `,
-    author: 'Dr. Sarah Johnson',
-    date: 'April 2, 2025',
-    readTime: '8 min read',
-    category: 'Mental Health',
-    image: '/lovable-uploads/7e575c2d-6979-450d-b7bd-502df750d57b.png',
-    audio: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_942258089f.mp3?filename=let-it-go-12279.mp3'
-  },
-  {
-    id: '2',
-    title: 'The Science of Deep Breathing',
-    excerpt: 'Explore how deep breathing techniques affect your nervous system and can help manage stress and anxiety.',
-    content: `
-      <h1>The Science of Deep Breathing</h1>
-      <p>Deep breathing is one of the most powerful tools we have for regulating our nervous system and managing stress...</p>
-      <h2>How Breathing Affects Your Body</h2>
-      <p>Your breath is directly connected to your autonomic nervous system, which controls unconscious processes like heart rate...</p>
-    `,
-    author: 'Dr. Michael Chen',
-    date: 'March 28, 2025',
-    readTime: '6 min read',
-    category: 'Stress Management',
-    image: '/lovable-uploads/031154ed-69c2-4cb3-b86e-8c724f0e1364.png',
-    audio: 'https://cdn.pixabay.com/download/audio/2021/04/07/audio_b687fabb42.mp3?filename=lofi-study-112191.mp3'
-  },
-  // Add more articles as needed
-];
+interface Article {
+  id: string;
+  title: string;
+  content: string;
+  excerpt: string;
+  imageUrl: string;
+  audioUrl: string;
+  author: string;
+  date: string;
+  readTime: string;
+  tags: string[];
+}
 
 const ArticleDetail = () => {
-  const { id } = useParams();
-  const [article, setArticle] = useState<any>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [readingProgress, setReadingProgress] = useState(0);
-  const { toast } = useToast();
-
+  const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const [article, setArticle] = useState<Article | null>(null);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [readProgress, setReadProgress] = useState(0);
+  const [helpfulFeedback, setHelpfulFeedback] = useState<boolean | null>(null);
+  
   useEffect(() => {
-    // Find the article by ID
-    const foundArticle = articles.find(article => article.id === id);
-    if (foundArticle) {
-      setArticle(foundArticle);
+    // Try to get article from location state or fetch based on ID
+    if (location.state?.article) {
+      setArticle(location.state.article);
+    } else if (id) {
+      // In a real app, you'd fetch the article from an API using the ID
+      // For demo, we're hardcoding the article data
+      const mockArticle = {
+        id: '4',
+        title: 'Rewire Your Brain: The Power of Neuroplasticity',
+        excerpt: 'Discover how you can literally change your brain through focused practice and mindfulness.',
+        content: `
+          <h1>Rewire Your Brain: The Power of Neuroplasticity</h1>
+          
+          <p>For much of the 20th century, scientists believed that the adult brain was relatively fixed—its structure and function largely established in childhood. We now know this is far from true. The brain remains malleable throughout life, constantly reorganizing itself based on experiences and focused attention. This property, known as neuroplasticity, offers profound possibilities for personal transformation.</p>
+          
+          <h2>Understanding Neuroplasticity</h2>
+          
+          <p>Neuroplasticity refers to the brain's ability to form new neural connections, strengthen existing ones, and even reorganize itself after injury. This happens on multiple levels, from microscopic changes in individual neurons to large-scale changes visible on brain scans.</p>
+          
+          <p>The saying "neurons that fire together, wire together" (Hebb's rule) captures a fundamental principle of neuroplasticity. When we repeatedly engage in a thought or activity, the neural pathways involved become stronger and more efficient, making that pattern more likely to recur.</p>
+          
+          <h2>Mindfulness as a Tool for Rewiring</h2>
+          
+          <p>Mindfulness meditation is one of the most well-researched approaches to intentional brain change. Regular practice has been shown to:</p>
+          
+          <ul>
+            <li>Increase gray matter density in areas associated with attention and emotional regulation</li>
+            <li>Reduce activity in the default mode network, which is linked to mind-wandering and rumination</li>
+            <li>Strengthen connections between the prefrontal cortex and the amygdala, improving emotional regulation</li>
+          </ul>
+          
+          <p>These changes aren't just theoretical—they translate to measurable improvements in attention, stress management, and emotional wellbeing.</p>
+          
+          <h2>Daily Practices for Positive Neuroplasticity</h2>
+          
+          <p>Beyond formal meditation, many daily practices can harness neuroplasticity for positive change:</p>
+          
+          <h3>Gratitude Practice</h3>
+          <p>Regularly focusing on things you're grateful for strengthens neural pathways associated with positive emotions. Even during difficult times, intentionally noticing and appreciating small pleasures can gradually rewire your brain's default response patterns.</p>
+          
+          <h3>Learning New Skills</h3>
+          <p>Novel experiences and challenges create new neural connections. Learning a musical instrument, studying a language, or mastering a craft all provide healthy stimulation for your brain, potentially building cognitive reserve that protects against age-related decline.</p>
+          
+          <h3>Movement and Exercise</h3>
+          <p>Physical activity increases production of brain-derived neurotrophic factor (BDNF), sometimes called "fertilizer for the brain." BDNF supports the growth and maintenance of neurons, facilitating learning and memory formation.</p>
+          
+          <h2>Overcoming Negative Patterns</h2>
+          
+          <p>Understanding neuroplasticity also helps explain why negative thought patterns and habits can be so persistent—they've been strengthened through repetition. The good news is that the same principles apply to changing these patterns.</p>
+          
+          <p>When we notice ourselves engaging in unwanted thought patterns, we can deliberately redirect our attention, gradually weakening those neural pathways while strengthening more helpful alternatives. This process requires patience and consistency but becomes easier with practice.</p>
+          
+          <h2>The Time Factor</h2>
+          
+          <p>Significant brain changes don't happen overnight. Research suggests that forming new habits typically takes anywhere from 18 to 254 days, with an average of about 66 days. Creating lasting change requires commitment and consistency.</p>
+          
+          <p>However, even small daily practices can accumulate into meaningful transformation over time. The key is persistence and self-compassion during the inevitable setbacks that occur along the way.</p>
+          
+          <h2>Conclusion</h2>
+          
+          <p>Your brain is constantly being shaped by your experiences and where you direct your attention. By understanding and working with neuroplasticity, you can become an active participant in this process rather than a passive recipient.</p>
+          
+          <p>Remember that every thought and action is, in a small way, reinforcing neural pathways. Choose wisely what you practice and repeat, knowing that you are literally rewiring your brain with each mindful choice.</p>
+        `,
+        imageUrl: 'src/pages/images/REWIRE_BRAIN.jpg',
+        audioUrl: 'src/pages/audio/neuroplasticity-audio.mp3',
+        author: 'Dr. James Wilson',
+        date: 'March 18, 2025',
+        readTime: '10 min read',
+        tags: ['Neuroplasticity', 'Brain Health', 'Science']
+      };
       
-      // Reset reading progress when article changes
-      setReadingProgress(0);
-      window.scrollTo(0, 0);
+      setArticle(mockArticle);
     }
-
-    // Set up scroll listener to track reading progress
+    
+    // Set up scroll listener for reading progress
     const handleScroll = () => {
-      const totalHeight = document.body.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      setReadingProgress(Math.min(Math.max(progress, 0), 100));
+      const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const currentScroll = window.scrollY;
+      const scrollPercentage = (currentScroll / totalHeight) * 100;
+      setReadProgress(Math.min(scrollPercentage, 100));
     };
-
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [id]);
-
+  }, [id, location]);
+  
   if (!article) {
     return (
-      <div className="container-custom py-20">
-        <div className="flex items-center justify-center h-60">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Article not found</h2>
-            <Link to="/articles" className="text-mindful hover:underline">
-              Back to Articles
-            </Link>
-          </div>
+      <div className="container-custom py-12 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold mb-4">Loading article...</h2>
+          <div className="w-16 h-16 border-4 border-mindful border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
       </div>
     );
   }
-
-  const handleBookmark = () => {
-    toast({
-      title: "Article saved",
-      description: "This article has been added to your bookmarks.",
-    });
+  
+  const provideFeedback = (isHelpful: boolean) => {
+    setHelpfulFeedback(isHelpful);
   };
-
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast({
-      title: "Link copied",
-      description: "Article link copied to clipboard.",
-    });
+  
+  const shareArticle = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: article.title,
+        text: article.excerpt,
+        url: window.location.href
+      });
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
   };
-
-  const toggleAudioPlay = () => {
-    setIsPlaying(!isPlaying);
-  };
-
+  
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
-      {/* Reading Progress */}
+    <div className="min-h-screen bg-gradient-to-br from-mindful-lighter/30 to-white">
+      {/* Reading progress bar */}
       <div className="fixed top-0 left-0 w-full z-50">
-        <Progress value={readingProgress} className="h-1 bg-gray-200 dark:bg-gray-700" />
+        <Progress value={readProgress} className="h-1 bg-transparent" indicatorClassName="bg-mindful" />
       </div>
       
-      <div className="container-custom pt-8 pb-20">
-        {/* Back Button */}
-        <Link 
-          to="/articles" 
-          className="inline-flex items-center text-gray-600 hover:text-mindful mb-6 transition-colors"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Articles
-        </Link>
+      {/* Hero section with banner image */}
+      <div className="w-full h-64 md:h-80 lg:h-96 relative">
+        <img 
+          src={article.imageUrl} 
+          alt={article.title} 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+          <div className="container-custom py-8 text-white">
+            {article.tags.map((tag, index) => (
+              <Badge key={index} className="bg-mindful mr-2 mb-2">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      </div>
+      
+      {/* Article content */}
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Breadcrumbs */}
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/articles">Articles</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink>{article.title}</BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         
-        {/* Article Header */}
+        {/* Back button */}
+        <div className="mb-6">
+          <Link to="/articles" className="inline-flex items-center text-mindful hover:text-mindful-dark transition-colors">
+            <ArrowLeft size={18} className="mr-2" />
+            Back to articles
+          </Link>
+        </div>
+        
+        {/* Article title and meta */}
         <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-50 font-raleway mb-6">
-            {article.title}
-          </h1>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-raleway mb-4">{article.title}</h1>
           
-          <div className="flex flex-wrap items-center text-gray-500 dark:text-gray-400 gap-4 mb-6">
+          <div className="flex flex-wrap gap-4 items-center text-gray-600">
             <div className="flex items-center">
-              <BookOpen className="h-4 w-4 mr-1" />
-              <span>{article.category}</span>
+              <Avatar className="h-8 w-8 mr-2">
+                <AvatarImage src="/placeholder.svg" alt={article.author} />
+                <AvatarFallback>{article.author[0]}</AvatarFallback>
+              </Avatar>
+              <span className="font-medium">{article.author}</span>
             </div>
+            
             <div className="flex items-center">
-              <Clock className="h-4 w-4 mr-1" />
-              <span>{article.readTime}</span>
-            </div>
-            <div>
+              <Calendar size={16} className="mr-1" />
               <span>{article.date}</span>
             </div>
-          </div>
-          
-          <div className="flex items-center">
-            <div className="flex-shrink-0 mr-4">
-              <div className="h-10 w-10 rounded-full bg-mindful/20 flex items-center justify-center text-mindful">
-                {article.author.split(' ').map((n: string) => n[0]).join('')}
-              </div>
-            </div>
-            <div>
-              <p className="font-medium">{article.author}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Mental Health Specialist</p>
+            
+            <div className="flex items-center">
+              <Clock size={16} className="mr-1" />
+              <span>{article.readTime}</span>
             </div>
           </div>
         </div>
         
-        {/* Audio Player Card */}
-        <Card className="mb-8 border-none shadow-md bg-white dark:bg-gray-800">
+        {/* Audio player */}
+        <Card className="mb-8 border-mindful/20 shadow-md">
           <CardContent className="p-4">
-            <div className="mb-2 font-medium">Listen to this article</div>
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-sm font-medium text-mindful">Listen to this article</h3>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="p-1 h-auto"
+                onClick={() => setIsAudioPlaying(!isAudioPlaying)}
+              >
+                {isAudioPlaying ? <XCircle size={16} /> : <Headphones size={16} />}
+              </Button>
+            </div>
+            
             <AudioPlayer
-              src={article.audio}
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              className="article-audio-player"
-              layout="horizontal-reverse"
+              src={article.audioUrl}
+              showJumpControls={true}
+              layout="stacked-reverse"
+              customControlsSection={defaultControlsSection}
+              customProgressBarSection={defaultProgressBarSection}
+              className="audio-player-custom rounded-md"
+              style={audioPlayerStyles}
+              autoPlayAfterSrcChange={false}
+              onPlay={() => setIsAudioPlaying(true)}
+              onPause={() => setIsAudioPlaying(false)}
             />
           </CardContent>
         </Card>
         
-        {/* Featured Image */}
-        {article.image && (
-          <div className="mb-8">
-            <img
-              src={article.image}
-              alt={article.title}
-              className="w-full h-auto max-h-[500px] object-cover rounded-xl shadow-md"
-            />
-          </div>
-        )}
+        {/* Article content */}
+        <div 
+          className="prose prose-lg max-w-none mb-12 font-raleway prose-headings:font-raleway prose-headings:text-mindful-dark prose-a:text-mindful hover:prose-a:text-mindful-dark prose-img:rounded-lg prose-img:shadow-md"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
         
-        {/* Article Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-3">
-            <article className="prose prose-lg max-w-none dark:prose-invert">
-              <div dangerouslySetInnerHTML={{ __html: article.content }} />
-            </article>
-            
-            {/* Article Footer */}
-            <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex justify-between items-center flex-wrap gap-4">
-                <div className="flex space-x-4">
-                  <Button variant="outline" size="sm" onClick={() => toast({ title: "Thank you!", description: "Your feedback is appreciated." })}>
-                    <ThumbsUp className="mr-2 h-4 w-4" />
-                    Helpful
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={handleShare}>
-                    <Share2 className="mr-2 h-4 w-4" />
-                    Share
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={handleBookmark}>
-                    <Bookmark className="mr-2 h-4 w-4" />
-                    Save
-                  </Button>
-                </div>
-                
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Last updated: {article.date}
-                </div>
-              </div>
-            </div>
+        {/* Feedback section */}
+        <div className="border-t border-gray-200 pt-8 mt-12">
+          <h3 className="text-xl font-semibold mb-4">Was this article helpful?</h3>
+          <div className="flex space-x-4">
+            <Button 
+              variant={helpfulFeedback === true ? "default" : "outline"} 
+              onClick={() => provideFeedback(true)}
+              className={helpfulFeedback === true ? "bg-mindful hover:bg-mindful-dark" : ""}
+            >
+              <ThumbsUp size={18} className="mr-2" />
+              Yes, it was helpful
+            </Button>
+            <Button 
+              variant={helpfulFeedback === false ? "default" : "outline"}
+              onClick={() => provideFeedback(false)}
+              className={helpfulFeedback === false ? "bg-mindful hover:bg-mindful-dark" : ""}
+            >
+              <ThumbsDown size={18} className="mr-2" />
+              No, not really
+            </Button>
           </div>
-          
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
-              <Card className="shadow-sm bg-white dark:bg-gray-800">
-                <CardContent className="p-4">
-                  <h3 className="font-medium mb-3">Related Articles</h3>
-                  <div className="space-y-3">
-                    {articles
-                      .filter(a => a.id !== article.id)
-                      .slice(0, 3)
-                      .map(relatedArticle => (
-                        <Link 
-                          key={relatedArticle.id} 
-                          to={`/article/${relatedArticle.id}`}
-                          className="block group"
-                        >
-                          <div className="text-sm font-medium group-hover:text-mindful transition-colors">
-                            {relatedArticle.title}
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {relatedArticle.readTime}
-                          </div>
-                        </Link>
-                      ))}
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="shadow-sm bg-white dark:bg-gray-800">
-                <CardContent className="p-4">
-                  <h3 className="font-medium mb-3">Topics</h3>
-                  <div className="flex flex-wrap gap-2">
-                    <Link to="/articles" className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm hover:bg-mindful/20 transition-colors">
-                      Meditation
-                    </Link>
-                    <Link to="/articles" className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm hover:bg-mindful/20 transition-colors">
-                      Mental Health
-                    </Link>
-                    <Link to="/articles" className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm hover:bg-mindful/20 transition-colors">
-                      Neuroplasticity
-                    </Link>
-                    <Link to="/articles" className="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm hover:bg-mindful/20 transition-colors">
-                      Stress Management
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="shadow-sm bg-mindful/10 dark:bg-mindful/5">
-                <CardContent className="p-4">
-                  <h3 className="font-medium mb-3 flex items-center">
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    Discuss with AI
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                    Have questions about this article? Chat with our AI assistant.
-                  </p>
-                  <Link to="/ai-chat">
-                    <Button className="w-full">
-                      Start AI Chat
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            </div>
+        </div>
+        
+        {/* Share section */}
+        <div className="mt-8">
+          <Button 
+            variant="outline" 
+            onClick={shareArticle}
+            className="border-mindful/30 text-mindful"
+          >
+            <Share size={18} className="mr-2" />
+            Share this article
+          </Button>
+        </div>
+        
+        {/* Related tags */}
+        <div className="mt-12">
+          <h3 className="text-xl font-semibold mb-4">Related Topics</h3>
+          <div className="flex flex-wrap gap-2">
+            {article.tags.map((tag, index) => (
+              <Link to={`/articles?tag=${tag}`} key={index}>
+                <Badge variant="outline" className="text-mindful border-mindful/30 hover:bg-mindful/10">
+                  <Tag size={14} className="mr-1" />
+                  {tag}
+                </Badge>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
