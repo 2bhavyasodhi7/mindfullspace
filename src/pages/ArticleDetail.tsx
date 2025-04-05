@@ -155,7 +155,7 @@ const ArticleDetail = () => {
     <div className="min-h-screen bg-gradient-to-br from-mindful-lighter/30 to-white">
       {/* Reading progress bar */}
       <div className="fixed top-0 left-0 w-full z-50">
-        <Progress value={readProgress} className="h-1 bg-transparent" indicatorClassName="bg-mindful" />
+        <Progress value={readProgress} className="h-1 bg-transparent" />
       </div>
       
       {/* Hero section with banner image */}
