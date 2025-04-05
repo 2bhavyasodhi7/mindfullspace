@@ -118,8 +118,31 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float-up': 'float-up 0.5s ease-out forwards',
 				'emoji-float': 'emoji-float 5s ease-out forwards'
-			}
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						color: 'var(--foreground)',
+						maxWidth: '100%',
+						a: {
+							color: 'var(--mindful)',
+							'&:hover': {
+								color: 'var(--mindful-dark)',
+							},
+						},
+						h1: {
+							color: 'var(--mindful-dark)',
+						},
+						h2: {
+							color: 'var(--mindful-dark)',
+						},
+						h3: {
+							color: 'var(--mindful)',
+						},
+					},
+				},
+			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

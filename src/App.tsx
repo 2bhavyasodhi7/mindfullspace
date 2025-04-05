@@ -14,6 +14,7 @@ import Meditation from "./pages/Meditation";
 import StressAndAnxiety from "./pages/StressAndAnxiety";
 import Journaling from "./pages/Journaling";
 import Articles from "./pages/Articles";
+import ArticleDetail from "./pages/ArticleDetail";
 import Rewards from "./pages/Rewards";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -40,6 +41,7 @@ const App = () => (
                 <Route path="/stress-and-anxiety" element={<StressAndAnxiety />} />
                 <Route path="/journaling" element={<Journaling />} />
                 <Route path="/articles" element={<Articles />} />
+                <Route path="/article/:id" element={<ArticleDetail />} />
                 <Route path="/rewards" element={<Rewards />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />

@@ -135,6 +135,43 @@
            hover:bg-mindful/10 shadow-sm hover:shadow-md
            transform hover:scale-105 active:scale-95;
   }
+  
+  /* Article styles */
+  .prose h1 {
+    @apply text-4xl font-bold text-mindful-dark mb-6 mt-8 font-raleway;
+  }
+  
+  .prose h2 {
+    @apply text-2xl font-semibold text-mindful-dark mt-8 mb-4 font-raleway;
+  }
+  
+  .prose h3 {
+    @apply text-xl font-medium text-mindful mt-6 mb-3 font-raleway;
+  }
+  
+  .prose p {
+    @apply mb-4 leading-relaxed text-gray-700 dark:text-gray-300;
+  }
+  
+  .prose ul, .prose ol {
+    @apply my-4 pl-6;
+  }
+  
+  .prose li {
+    @apply mb-2;
+  }
+  
+  .prose img {
+    @apply rounded-lg shadow-md my-6 mx-auto;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-mindful pl-4 italic my-6 text-gray-600 dark:text-gray-400;
+  }
+  
+  .prose a {
+    @apply text-mindful hover:text-mindful-dark underline;
+  }
 }
 
 /* Font Family Definitions */
