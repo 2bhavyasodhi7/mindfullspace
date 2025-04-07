@@ -31,7 +31,7 @@ const MeditationOptions = () => {
   const clockRef = useRef<NodeJS.Timeout>();
 
   const guidedMeditations = [
-    { title: "Morning Meditation", duration: "10:00", url: "/music/guided meditaion/4-Minute Guided Mindfulness Meditation [TubeRipper.com].mp3"},
+    { title: "Morning Meditation", duration: "10:00", url: "/music/guided-meditation/4-Minute-Guided-Mindfulness-Meditation.mp3"},
     { title: "Stress Relief", duration: "15:00", url: "/music/sample-audio.mp3" },
     { title: "Deep Sleep", duration: "20:00", url: "/music/sample-audio.mp3" },
     { title: "Anxiety Relief", duration: "12:00", url: "/music/sample-audio.mp3" },
@@ -43,22 +43,22 @@ const MeditationOptions = () => {
     {
       title: "Mindfulness Meditation",
       description: "Focus on the present moment through breath awareness",
-      image: "src/pages/images/MINDFULLNESS_MEDITATION.jpg"
+      image: "/images/MINDFULLNESS_MEDITATION.jpg"
     },
     {
       title: "Loving-Kindness Meditation",
       description: "Cultivate compassion and positive feelings towards others",
-      image: "src/pages/images/LOVING_KINDNESS.jpg"
+      image: "/images/LOVING_KINDNESS.jpg"
     },
     {
       title: "Body Scan Meditation",
       description: "Progressive relaxation through body awareness",
-      image: "src/pages/images/BODY_SCAN.jpg"
+      image: "/images/BODY_SCAN.jpg"
     },
     {
       title: "Transcendental Meditation",
       description: "Silent mantra meditation for deep relaxation",
-      image: "src/pages/images/TRANSCEDENTAL.jpg"
+      image: "/images/TRANSCEDENTAL.jpg"
     }
   ];
 
