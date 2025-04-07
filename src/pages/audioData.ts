@@ -6,31 +6,31 @@ export const audioFiles = {
       id: 1,
       title: "Peaceful Meadow Journey",
       duration: "15 min",
-      url: "/music/Peaceful-Meadow-Journey.mp3"
+      url: "src/pages/music/Peaceful Meadow Journey.mp3"
     },
     {
       id: 2,
       title: "Seaside Slumber",
       duration: "20 min",
-      url: "/music/Seaside-Slumber.mp3"
+      url: "src/pages/music/Seaside Slumber.mp3"
     },
     {
       id: 3,
       title: "Starry Night Visualization",
       duration: "18 min",
-      url: "/music/Starry-Night-Visualization.mp3"
+      url: "src/pages/music/Starry Night Visualization.mp3"
     },
     {
       id: 4,
       title: "Forest Canopy Dreams",
       duration: "22 min",
-      url: "/music/Forest-Canopy-Dreams.mp3"
+      url: "src/pages/music/Forest Canopy Dreams.mp3"
     },
     {
       id: 5,
       title: "Mountain Cabin Rest",
       duration: "25 min",
-      url: "/music/Mountain-cabin-rest.mp3"
+      url: "src/pages/music/Mountain cabin rest.mp3"
     },
     {
       id: 6,
@@ -44,7 +44,7 @@ export const audioFiles = {
       id: 1,
       title: "Basic NSDR Protocol",
       duration: "10 min",
-      url: "/music/Basic-NSDR-Protocol.mp3"
+      url: "src/pages/music/Basic NSDR Protocol.mp3"
     },
     {
       id: 2,
@@ -62,7 +62,7 @@ export const audioFiles = {
       id: 4,
       title: "Morning NSDR Energizer",
       duration: "12 min",
-      url: "/music/Morning-NSDR-energizer.mp3"
+      url: "src/pages/music/Morning NSDR energizer.mp3"
     }
   ],
   soundscapes: [

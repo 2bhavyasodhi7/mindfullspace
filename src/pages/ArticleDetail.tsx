@@ -99,8 +99,8 @@ const ArticleDetail = () => {
           
           <p>Remember that every thought and action is, in a small way, reinforcing neural pathways. Choose wisely what you practice and repeat, knowing that you are literally rewiring your brain with each mindful choice.</p>
         `,
-        imageUrl: '/images/REWIRE_BRAIN.jpg',
-        audioUrl: '/music/neuroplasticity-audio.mp3',
+        imageUrl: 'src/pages/images/REWIRE_BRAIN.jpg',
+        audioUrl: 'src/pages/audio/neuroplasticity-audio.mp3',
         author: 'Dr. James Wilson',
         date: 'March 18, 2025',
         readTime: '10 min read',

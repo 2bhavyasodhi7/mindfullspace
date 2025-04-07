@@ -20,7 +20,7 @@ const MeditationHeader = () => {
       </div>
       <div className="md:w-1/2 mt-8 md:mt-0">
         <img 
-          src="/images/MEDITATION_PAGE_FIRST.jpg"
+          src="src/pages/images/MEDITATION_PAGE_FIRST.jpg"
           alt="Meditation"
           className="rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
         />
