@@ -28,7 +28,7 @@ const HeroSection = () => {
       {/* Full-width, full-height background image */}
       <div className="absolute inset-0 w-full h-full">
         <img 
-          src="" 
+          src="src/pages/images/scenery.jpg" 
           alt="Meditation background" 
           className="w-full h-full object-cover brightness-[0.6]"
         />
