@@ -136,6 +136,27 @@
            transform hover:scale-105 active:scale-95;
   }
   
+  /* New UI Styles */
+  .btn-primary {
+    @apply px-6 py-2.5 rounded-full text-white font-medium bg-spice-500 hover:bg-spice-600 transition-colors duration-300 shadow-lg hover:shadow-xl focus:ring-2 focus:ring-spice-300 focus:outline-none;
+  }
+  
+  .btn-outline {
+    @apply px-6 py-2.5 rounded-full border-2 border-white/30 backdrop-blur-sm hover:bg-white/10 transition-colors duration-300 font-medium focus:ring-2 focus:ring-white/30 focus:outline-none;
+  }
+  
+  .glass-panel {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg;
+  }
+  
+  .subtitle {
+    @apply text-sm uppercase tracking-widest font-medium text-spice-400;
+  }
+  
+  .nav-item {
+    @apply px-3 py-2 rounded-full text-foreground hover:bg-background/10 backdrop-blur-sm;
+  }
+  
   /* Article styles */
   .prose h1 {
     @apply text-4xl font-bold text-mindful-dark mb-6 mt-8 font-raleway;
@@ -172,6 +193,11 @@
   .prose a {
     @apply text-mindful hover:text-mindful-dark underline;
   }
+
+  /* Hardware acceleration for smoother animations */
+  .hardware-accelerated {
+    @apply will-change-transform backface-visibility-hidden translate-z-0;
+  }
 }
 
 /* Font Family Definitions */
@@ -203,4 +229,50 @@
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Animation for elements to appear when they come into view */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Nike inspired styles */
+.nike-headline {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.nike-highlight {
+  display: inline-block;
+  position: relative;
+}
+
+.nike-body-text {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.6;
+}
+
+.nike-quote {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+}
+
+.nike-quote-author {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+}
+
+.nike-button {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
