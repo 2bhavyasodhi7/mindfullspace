@@ -23,7 +23,10 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
 }) => {
   const controls = useAnimation();
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, threshold });
+  const inView = useInView(ref, { 
+    once: true, 
+    amount: threshold // Changed from threshold to amount which is the correct property
+  });
 
   // Calculate initial position based on direction
   const getInitialPosition = () => {
