@@ -21,7 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				'serif': ['Merriweather', 'serif'],
-				'sans': ['Inter', 'sans-serif'],
+				'sans': ['Open Sans', 'sans-serif'],
 				'stay-calm': ['"Stay Calm"', 'sans-serif'],
 				'calming': ['Calming', 'serif'],
 				'ff-yoga': ['"FF Yoga"', 'serif'],
@@ -73,29 +73,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Updated color scheme inspired by Headspace
 				mindful: {
-					DEFAULT: '#F36B08', // Orange primary
-					dark: '#D95A00',    // Darker orange
-					light: '#FF8A3D',   // Lighter orange
-					lighter: '#FFF0E6', // Very light orange
-					darker: '#B84C00',  // Very dark orange
-				},
-				// Adding Headspace yellow as a secondary color
-				mindful2: {
-					DEFAULT: '#FACA0F', // Yellow
-					dark: '#E0B400',    // Darker yellow
-					light: '#FFD83D',   // Lighter yellow
-					lighter: '#FFF7E0', // Very light yellow
-					darker: '#C89E00',  // Very dark yellow
-				},
-				// Adding Headspace blue as a tertiary color
-				mindful3: {
-					DEFAULT: '#304B61', // Blue
-					dark: '#1E3142',    // Darker blue
-					light: '#4A6683',   // Lighter blue
-					lighter: '#E5EBF1', // Very light blue
-					darker: '#0F1A23',  // Very dark blue
+					DEFAULT: '#73A580',
+					dark: '#5C8467',
+					light: '#A6C1AD',
+					lighter: '#E8F0EA',
+					darker: '#4A6B53',
 				}
 			},
 			borderRadius: {
