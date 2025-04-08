@@ -22,7 +22,7 @@ const ScrollTriggeredAnimation: React.FC<ScrollTriggeredAnimationProps> = ({
 }) => {
   const { scrollYProgress } = useScroll({
     offset: ["start end", "end start"],
-    threshold
+    // Remove the threshold property as it's not supported in UseScrollOptions
   });
   
   // Different transformation effects
