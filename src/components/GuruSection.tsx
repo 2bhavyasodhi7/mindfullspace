@@ -25,7 +25,7 @@ const GuruSection = () => {
     {
       name: "Sadhguru",
       description: "Blending ancient yogic wisdom with contemporary understanding to offer practical solutions for modern life.",
-      imageUrl: "/images/sadhguru.jpg",
+      imageUrl: "images/sadhguru.jpg",
       websiteUrl: "https://isha.sadhguru.org/"
     },
     {
