@@ -88,7 +88,12 @@
 @layer components {
   /* Container utility */
   .container-custom {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-lg shadow-lg;
+  }
+
+  /* Content sections with backdrop for better readability */
+  .content-section {
+    @apply bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-md p-6;
   }
 
   /* Typography utilities */
