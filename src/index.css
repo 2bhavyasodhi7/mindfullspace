@@ -5,8 +5,9 @@
 
 @layer base {
   :root {
+    /* Updating color scheme based on Headspace */
     --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
+    --foreground: 222 47% 11%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -20,11 +21,13 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Headspace orange */
+    --primary: 25 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Headspace yellow */
+    --secondary: 43 100% 50%;
+    --secondary-foreground: 222 47% 11%;
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -32,15 +35,30 @@
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --ring: 215 20.2% 65.1%;
+    --ring: 25 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --mindful: #73A580;
-    --mindful-dark: #5D8469;
-    --mindful-darker: #3e574b;
-    --mindful-light: #A3C2AB;
-    --mindful-lighter: #E8F2EB;
+    /* Direct color variables */
+    --mindful: #F36B08;
+    --mindful-dark: #D95A00;
+    --mindful-darker: #B84C00;
+    --mindful-light: #FF8A3D;
+    --mindful-lighter: #FFF0E6;
+    
+    /* Headspace yellow */
+    --mindful2: #FACA0F;
+    --mindful2-dark: #E0B400;
+    --mindful2-darker: #C89E00;
+    --mindful2-light: #FFD83D;
+    --mindful2-lighter: #FFF7E0;
+    
+    /* Headspace blue */
+    --mindful3: #304B61;
+    --mindful3-dark: #1E3142;
+    --mindful3-darker: #0F1A23;
+    --mindful3-light: #4A6683;
+    --mindful3-lighter: #E5EBF1;
   }
 
   .dark {
@@ -59,11 +77,13 @@
     --border: 216 34% 17%;
     --input: 216 34% 17%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
+    /* Headspace orange in dark mode */
+    --primary: 25 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
+    /* Headspace yellow in dark mode */
+    --secondary: 43 100% 50%;
+    --secondary-foreground: 222 47% 11%;
 
     --accent: 216 34% 17%;
     --accent-foreground: 210 40% 98%;
@@ -71,7 +91,7 @@
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --ring: 216 34% 17%;
+    --ring: 25 100% 50%;
   }
 }
 
@@ -83,12 +103,15 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium;
+  }
 }
 
 @layer components {
   /* Container utility */
   .container-custom {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl;
   }
 
   /* Typography utilities */
@@ -121,7 +144,7 @@
     @apply absolute top-0 left-0 w-full h-full flex items-center justify-center text-lg font-medium;
   }
   
-  /* Apple-style button */
+  /* Headspace-style button */
   .apple-button {
     @apply inline-flex items-center justify-center px-6 py-3 font-medium text-sm rounded-full
            bg-mindful text-white transition-all duration-300 ease-in-out
@@ -134,6 +157,16 @@
            bg-white text-mindful border border-mindful/30 transition-all duration-300 ease-in-out
            hover:bg-mindful/10 shadow-sm hover:shadow-md
            transform hover:scale-105 active:scale-95;
+  }
+
+  /* Headspace container */
+  .headspace-container {
+    @apply container max-w-6xl mx-auto px-4 sm:px-6;
+  }
+
+  /* Headspace button */
+  .headspace-btn {
+    @apply rounded-full font-medium;
   }
   
   /* Article styles */
@@ -176,7 +209,7 @@
 
 /* Font Family Definitions */
 .font-stay-calm {
-  font-family: 'Stay Calm', 'Arial', sans-serif;
+  font-family: 'Stay Calm', 'Inter', sans-serif;
 }
 
 .font-calming {
@@ -184,7 +217,7 @@
 }
 
 .font-raleway {
-  font-family: 'Raleway', 'Arial', sans-serif;
+  font-family: 'Raleway', 'Inter', sans-serif;
 }
 
 .font-ff-yoga {
@@ -192,7 +225,7 @@
 }
 
 .font-tan-mon-cheri {
-  font-family: 'Tan Mon Cheri', 'Arial', sans-serif;
+  font-family: 'Tan Mon Cheri', 'Inter', sans-serif;
 }
 
 /* Animation for fade in */
@@ -203,4 +236,29 @@
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* New rounded cards and button styles */
+.rounded-card {
+  @apply rounded-2xl overflow-hidden shadow-lg border-0 transition-all duration-300 hover:shadow-xl;
+}
+
+.button-primary {
+  @apply bg-mindful text-white rounded-full px-6 py-3 font-medium transition-all duration-300 
+         hover:bg-mindful-dark hover:shadow-lg transform hover:scale-105;
+}
+
+.button-secondary {
+  @apply bg-mindful2 text-mindful3-darker rounded-full px-6 py-3 font-medium transition-all duration-300 
+         hover:bg-mindful2-dark hover:shadow-lg transform hover:scale-105;
+}
+
+.button-tertiary {
+  @apply bg-mindful3 text-white rounded-full px-6 py-3 font-medium transition-all duration-300 
+         hover:bg-mindful3-dark hover:shadow-lg transform hover:scale-105;
+}
+
+.button-outline {
+  @apply border-2 border-mindful text-mindful rounded-full px-6 py-3 font-medium transition-all duration-300 
+         hover:bg-mindful-lighter hover:shadow-lg transform hover:scale-105;
 }

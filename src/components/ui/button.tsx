@@ -16,7 +16,9 @@ const buttonVariants = cva(
         outline:
           "border border-mindful/30 bg-white/10 hover:bg-mindful/5 text-mindful apple-button-secondary",
         secondary:
-          "bg-mindful-lighter text-mindful-dark hover:bg-mindful-lighter/80 shadow-sm apple-button-primary",
+          "bg-mindful2 text-mindful3-dark hover:bg-mindful2/80 shadow-sm",
+        tertiary:
+          "bg-mindful3 text-white hover:bg-mindful3/80 shadow-sm",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-mindful underline-offset-4 hover:underline",
       },
@@ -45,7 +47,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }), "font-raleway")}
+        className={cn(buttonVariants({ variant, size, className }), "font-sans")}
         ref={ref}
         {...props}
       />
