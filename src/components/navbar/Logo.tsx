@@ -15,7 +15,7 @@ const Logo = () => {
           <text x="12" y="16" fontSize="14" fontFamily="Arial, sans-serif" fontWeight="bold" fill="currentColor" textAnchor="middle" dominantBaseline="middle">MS</text>
         </svg>
       </div>
-      <span className="text-xl font-bold text-white">MindfulSpace</span>
+      <span className="text-xl font-bold text-white font-raleway">MindfulSpace</span>
     </Link>
   );
 };

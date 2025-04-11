@@ -103,6 +103,31 @@
   .mindful-section {
     @apply py-12 md:py-16 lg:py-20;
   }
+  
+  /* Navbar styles */
+  .navbar-circle {
+    @apply relative w-[90%] max-w-4xl mx-auto px-6 py-4 sm:py-3 rounded-full 
+           backdrop-blur-xl bg-white/10 
+           border border-white/20 shadow-lg
+           overflow-hidden;
+    background: radial-gradient(circle, rgba(115, 165, 128, 0.9), rgba(93, 132, 105, 0.9), rgba(62, 87, 75, 0.9));
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .nav-link {
+    @apply text-white font-raleway text-base font-medium transition-all duration-300
+           relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5
+           after:bg-white after:transform after:scale-x-0 after:origin-bottom-right
+           after:transition-transform hover:text-green-300 hover:after:scale-x-100
+           hover:after:origin-bottom-left;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  .nav-link-mobile {
+    @apply text-white font-raleway text-base font-medium py-2 
+           transition-all duration-300 hover:text-green-300 hover:translate-x-1;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  }
 
   /* Semi-circle chart styling */
   .semi-circle-chart {
@@ -203,4 +228,15 @@
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Navbar animation */
+@keyframes navbarPulse {
+  0% { box-shadow: 0 0 10px rgba(115, 165, 128, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(115, 165, 128, 0.8); }
+  100% { box-shadow: 0 0 10px rgba(115, 165, 128, 0.5); }
+}
+
+.navbar-circle:hover {
+  animation: navbarPulse 2s infinite;
 }

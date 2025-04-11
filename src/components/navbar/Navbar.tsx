@@ -6,8 +6,8 @@ import MobileNav from './MobileNav';
 
 const Navbar = () => {
   return (
-    <nav className="bg-[#0c1420] backdrop-blur-md sticky top-0 z-50 shadow-lg">
-      <div className="container-custom py-4">
+    <nav className="sticky top-4 z-50 flex justify-center w-full">
+      <div className="navbar-circle">
         <div className="flex justify-between items-center">
           {/* Logo and Brand */}
           <Logo />

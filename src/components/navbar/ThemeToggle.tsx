@@ -16,18 +16,18 @@ const ThemeToggle = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="border-gray-600 bg-transparent text-gray-300 hover:bg-gray-800 hover:text-white">
+        <Button variant="ghost" size="icon" className="text-white hover:bg-white/10 hover:text-green-300">
           {theme === 'light' ? <Moon className="h-[1.2rem] w-[1.2rem]" /> : <Sun className="h-[1.2rem] w-[1.2rem]" />}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-[#0c1420] border border-gray-700 text-gray-300">
-        <DropdownMenuItem onClick={() => setTheme("light")} className="hover:bg-gray-800 hover:text-white">
+      <DropdownMenuContent align="end" className="bg-white/10 backdrop-blur-lg border border-white/20 text-white">
+        <DropdownMenuItem onClick={() => setTheme("light")} className="hover:bg-green-800/30 hover:text-white">
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")} className="hover:bg-gray-800 hover:text-white">
+        <DropdownMenuItem onClick={() => setTheme("dark")} className="hover:bg-green-800/30 hover:text-white">
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")} className="hover:bg-gray-800 hover:text-white">
+        <DropdownMenuItem onClick={() => setTheme("system")} className="hover:bg-green-800/30 hover:text-white">
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

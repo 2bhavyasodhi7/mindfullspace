@@ -34,22 +34,22 @@ const MobileNav = () => {
           </Link>
         )}
         
-        <button onClick={toggleMenu} className="text-gray-300 hover:text-white">
+        <button onClick={toggleMenu} className="text-white hover:text-green-300 transition-colors">
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="bg-[#0c1420] py-4 px-4 border-t border-gray-800">
+        <div className="absolute top-full left-0 right-0 mt-4 rounded-lg bg-white/10 backdrop-blur-lg py-4 px-4 border border-white/20 shadow-lg">
           <div className="flex flex-col space-y-4">
-            <Link to="/sleep" className="text-gray-300 hover:text-white transition-colors" onClick={toggleMenu}>
+            <Link to="/sleep" className="nav-link-mobile" onClick={toggleMenu}>
               Sleep
             </Link>
-            <Link to="/meditation" className="text-gray-300 hover:text-white transition-colors" onClick={toggleMenu}>
+            <Link to="/meditation" className="nav-link-mobile" onClick={toggleMenu}>
               Meditation
             </Link>
-            <Link to="/stress-and-anxiety" className="text-gray-300 hover:text-white transition-colors" onClick={toggleMenu}>
+            <Link to="/stress-and-anxiety" className="nav-link-mobile" onClick={toggleMenu}>
               Stress & Anxiety
             </Link>
             
@@ -59,15 +59,15 @@ const MobileNav = () => {
             <div className="pt-4 flex space-x-4">
               {isLoggedIn ? (
                 <Link to="/profile" className="flex-1" onClick={toggleMenu}>
-                  <Button className="w-full bg-[#ffcc00] hover:bg-[#e6b800] text-[#0c1420] font-medium">Profile</Button>
+                  <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-medium">Profile</Button>
                 </Link>
               ) : (
                 <>
                   <Link to="/login" className="flex-1" onClick={toggleMenu}>
-                    <Button variant="outline" className="w-full border-gray-600 bg-transparent text-gray-300 hover:bg-gray-800 hover:text-white">Login</Button>
+                    <Button variant="outline" className="w-full border-green-300 bg-transparent text-white hover:bg-green-900/30 hover:text-white">Login</Button>
                   </Link>
                   <Link to="/signup" className="flex-1" onClick={toggleMenu}>
-                    <Button className="w-full bg-[#ffcc00] hover:bg-[#e6b800] text-[#0c1420] font-medium">Sign Up</Button>
+                    <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-medium">Sign Up</Button>
                   </Link>
                 </>
               )}

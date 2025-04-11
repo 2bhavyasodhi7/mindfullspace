@@ -10,13 +10,13 @@ const DesktopNav = () => {
     <>
       {/* Desktop Navigation Links */}
       <div className="hidden md:flex items-center space-x-6">
-        <Link to="/sleep" className="text-gray-300 hover:text-white transition-colors">
+        <Link to="/sleep" className="nav-link">
           Sleep
         </Link>
-        <Link to="/meditation" className="text-gray-300 hover:text-white transition-colors">
+        <Link to="/meditation" className="nav-link">
           Meditation
         </Link>
-        <Link to="/stress-and-anxiety" className="text-gray-300 hover:text-white transition-colors">
+        <Link to="/stress-and-anxiety" className="nav-link">
           Stress & Anxiety
         </Link>
 
