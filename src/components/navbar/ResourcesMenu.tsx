@@ -3,6 +3,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { BookOpen } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 
 interface ResourcesMenuProps {
   mobile?: boolean;
@@ -10,82 +16,84 @@ interface ResourcesMenuProps {
 }
 
 const ResourcesMenu: React.FC<ResourcesMenuProps> = ({ mobile, onItemClick }) => {
-  const [showResources, setShowResources] = useState(false);
-
-  const toggleResources = () => {
-    setShowResources((prev) => !prev);
-  };
-
   const handleItemClick = () => {
-    setShowResources(false);
     if (onItemClick) {
       onItemClick();
     }
   };
 
   return (
-    <div className="relative">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={toggleResources}
-        className="flex items-center gap-1 text-sm font-medium"
-        aria-expanded={showResources}
-        aria-haspopup="true"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="flex items-center gap-1 text-sm font-medium text-white hover:bg-white/10 hover:text-green-300"
+        >
+          <BookOpen size={18} />
+          <span className="ml-1">Resources</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent 
+        align="end" 
+        className={`bg-white/10 backdrop-blur-lg border border-white/20 text-white ${mobile ? 'w-full' : 'min-w-[200px]'}`}
       >
-        <BookOpen size={18} />
-        <span className="ml-1">Resources</span>
-      </Button>
-
-      {showResources && (
-        <div className={`${mobile ? "" : "absolute z-50 right-0 mt-2 w-56 origin-top-right"} rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800`}>
-          <div className="py-1 animate-fade-in">
-            <Link
-              to="/articles"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
-              onClick={handleItemClick}
-            >
-              Articles
-            </Link>
-            <Link
-              to="/meditation"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
-              onClick={handleItemClick}
-            >
-              Meditation
-            </Link>
-            <Link
-              to="/yoga"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
-              onClick={handleItemClick}
-            >
-              Yoga
-            </Link>
-            <Link
-              to="/sleep"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
-              onClick={handleItemClick}
-            >
-              Sleep
-            </Link>
-            <Link
-              to="/stress-and-anxiety"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
-              onClick={handleItemClick}
-            >
-              Stress & Anxiety
-            </Link>
-            <Link
-              to="/journaling"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
-              onClick={handleItemClick}
-            >
-              Journaling
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
+        <DropdownMenuItem asChild>
+          <Link 
+            to="/articles" 
+            className="hover:bg-green-800/30 hover:text-white w-full"
+            onClick={handleItemClick}
+          >
+            Articles
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link 
+            to="/meditation" 
+            className="hover:bg-green-800/30 hover:text-white w-full"
+            onClick={handleItemClick}
+          >
+            Meditation
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link 
+            to="/yoga" 
+            className="hover:bg-green-800/30 hover:text-white w-full"
+            onClick={handleItemClick}
+          >
+            Yoga
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link 
+            to="/sleep" 
+            className="hover:bg-green-800/30 hover:text-white w-full"
+            onClick={handleItemClick}
+          >
+            Sleep
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link 
+            to="/stress-and-anxiety" 
+            className="hover:bg-green-800/30 hover:text-white w-full"
+            onClick={handleItemClick}
+          >
+            Stress & Anxiety
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link 
+            to="/journaling" 
+            className="hover:bg-green-800/30 hover:text-white w-full"
+            onClick={handleItemClick}
+          >
+            Journaling
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
