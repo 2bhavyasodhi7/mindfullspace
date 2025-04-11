@@ -30,13 +30,14 @@ const Index = () => {
   }, []);
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    // Removed background gradient classes as we're now using the BackgroundWrapper
+    <div className="min-h-screen">
       <HeroSection />
       <WhatIsMindfulness />
-      <div className="py-10 bg-gradient-to-t from-gray-100 to-white dark:from-gray-800 dark:to-gray-900">
+      <div className="py-10">
         <GuruSection />
       </div>
-      <div className="py-10 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="py-10">
         <FAQSection />
       </div>
     </div>

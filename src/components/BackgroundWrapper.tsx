@@ -12,10 +12,11 @@ const BackgroundWrapper: React.FC<BackgroundWrapperProps> = ({ children }) => {
       <div 
         className="fixed inset-0 w-full h-full bg-cover bg-center z-0" 
         style={{ 
-          backgroundImage: 'url("/lovable-uploads/0b7ddbc8-b2ee-4c59-a8cf-3632faecedb1.png")',
+          backgroundImage: 'url("/lovable-uploads/96bbf7e5-56e0-4dfc-885b-03073da3c3d3.png")',
           filter: 'blur(8px)',
-          opacity: 0.2,
-          backgroundSize: 'cover'
+          opacity: 0.7,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       />
       
