@@ -21,6 +21,7 @@ import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
 import Yoga from "./pages/Yoga";
 import AIChat from "./pages/AIChat";
+import BackgroundWrapper from "./components/BackgroundWrapper";
 
 const queryClient = new QueryClient();
 
@@ -31,28 +32,30 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/sleep" element={<Sleep />} />
-                <Route path="/meditation" element={<Meditation />} />
-                <Route path="/stress-and-anxiety" element={<StressAndAnxiety />} />
-                <Route path="/journaling" element={<Journaling />} />
-                <Route path="/articles" element={<Articles />} />
-                <Route path="/article/:id" element={<ArticleDetail />} />
-                <Route path="/rewards" element={<Rewards />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/yoga" element={<Yoga />} />
-                <Route path="/ai-chat" element={<AIChat />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
+          <BackgroundWrapper>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-grow">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/sleep" element={<Sleep />} />
+                  <Route path="/meditation" element={<Meditation />} />
+                  <Route path="/stress-and-anxiety" element={<StressAndAnxiety />} />
+                  <Route path="/journaling" element={<Journaling />} />
+                  <Route path="/articles" element={<Articles />} />
+                  <Route path="/article/:id" element={<ArticleDetail />} />
+                  <Route path="/rewards" element={<Rewards />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/yoga" element={<Yoga />} />
+                  <Route path="/ai-chat" element={<AIChat />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </BackgroundWrapper>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
