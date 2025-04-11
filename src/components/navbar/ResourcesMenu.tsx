@@ -1,97 +1,76 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { BookOpen } from "lucide-react";
 
-interface ResourcesMenuProps {
-  mobile?: boolean;
-  onItemClick?: () => void;
-}
-
-const ResourcesMenu: React.FC<ResourcesMenuProps> = ({ mobile = false, onItemClick }) => {
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+const ResourcesMenu = () => {
+  const [showResources, setShowResources] = useState(false);
 
   const toggleResources = () => {
-    setIsResourcesOpen(!isResourcesOpen);
+    setShowResources((prev) => !prev);
   };
-
-  const handleItemClick = () => {
-    if (onItemClick) {
-      onItemClick();
-    }
-    setIsResourcesOpen(false);
-  };
-
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsResourcesOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  if (mobile) {
-    return (
-      <div>
-        <button 
-          onClick={toggleResources}
-          className="flex items-center text-gray-300 hover:text-white transition-colors w-full justify-between"
-        >
-          Resources {isResourcesOpen ? <ChevronUp className="ml-1 h-4 w-4" /> : <ChevronDown className="ml-1 h-4 w-4" />}
-        </button>
-        
-        {isResourcesOpen && (
-          <div className="mt-2 pl-4 border-l-2 border-gray-700">
-            <Link to="/journaling" className="block py-2 text-gray-300 hover:text-white" onClick={handleItemClick}>
-              Journaling
-            </Link>
-            <Link to="/articles" className="block py-2 text-gray-300 hover:text-white" onClick={handleItemClick}>
-              Articles
-            </Link>
-            <Link to="/yoga" className="block py-2 text-gray-300 hover:text-white" onClick={handleItemClick}>
-              Yoga
-            </Link>
-            <Link to="/ai-chat" className="block py-2 text-gray-300 hover:text-white" onClick={handleItemClick}>
-              AI Chat
-            </Link>
-          </div>
-        )}
-      </div>
-    );
-  }
 
   return (
-    <div className="relative" ref={menuRef}>
-      <button 
+    <div className="relative">
+      <Button
+        variant="ghost"
+        size="sm"
         onClick={toggleResources}
-        className="flex items-center text-gray-300 hover:text-white transition-colors"
-        aria-expanded={isResourcesOpen}
+        className="flex items-center gap-1 text-sm font-medium"
+        aria-expanded={showResources}
         aria-haspopup="true"
       >
-        Resources {isResourcesOpen ? <ChevronUp className="ml-1 h-4 w-4" /> : <ChevronDown className="ml-1 h-4 w-4" />}
-      </button>
-      
-      {isResourcesOpen && (
-        <div className="absolute mt-2 w-48 rounded-md shadow-lg py-1 z-10 dropdown-menu">
-          <Link to="/journaling" className="block px-4 py-2 text-gray-300 hover:bg-green-800 hover:text-white">
-            Journaling
-          </Link>
-          <Link to="/articles" className="block px-4 py-2 text-gray-300 hover:bg-green-800 hover:text-white">
-            Articles
-          </Link>
-          <Link to="/yoga" className="block px-4 py-2 text-gray-300 hover:bg-green-800 hover:text-white">
-            Yoga
-          </Link>
-          <Link to="/ai-chat" className="block px-4 py-2 text-gray-300 hover:bg-green-800 hover:text-white">
-            AI Chat
-          </Link>
+        <BookOpen size={18} />
+        <span className="ml-1">Resources</span>
+      </Button>
+
+      {showResources && (
+        <div className="absolute z-50 right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800">
+          <div className="py-1 animate-fade-in">
+            <Link
+              to="/articles"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
+              onClick={() => setShowResources(false)}
+            >
+              Articles
+            </Link>
+            <Link
+              to="/meditation"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
+              onClick={() => setShowResources(false)}
+            >
+              Meditation
+            </Link>
+            <Link
+              to="/yoga"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
+              onClick={() => setShowResources(false)}
+            >
+              Yoga
+            </Link>
+            <Link
+              to="/sleep"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
+              onClick={() => setShowResources(false)}
+            >
+              Sleep
+            </Link>
+            <Link
+              to="/stress-and-anxiety"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
+              onClick={() => setShowResources(false)}
+            >
+              Stress & Anxiety
+            </Link>
+            <Link
+              to="/journaling"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-700"
+              onClick={() => setShowResources(false)}
+            >
+              Journaling
+            </Link>
+          </div>
         </div>
       )}
     </div>
