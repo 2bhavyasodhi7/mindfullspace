@@ -30,16 +30,11 @@ const Index = () => {
   }, []);
   
   return (
-    // Removed background gradient classes as we're now using the BackgroundWrapper
     <div className="min-h-screen">
       <HeroSection />
       <WhatIsMindfulness />
-      <div className="py-10">
-        <GuruSection />
-      </div>
-      <div className="py-10">
-        <FAQSection />
-      </div>
+      <GuruSection />
+      <FAQSection />
     </div>
   );
 };
