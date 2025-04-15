@@ -54,11 +54,11 @@ const AIChat = () => {
     }
   }, [messages]);
 
-  // Updated to use Grok API 
+  // Updated to use Gemini API 
   const generateResponse = async (prompt: string) => {
     try {
       const API_KEY = "AIzaSyALXZHcvALcuNBcSG6AJjAsApqUkj5k9Ro";
-      const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+      const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
       
       const response = await fetch(`${API_URL}?key=${API_KEY}`, {
         method: "POST",
@@ -68,7 +68,6 @@ const AIChat = () => {
         body: JSON.stringify({
           contents: [
             {
-              role: "user",
               parts: [
                 { 
                   text: `You are a mindfulness assistant named MindfulBot. Respond to the following with practical mindfulness advice. Keep responses concise and actionable: ${prompt}` 
@@ -164,9 +163,9 @@ const AIChat = () => {
   return (
     <div className="min-h-[calc(100vh-64px-64px)] bg-gradient-to-br from-green-dark to-green-light flex items-center justify-center relative overflow-hidden">
       {/* Organic Circles */}
-      <div className="absolute w-[400px] h-[400px] left-[-100px] top-[-80px] rounded-full opacity-18 pointer-events-none z-1 bg-gold/20 animate-[float1_18s_infinite_alternate]"></div>
-      <div className="absolute w-[300px] h-[300px] right-[-80px] top-[120px] rounded-full opacity-18 pointer-events-none z-1 bg-green-light/20 animate-[float2_22s_infinite_alternate]"></div>
-      <div className="absolute w-[200px] h-[200px] left-[60%] bottom-[-60px] rounded-full opacity-18 pointer-events-none z-1 bg-green-dark/20 animate-[float3_20s_infinite_alternate]"></div>
+      <div className="absolute w-[400px] h-[400px] left-[-100px] top-[-80px] rounded-full opacity-18 pointer-events-none z-1 bg-gold/20 animate-float1"></div>
+      <div className="absolute w-[300px] h-[300px] right-[-80px] top-[120px] rounded-full opacity-18 pointer-events-none z-1 bg-green-light/20 animate-float2"></div>
+      <div className="absolute w-[200px] h-[200px] left-[60%] bottom-[-60px] rounded-full opacity-18 pointer-events-none z-1 bg-green-dark/20 animate-float3"></div>
       
       {/* Chatbot Container */}
       <div className="relative z-2 w-full max-w-[420px] min-h-[600px] bg-white/70 rounded-[32px] shadow-lg flex flex-col overflow-hidden my-8 mx-4">
@@ -261,16 +260,17 @@ const AIChat = () => {
         <Mic className="h-6 w-6 text-white" />
       </Button>
       
-      {/* Style for animations */}
-      <style jsx>{`
-        @keyframes float1 { to { top: -60px; left: -80px; } }
-        @keyframes float2 { to { top: 140px; right: -60px; } }
-        @keyframes float3 { to { bottom: -40px; left: 62%; } }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px);}
-          to { opacity: 1; transform: translateY(0);}
-        }
-      `}</style>
+      <style>
+        {`
+          @keyframes float1 { to { top: -60px; left: -80px; } }
+          @keyframes float2 { to { top: 140px; right: -60px; } }
+          @keyframes float3 { to { bottom: -40px; left: 62%; } }
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+          }
+        `}
+      </style>
     </div>
   );
 };
