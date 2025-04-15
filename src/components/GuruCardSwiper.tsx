@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useMediaQuery } from "../hooks/use-mobile";
+import { useIsMobile } from "../hooks/use-mobile";
 
 interface Guru {
   id: number;
@@ -57,7 +57,7 @@ const GuruCardSwiper = () => {
   const [touchEnd, setTouchEnd] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useIsMobile();
   const cardsToShow = isMobile ? 1 : 3;
   
   const handlePrev = () => {
