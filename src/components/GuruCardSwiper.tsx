@@ -118,18 +118,18 @@ const GuruCardSwiper = () => {
         {visibleGurus.map((guru) => (
           <Card 
             key={guru.id} 
-            className="w-full max-w-xs bg-gradient-to-br from-teal-100 to-blue-50 border-none shadow-lg hover:shadow-xl transition-all duration-300 flex-shrink-0 animate-fade-in"
+            className="w-full max-w-xs bg-gradient-to-br from-mindful-lighter to-mindful-light border-none shadow-lg hover:shadow-xl transition-all duration-300 flex-shrink-0 animate-fade-in"
           >
             <CardContent className="p-6 flex flex-col items-center">
-              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-teal-200">
+              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-mindful-light">
                 <img
                   src={guru.image}
                   alt={guru.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-xl font-bold text-teal-800 mb-2">{guru.name}</h3>
-              <p className="text-gray-700 text-center text-sm leading-relaxed">{guru.description}</p>
+              <h3 className="text-xl font-bold text-mindful-dark mb-2">{guru.name}</h3>
+              <p className="text-mindful-darker text-center text-sm leading-relaxed">{guru.description}</p>
             </CardContent>
           </Card>
         ))}
@@ -140,7 +140,7 @@ const GuruCardSwiper = () => {
           onClick={handlePrev} 
           variant="outline" 
           size="icon" 
-          className="rounded-full border-teal-300 bg-white text-teal-700 hover:bg-teal-50 hover:text-teal-800 shadow-sm"
+          className="rounded-full border-mindful-light bg-white text-mindful hover:bg-mindful-lighter hover:text-mindful-dark shadow-sm"
           disabled={isTransitioning}
         >
           <ChevronLeft className="h-4 w-4" />
@@ -149,7 +149,7 @@ const GuruCardSwiper = () => {
           onClick={handleNext} 
           variant="outline" 
           size="icon"
-          className="rounded-full border-teal-300 bg-white text-teal-700 hover:bg-teal-50 hover:text-teal-800 shadow-sm"
+          className="rounded-full border-mindful-light bg-white text-mindful hover:bg-mindful-lighter hover:text-mindful-dark shadow-sm"
           disabled={isTransitioning}
         >
           <ChevronRight className="h-4 w-4" />
