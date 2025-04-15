@@ -1,33 +1,10 @@
 
-import React, { useState } from 'react';
-import EmojiFloating from './EmojiFloating';
+import React from 'react';
 
 const WhatIsMindfulness = () => {
-  const [showEmojis, setShowEmojis] = useState(false);
-  
-  // Trigger emoji animation when component is viewed
-  React.useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setShowEmojis(true);
-        }
-      });
-    }, { threshold: 0.3 });
-    
-    const element = document.getElementById('mindfulness-section');
-    if (element) observer.observe(element);
-    
-    return () => {
-      if (element) observer.unobserve(element);
-    };
-  }, []);
-  
   return (
-    <section id="mindfulness-section" className="py-20 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
-      {showEmojis && <EmojiFloating contained={true} duration={30000} />}
-      
-      <div className="container-custom relative z-10">
+    <section className="py-20 bg-gray-50 dark:bg-gray-900">
+      <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="animate-on-scroll">
             <h2 className="text-4xl md:text-5xl font-bold mb-8 nike-headline">
@@ -58,10 +35,6 @@ const WhatIsMindfulness = () => {
           </div>
         </div>
       </div>
-      
-      {/* Soft glowing background accents */}
-      <div className="absolute top-1/4 left-10 w-40 h-40 bg-[#6fa883] rounded-full opacity-10 blur-3xl"></div>
-      <div className="absolute bottom-1/4 right-10 w-60 h-60 bg-[#FFD700] rounded-full opacity-10 blur-3xl"></div>
     </section>
   );
 };
