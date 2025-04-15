@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -56,48 +55,84 @@ const AIChat = () => {
 
   // Updated to use Gemini API 
   const generateResponse = async (prompt: string) => {
-    try {
-      const API_KEY = "AIzaSyALXZHcvALcuNBcSG6AJjAsApqUkj5k9Ro";
-      const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
-      
-      const response = await fetch(`${API_URL}?key=${API_KEY}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                { 
-                  text: `You are a mindfulness assistant named MindfulBot. Respond to the following with practical mindfulness advice. Keep responses concise and actionable: ${prompt}` 
-                }
-              ]
-            }
-          ],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 800,
-          }
-        }),
-      });
+  try {
+    const API_KEY = "AIzaSyALXZHcvALcuNBcSG6AJjAsApqUkj5k9Ro";
+    const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+    
+    // Special handling for breathing exercise
+    if (prompt.toLowerCase().includes('breathing exercise')) {
+      return `🌿 **4-7-8 Breathing Meditation**
 
-      const data = await response.json();
-      
-      if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-        return data.candidates[0].content.parts[0].text;
-      } else if (data.error) {
-        console.error('API Error:', data.error);
-        return `I'm sorry, I encountered an error: ${data.error.message || 'Unknown error'}. Please try again later.`;
-      } else {
-        console.error('Unexpected API response structure:', data);
-        return "I'm sorry, I couldn't generate a response at the moment. Please try again later.";
-      }
-    } catch (error) {
-      console.error('Error calling Gemini API:', error);
-      return "I'm sorry, I encountered an error. Please try again later.";
+*A gentle journey to inner calm*
+
+1. 🧘‍♀️ **Sit Comfortably**
+   • Find a peaceful spot
+   • Relax your shoulders
+   • Soften your jaw
+
+2. 🫁 **Exhale Completely**
+   • Release all the air from your lungs
+   • Let go of tension
+
+3. 🌬️ **Inhale (4 counts)**
+   • Breathe deeply through your nose
+   • Feel your belly expand
+   • Allow peace to enter
+
+4. 🕊️ **Hold (7 counts)**
+   • Pause gently
+   • Notice the stillness
+   • Feel centered
+
+5. 🌊 **Exhale (8 counts)**
+   • Slowly breathe out through your mouth
+   • Make a soft "whoosh" sound
+   • Release all stress
+
+**Repeat 3-4 times**
+
+💫 *After each cycle, notice how you feel*
+Observe without judgment. You're cultivating inner peace.`;
     }
-  };
+
+    const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              { 
+                text: `You are a mindfulness assistant named MindfulBot. Respond to the following with practical mindfulness advice. Keep responses concise and actionable: ${prompt}` 
+              }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 800,
+        }
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+      return data.candidates[0].content.parts[0].text;
+    } else if (data.error) {
+      console.error('API Error:', data.error);
+      return `I'm sorry, I encountered an error: ${data.error.message || 'Unknown error'}. Please try again later.`;
+    } else {
+      console.error('Unexpected API response structure:', data);
+      return "I'm sorry, I couldn't generate a response at the moment. Please try again later.";
+    }
+  } catch (error) {
+    console.error('Error calling Gemini API:', error);
+    return "I'm sorry, I encountered an error. Please try again later.";
+  }
+};
 
   const handleSendMessage = async () => {
     if (input.trim() === '' || isLoading) return;
