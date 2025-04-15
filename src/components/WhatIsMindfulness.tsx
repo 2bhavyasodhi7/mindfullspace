@@ -1,9 +1,11 @@
 
 import React from 'react';
+import MindfulnessText from './MindfulnessText';
 
 const WhatIsMindfulness = () => {
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-900">
+    <section className="py-20 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+      <MindfulnessText />
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="animate-on-scroll">
