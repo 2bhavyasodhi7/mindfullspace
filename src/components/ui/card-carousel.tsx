@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -47,17 +46,20 @@ const Card = ({ image, title, description, index, activeIndex, totalCards }: Car
     >
       <div 
         className={cn(
-          "w-full max-w-xs mx-auto bg-gradient-to-br from-[#F2FCE2] to-[#D8F0C0]",
-          "rounded-xl overflow-hidden relative group",
-          "border border-[#D4AF37] transition-all duration-300",
+          "w-full max-w-xs mx-auto overflow-hidden relative group",
+          "rounded-xl border border-[#FFD700] transition-all duration-300",
           "backdrop-blur-sm bg-opacity-80",
           "shadow-[0_8px_32px_rgba(0,0,0,0.1)]",
           isActive ? "scale-105 shadow-[0_12px_36px_rgba(0,0,0,0.15)]" : "",
           "hover:shadow-[0_15px_40px_rgba(0,0,0,0.18)] hover:translate-y-[-5px]"
         )}
+        style={{
+          background: `linear-gradient(135deg, #5a7e6b 0%, #6fa883 50%, #8bbd9c 100%)`,
+          boxShadow: isActive ? '0 12px 36px rgba(0,0,0,0.15), 0 0 15px rgba(111, 168, 131, 0.3)' : '0 8px 32px rgba(0,0,0,0.1)'
+        }}
       >
         {/* Gold accent line at top */}
-        <div className="h-1 w-full bg-[#D4AF37] bg-opacity-70"></div>
+        <div className="h-1 w-full bg-[#FFD700] bg-opacity-70"></div>
         
         {/* Inner glow effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-white to-transparent opacity-20 pointer-events-none"></div>
@@ -65,35 +67,35 @@ const Card = ({ image, title, description, index, activeIndex, totalCards }: Car
         <div className="p-6 flex flex-col items-center">
           {/* Profile image with circular frame */}
           <div className="relative mb-4">
-            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#D4AF37] shadow-lg relative z-10">
+            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#FFD700] shadow-lg relative z-10">
               <img src={image} alt={title} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
             </div>
-            <div className="absolute -inset-1 bg-[#D4AF37] opacity-20 blur-md rounded-full z-0"></div>
+            <div className="absolute -inset-1 bg-[#FFD700] opacity-20 blur-md rounded-full z-0"></div>
           </div>
           
           {/* Quote icon */}
           <div className="mb-2">
-            <Quote className="w-5 h-5 text-[#D4AF37] opacity-80" />
+            <Quote className="w-5 h-5 text-[#FFD700] opacity-80" />
           </div>
           
           {/* Title with limited lines */}
-          <h3 className="font-sans font-medium text-lg text-center text-gray-800 mb-1 line-clamp-2">{title}</h3>
+          <h3 className="font-sans font-medium text-lg text-center text-white mb-1 line-clamp-2">{title}</h3>
           
           {/* Description with limited lines */}
-          <p className="font-sans font-light text-sm text-center text-gray-600 mb-4 line-clamp-4">{description}</p>
+          <p className="font-sans font-light text-sm text-center text-gray-100 mb-4 line-clamp-4">{description}</p>
           
           {/* Learn more button */}
           <Button 
             variant="outline" 
-            className="mt-auto text-xs border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] hover:border-[#D4AF37]"
+            className="mt-auto text-xs border-[#FFD700] text-[#FFD700] hover:bg-[#FFD700]/10 hover:text-[#FFD700] hover:border-[#FFD700]"
           >
             Learn More
           </Button>
         </div>
         
         {/* Gold accent dot at bottom */}
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 h-1 w-1 rounded-full bg-[#D4AF37]"></div>
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 h-1 w-1 rounded-full bg-[#FFD700]"></div>
       </div>
     </div>
   );
@@ -214,12 +216,12 @@ const CardCarousel = ({
         onTouchEnd={handleDragEnd}
       >
         {/* Gradient background for carousel */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#F2FCE2]/40 to-[#D8F0C0]/40 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#5a7e6b]/40 to-[#8bbd9c]/40 backdrop-blur-sm"></div>
         
         {/* Subtle pattern */}
         <div className="absolute inset-0 opacity-10" 
           style={{ 
-            backgroundImage: 'radial-gradient(circle, #D4AF37 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(circle, #FFD700 1px, transparent 1px)',
             backgroundSize: '20px 20px' 
           }} 
         />
@@ -239,7 +241,7 @@ const CardCarousel = ({
         
         {/* Navigation buttons */}
         <button 
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-20 text-gray-800 hover:text-[#D4AF37] transition-all"
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-20 text-gray-800 hover:text-[#6fa883] transition-all"
           onClick={goToPrevious}
           aria-label="Previous card"
         >
@@ -247,7 +249,7 @@ const CardCarousel = ({
         </button>
         
         <button 
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-20 text-gray-800 hover:text-[#D4AF37] transition-all"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-md z-20 text-gray-800 hover:text-[#6fa883] transition-all"
           onClick={goToNext}
           aria-label="Next card"
         >
@@ -262,7 +264,7 @@ const CardCarousel = ({
             key={index}
             className={`w-2 h-2 rounded-full transition-all ${
               index === activeIndex 
-                ? 'bg-[#D4AF37] w-3 h-3' 
+                ? 'bg-[#FFD700] w-3 h-3' 
                 : 'bg-gray-300 hover:bg-gray-400'
             }`}
             onClick={() => goToIndex(index)}
