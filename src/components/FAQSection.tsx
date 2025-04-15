@@ -91,7 +91,7 @@ const FAQSection = () => {
   const progressPercentage = (viewedFAQs.length / faqs.length) * 100;
   
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-900 relative" id="faq">
+    <section className="py-16 bg-gradient-to-br from-mindful-lighter/50 to-white dark:bg-gray-900 relative" id="faq">
       {/* Forest image banner with proper source */}
       <div className="w-full mb-12 overflow-hidden">
         <img 
@@ -113,7 +113,7 @@ const FAQSection = () => {
             />
           </div>
           <h2 className="text-center mindful-heading mb-2">
-            Frequently Asked <span className="text-mindful">Questions</span>
+            Frequently Asked <span className="bg-gradient-to-r from-mindful to-amber-500 bg-clip-text text-transparent">Questions</span>
           </h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Discover answers to common questions about mindfulness and meditation practice.
@@ -137,7 +137,7 @@ const FAQSection = () => {
             {faqs.map((faq, index) => (
               <div 
                 key={index} 
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px] overflow-hidden"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px] border border-amber-400/30 hover:shadow-[0_0_15px_rgba(255,191,0,0.3)] overflow-hidden"
               >
                 <Accordion 
                   type="single" 
@@ -146,10 +146,10 @@ const FAQSection = () => {
                   className="border-none"
                 >
                   <AccordionItem value={`item-${index}`} className="border-none">
-                    <AccordionTrigger className="px-5 py-4 flex items-center font-serif text-lg font-medium hover:no-underline">
+                    <AccordionTrigger className="px-5 py-4 flex items-center font-serif text-lg font-medium hover:no-underline bg-gradient-to-r hover:from-mindful-lighter hover:to-amber-100/50">
                       <div className="flex items-center">
                         <span className="mr-3">{faq.icon}</span>
-                        <span>{faq.question}</span>
+                        <span className="bg-gradient-to-r from-mindful-dark to-amber-700 bg-clip-text text-transparent">{faq.question}</span>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="px-5 pb-5 font-sans text-base leading-relaxed text-gray-600 dark:text-gray-300 animate-accordion-down">
@@ -181,8 +181,8 @@ const FAQSection = () => {
         </div>
         
         <div className="mt-12 text-center">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-            <p className="text-lg font-serif italic mb-2">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md max-w-2xl mx-auto border border-amber-400/30">
+            <p className="text-lg font-serif italic mb-2 bg-gradient-to-r from-mindful-dark to-amber-700 bg-clip-text text-transparent">
               "72% of users reported feeling calmer after just 2 weeks of regular practice"
             </p>
             <p className="text-sm text-gray-500">
@@ -195,7 +195,7 @@ const FAQSection = () => {
       <div className="fixed bottom-6 right-6 z-50">
         <a 
           href="/meditation" 
-          className="bg-mindful hover:bg-mindful-dark text-white rounded-full px-6 py-3 shadow-lg flex items-center transition-all duration-300 hover:scale-105"
+          className="bg-gradient-to-r from-mindful to-amber-500 hover:from-mindful-dark hover:to-amber-600 text-white rounded-full px-6 py-3 shadow-lg flex items-center transition-all duration-300 hover:scale-105"
         >
           <Flower className="mr-2 h-5 w-5" />
           Start Practicing

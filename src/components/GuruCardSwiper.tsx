@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
@@ -118,10 +117,10 @@ const GuruCardSwiper = () => {
         {visibleGurus.map((guru) => (
           <Card 
             key={guru.id} 
-            className="w-full max-w-xs bg-gradient-to-br from-mindful-lighter to-mindful-light border-none shadow-lg hover:shadow-xl transition-all duration-300 flex-shrink-0 animate-fade-in"
+            className="w-full max-w-xs bg-gradient-to-br from-mindful-lighter to-mindful-light border-2 border-amber-400 shadow-[0_0_15px_rgba(255,191,0,0.5)] hover:shadow-[0_0_25px_rgba(255,191,0,0.7)] transition-all duration-300 flex-shrink-0 animate-fade-in"
           >
             <CardContent className="p-6 flex flex-col items-center">
-              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-mindful-light">
+              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-amber-400 shadow-[0_0_10px_rgba(255,191,0,0.4)]">
                 <img
                   src={guru.image}
                   alt={guru.name}
@@ -140,7 +139,7 @@ const GuruCardSwiper = () => {
           onClick={handlePrev} 
           variant="outline" 
           size="icon" 
-          className="rounded-full border-mindful-light bg-white text-mindful hover:bg-mindful-lighter hover:text-mindful-dark shadow-sm"
+          className="rounded-full border-amber-400 bg-white text-mindful hover:bg-mindful-lighter hover:text-mindful-dark shadow-sm hover:shadow-[0_0_10px_rgba(255,191,0,0.4)]"
           disabled={isTransitioning}
         >
           <ChevronLeft className="h-4 w-4" />
@@ -149,7 +148,7 @@ const GuruCardSwiper = () => {
           onClick={handleNext} 
           variant="outline" 
           size="icon"
-          className="rounded-full border-mindful-light bg-white text-mindful hover:bg-mindful-lighter hover:text-mindful-dark shadow-sm"
+          className="rounded-full border-amber-400 bg-white text-mindful hover:bg-mindful-lighter hover:text-mindful-dark shadow-sm hover:shadow-[0_0_10px_rgba(255,191,0,0.4)]"
           disabled={isTransitioning}
         >
           <ChevronRight className="h-4 w-4" />

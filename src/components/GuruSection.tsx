@@ -7,7 +7,7 @@ const GuruSection = () => {
   return (
     <section 
       id="gurus" 
-      className="py-16 md:py-24 bg-gradient-to-br from-teal-50 to-blue-50"
+      className="py-16 md:py-24 bg-gradient-to-br from-mindful-lighter to-white"
     >
       <div className="container px-4 mx-auto">
         <div className="text-center mb-12">
@@ -15,9 +15,11 @@ const GuruSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-4xl font-bold text-teal-800 mb-4"
+            className="text-3xl md:text-4xl font-bold mb-4"
           >
-            Gurus & The Science Behind
+            <span className="bg-gradient-to-r from-mindful-dark to-amber-500 bg-clip-text text-transparent">
+              Gurus & The Science Behind
+            </span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -31,16 +33,18 @@ const GuruSection = () => {
         
         <GuruCardSwiper />
 
-        <div className="mt-16 bg-white rounded-2xl p-6 md:p-10 shadow-lg">
+        <div className="mt-16 bg-gradient-to-br from-mindful-lighter to-white rounded-2xl p-6 md:p-10 shadow-lg border border-mindful/20">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <motion.h3 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-2xl md:text-3xl font-bold text-teal-800 mb-4"
+                className="text-2xl md:text-3xl font-bold mb-4"
               >
-                The Scientific Evidence
+                <span className="bg-gradient-to-r from-mindful-dark to-amber-500 bg-clip-text text-transparent">
+                  The Scientific Evidence
+                </span>
               </motion.h3>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -57,7 +61,7 @@ const GuruSection = () => {
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="flex items-start"
                 >
-                  <span className="inline-block w-6 h-6 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center mr-2">✓</span>
+                  <span className="inline-block w-6 h-6 rounded-full bg-mindful-light text-mindful-dark flex items-center justify-center mr-2">✓</span>
                   <span>Reduce stress and anxiety levels</span>
                 </motion.li>
                 <motion.li 
@@ -66,7 +70,7 @@ const GuruSection = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="flex items-start"
                 >
-                  <span className="inline-block w-6 h-6 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center mr-2">✓</span>
+                  <span className="inline-block w-6 h-6 rounded-full bg-mindful-light text-mindful-dark flex items-center justify-center mr-2">✓</span>
                   <span>Improve focus and attention span</span>
                 </motion.li>
                 <motion.li 
@@ -75,7 +79,7 @@ const GuruSection = () => {
                   transition={{ duration: 0.6, delay: 0.5 }}
                   className="flex items-start"
                 >
-                  <span className="inline-block w-6 h-6 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center mr-2">✓</span>
+                  <span className="inline-block w-6 h-6 rounded-full bg-mindful-light text-mindful-dark flex items-center justify-center mr-2">✓</span>
                   <span>Enhance emotional regulation and resilience</span>
                 </motion.li>
                 <motion.li 
@@ -84,7 +88,7 @@ const GuruSection = () => {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className="flex items-start"
                 >
-                  <span className="inline-block w-6 h-6 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center mr-2">✓</span>
+                  <span className="inline-block w-6 h-6 rounded-full bg-mindful-light text-mindful-dark flex items-center justify-center mr-2">✓</span>
                   <span>Lower blood pressure and improve cardiovascular health</span>
                 </motion.li>
                 <motion.li 
@@ -93,7 +97,7 @@ const GuruSection = () => {
                   transition={{ duration: 0.6, delay: 0.7 }}
                   className="flex items-start"
                 >
-                  <span className="inline-block w-6 h-6 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center mr-2">✓</span>
+                  <span className="inline-block w-6 h-6 rounded-full bg-mindful-light text-mindful-dark flex items-center justify-center mr-2">✓</span>
                   <span>Support neuroplasticity and cognitive functioning</span>
                 </motion.li>
               </ul>
