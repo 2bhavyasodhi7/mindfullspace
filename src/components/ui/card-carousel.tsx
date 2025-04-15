@@ -23,7 +23,8 @@ const Card = ({ image, title, description, index, activeIndex, totalCards }: Car
   let opacity = 0;
   
   if (isVisible) {
-    transform = `translateX(${position * 105}%)`;
+    // Remove the spacing by using 100% instead of 105%
+    transform = `translateX(${position * 100}%)`;
     zIndex = 10 - Math.abs(position);
     opacity = 1 - Math.abs(position) * 0.4;
   } else {
@@ -46,7 +47,8 @@ const Card = ({ image, title, description, index, activeIndex, totalCards }: Car
     >
       <div 
         className={cn(
-          "w-full max-w-xs mx-auto overflow-hidden relative group",
+          // Adjusted width to full to take up all available space
+          "w-full mx-auto overflow-hidden relative group",
           "rounded-xl border border-[#FFD700] transition-all duration-300",
           "backdrop-blur-sm bg-opacity-80",
           "shadow-[0_8px_32px_rgba(0,0,0,0.1)]",
