@@ -76,6 +76,13 @@
 
     --ring: 216 34% 17%;
   }
+
+  /* Additional variables for chatbot UI */
+  :root {
+    --green-dark: #5a7e6b;
+    --green-light: #8bbd9c;
+    --off-white: #f6faf7;
+  }
 }
 
 @layer base {
@@ -387,19 +394,25 @@
     animation-delay: 1.2s;
   }
 
-  /* Animation for pulse effect */
-  @keyframes pulse {
-    0% {
-      opacity: 0.5;
-      transform: scale(0.95);
-    }
-    50% {
-      opacity: 0.7;
-    }
-    100% {
-      opacity: 0.5;
-      transform: scale(1.05);
-    }
+  /* Custom scrollbar for chat area */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    background: var(--green-light);
+    border-radius: 8px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 8px;
+  }
+  
+  /* Animation for chat bubbles */
+  .animate-fadeInUp {
+    animation: fadeInUp 0.5s;
   }
 }
 
@@ -444,3 +457,13 @@
 .navbar-circle:hover {
   animation: navbarPulse 2s infinite;
 }
+
+/* Animation keyframes - will be used with inline styles */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+@keyframes float1 { to { top: -60px; left: -80px; } }
+@keyframes float2 { to { top: 140px; right: -60px; } }
+@keyframes float3 { to { bottom: -40px; left: 62%; } }
