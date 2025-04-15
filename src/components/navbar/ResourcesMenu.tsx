@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Bot } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -90,6 +90,16 @@ const ResourcesMenu: React.FC<ResourcesMenuProps> = ({ mobile, onItemClick }) =>
             onClick={handleItemClick}
           >
             Journaling
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link 
+            to="/ai-chat" 
+            className="hover:bg-green-800/30 hover:text-white w-full flex items-center gap-1.5"
+            onClick={handleItemClick}
+          >
+            <Bot size={16} className="text-gold" />
+            <span>MindfulChat</span>
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
