@@ -444,29 +444,3 @@
 .navbar-circle:hover {
   animation: navbarPulse 2s infinite;
 }
-
-/* Floating text animation */
-@keyframes float {
-  0% {
-    transform: translateY(0px) translateX(-50%) scale(1);
-    filter: blur(0px);
-  }
-  50% {
-    transform: translateY(-15px) translateX(-50%) scale(1.05);
-    filter: blur(1px);
-  }
-  100% {
-    transform: translateY(0px) translateX(-50%) scale(1);
-    filter: blur(0px);
-  }
-}
-
-.text-phrase {
-  transition: all 0.5s ease;
-}
-
-.text-phrase:hover {
-  transform: translateX(-50%) scale(1.1) !important;
-  text-shadow: 0 0 20px rgba(115, 165, 128, 0.9), 0 0 15px rgba(255, 215, 0, 0.6) !important;
-  color: rgba(115, 165, 128, 0.9) !important;
-}
