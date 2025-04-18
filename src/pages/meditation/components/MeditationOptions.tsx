@@ -8,7 +8,6 @@ import 'react-h5-audio-player/lib/styles.css';
 import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
 
 const MeditationOptions = () => {
-  
   const [isPlaying, setIsPlaying] = useState(false);
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
   const [showTracker, setShowTracker] = useState(false);
@@ -28,14 +27,9 @@ const MeditationOptions = () => {
     { day: 'Sun', hours: 0 },
   ]);
 
-  // Add animation control states
-  const [audioPlayerAnimating, setAudioPlayerAnimating] = useState(false);
-  const [trackerAnimating, setTrackerAnimating] = useState(false);
-  const [techniquesAnimating, setTechniquesAnimating] = useState(false);
-
   const timerRef = useRef<NodeJS.Timeout>();
   const clockRef = useRef<NodeJS.Timeout>();
-  
+
   const guidedMeditations = [
     { title: "Morning Meditation", duration: "10:00", url: "/music/guided meditaion/4-Minute Guided Mindfulness Meditation [TubeRipper.com].mp3"},
     { title: "Stress Relief", duration: "15:00", url: "/music/sample-audio.mp3" },
@@ -86,7 +80,7 @@ const MeditationOptions = () => {
       url: "https://www.mayoclinic.org/tests-procedures/meditation/in-depth/meditation/art-20045858"
     }
   ];
-  
+
   useEffect(() => {
     setMeditationStats(weeklyStats);
   }, []);
@@ -121,91 +115,6 @@ const MeditationOptions = () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Improve toggle functions with animation states
-  const toggleAudioPlayer = () => {
-    if (showAudioPlayer) {
-      setAudioPlayerAnimating(true);
-      setTimeout(() => {
-        setShowAudioPlayer(false);
-        setAudioPlayerAnimating(false);
-      }, 300);
-    } else {
-      if (showTracker) {
-        setTrackerAnimating(true);
-        setTimeout(() => {
-          setShowTracker(false);
-          setTrackerAnimating(false);
-          setShowAudioPlayer(true);
-        }, 300);
-      } else if (showTechniques) {
-        setTechniquesAnimating(true);
-        setTimeout(() => {
-          setShowTechniques(false);
-          setTechniquesAnimating(false);
-          setShowAudioPlayer(true);
-        }, 300);
-      } else {
-        setShowAudioPlayer(true);
-      }
-    }
-  };
-
-  const toggleTracker = () => {
-    if (showTracker) {
-      setTrackerAnimating(true);
-      setTimeout(() => {
-        setShowTracker(false);
-        setTrackerAnimating(false);
-      }, 300);
-    } else {
-      if (showAudioPlayer) {
-        setAudioPlayerAnimating(true);
-        setTimeout(() => {
-          setShowAudioPlayer(false);
-          setAudioPlayerAnimating(false);
-          setShowTracker(true);
-        }, 300);
-      } else if (showTechniques) {
-        setTechniquesAnimating(true);
-        setTimeout(() => {
-          setShowTechniques(false);
-          setTechniquesAnimating(false);
-          setShowTracker(true);
-        }, 300);
-      } else {
-        setShowTracker(true);
-      }
-    }
-  };
-
-  const toggleTechniques = () => {
-    if (showTechniques) {
-      setTechniquesAnimating(true);
-      setTimeout(() => {
-        setShowTechniques(false);
-        setTechniquesAnimating(false);
-      }, 300);
-    } else {
-      if (showAudioPlayer) {
-        setAudioPlayerAnimating(true);
-        setTimeout(() => {
-          setShowAudioPlayer(false);
-          setAudioPlayerAnimating(false);
-          setShowTechniques(true);
-        }, 300);
-      } else if (showTracker) {
-        setTrackerAnimating(true);
-        setTimeout(() => {
-          setShowTracker(false);
-          setTrackerAnimating(false);
-          setShowTechniques(true);
-        }, 300);
-      } else {
-        setShowTechniques(true);
-      }
-    }
-  };
-
   return (
     <>
       <section className="container mx-auto px-4 py-16 mb-32">
@@ -215,7 +124,7 @@ const MeditationOptions = () => {
           <div>
             <div className="relative group mb-8">
               <button
-                onClick={toggleAudioPlayer}
+                onClick={() => setShowAudioPlayer(!showAudioPlayer)}
                 className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
                 <Headphones className="w-6 h-6 text-mindful" />
@@ -240,10 +149,7 @@ const MeditationOptions = () => {
             </div>
             
             {showAudioPlayer && (
-              <div 
-                className={`grid gap-4 bg-white p-8 rounded-2xl shadow-lg ${audioPlayerAnimating ? 'animate-fade-out' : 'animate-fade-in'}`}
-                style={{ animationDuration: '300ms' }}
-              >
+              <div className="grid gap-4 bg-white p-8 rounded-2xl shadow-lg">
                 {guidedMeditations.map((meditation, index) => (
                   <div
                     key={index}
@@ -282,7 +188,7 @@ const MeditationOptions = () => {
           <div>
             <div className="relative group mb-8">
               <button
-                onClick={toggleTracker}
+                onClick={() => setShowTracker(!showTracker)}
                 className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
                 <BarChart3 className="w-6 h-6 text-mindful" />
@@ -307,10 +213,7 @@ const MeditationOptions = () => {
             </div>
 
             {showTracker && (
-              <div 
-                className={`bg-white p-8 rounded-2xl shadow-lg ${trackerAnimating ? 'animate-fade-out' : 'animate-fade-in'}`}
-                style={{ animationDuration: '300ms' }}
-              >
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
                 <div className="grid grid-cols-1 gap-8">
                   <div className="flex flex-col justify-center">
                     <div className="text-6xl font-bold text-mindful mb-4 text-center">
@@ -379,7 +282,7 @@ const MeditationOptions = () => {
           <div>
             <div className="relative group mb-8">
               <button
-                onClick={toggleTechniques}
+                onClick={() => setShowTechniques(!showTechniques)}
                 className="w-full flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               >
                 <BookOpen className="w-6 h-6 text-mindful" />
@@ -404,10 +307,7 @@ const MeditationOptions = () => {
             </div>
 
             {showTechniques && (
-              <div 
-                className={`bg-white p-8 rounded-2xl shadow-lg ${techniquesAnimating ? 'animate-fade-out' : 'animate-fade-in'}`}
-                style={{ animationDuration: '300ms' }}
-              >
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
                 <div className="grid gap-6 mb-8">
                   {meditationTechniques.map((technique, index) => (
                     <div 
