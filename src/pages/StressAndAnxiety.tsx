@@ -279,11 +279,12 @@ const StressAndAnxiety = () => {
                   {quickReliefAudios.map((audio) => (
                     <div
                       key={audio.id}
-                      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
+                      className="bg-gradient-to-br from-[#8BA989]/80 to-[#F2C94C]/40 backdrop-blur-sm 
+                        rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-white/10"
                     >
                       <div className="text-center mb-4">
-                        <h3 className="font-medium text-gray-900">{audio.title}</h3>
-                        <p className="text-sm text-gray-500">{audio.duration}</p>
+                        <h3 className="font-medium text-white">{audio.title}</h3>
+                        <p className="text-sm text-white/80">{audio.duration}</p>
                       </div>
                       <AudioPlayer
                         src={audio.url}
@@ -292,7 +293,7 @@ const StressAndAnxiety = () => {
                         layout="stacked-reverse"
                         customControlsSection={defaultControlsSection}
                         customProgressBarSection={defaultProgressBarSection}
-                        className="audio-player-custom rounded-md"
+                        className="audio-player-custom rounded-md bg-transparent"
                         style={audioPlayerStyles}
                       />
                     </div>
@@ -300,7 +301,7 @@ const StressAndAnxiety = () => {
                 </div>
 
                 <div className="mt-12">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6">Time Spent Hearing Relief Music</h3>
+                  <h3 className="text-xl font-semibold text-white mb-6">Time Spent Hearing Relief Music</h3>
                   {renderUsageGraph(weeklyStats.relief)}
                 </div>
               </div>
@@ -329,11 +330,12 @@ const StressAndAnxiety = () => {
                   {breathingAudios.map((audio) => (
                     <div
                       key={audio.id}
-                      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
+                      className="bg-gradient-to-br from-[#8BA989]/80 to-[#F2C94C]/40 backdrop-blur-sm 
+                        rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow border border-white/10"
                     >
                       <div className="text-center mb-4">
-                        <h3 className="font-medium text-gray-900">{audio.title}</h3>
-                        <p className="text-sm text-gray-500">{audio.duration}</p>
+                        <h3 className="font-medium text-white">{audio.title}</h3>
+                        <p className="text-sm text-white/80">{audio.duration}</p>
                       </div>
                       <AudioPlayer
                         src={audio.url}
@@ -342,7 +344,7 @@ const StressAndAnxiety = () => {
                         layout="stacked-reverse"
                         customControlsSection={defaultControlsSection}
                         customProgressBarSection={defaultProgressBarSection}
-                        className="audio-player-custom rounded-md"
+                        className="audio-player-custom rounded-md bg-transparent"
                         style={audioPlayerStyles}
                       />
                     </div>
@@ -350,7 +352,7 @@ const StressAndAnxiety = () => {
                 </div>
 
                 <div className="mt-12">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6">Time Spent on Guided Breathing</h3>
+                  <h3 className="text-xl font-semibold text-white mb-6">Time Spent on Guided Breathing</h3>
                   {renderUsageGraph(weeklyStats.breathing)}
                 </div>
               </div>

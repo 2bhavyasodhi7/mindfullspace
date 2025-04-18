@@ -1,19 +1,27 @@
 
-import { RHAP_UI } from 'react-h5-audio-player';
-
-export const defaultControlsSection = [
-  RHAP_UI.MAIN_CONTROLS,
-  RHAP_UI.VOLUME_CONTROLS
-];
-
-export const defaultProgressBarSection = [
-  RHAP_UI.PROGRESS_BAR,
-  RHAP_UI.CURRENT_TIME,
-  RHAP_UI.DURATION
-];
-
 export const audioPlayerStyles = {
-  backgroundColor: '#f3f4f6', 
-  borderRadius: '0.5rem',
-  boxShadow: 'none'
+  background: 'transparent',
+  boxShadow: 'none',
+  width: '100%',
+  '& .rhap_progress-bar': {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  '& .rhap_progress-indicator': {
+    backgroundColor: '#fff',
+  },
+  '& .rhap_controls-section': {
+    backgroundColor: 'transparent',
+  },
+  '& .rhap_main-controls-button': {
+    color: '#fff',
+  },
+  '& .rhap_time': {
+    color: '#fff',
+  },
+  '& .rhap_progress-filled': {
+    backgroundColor: '#fff',
+  },
 };
+
+export const defaultControlsSection = ['MAIN_CONTROLS', 'VOLUME_CONTROLS'];
+export const defaultProgressBarSection = ['PROGRESS_BAR', 'CURRENT_TIME', 'DURATION'];
