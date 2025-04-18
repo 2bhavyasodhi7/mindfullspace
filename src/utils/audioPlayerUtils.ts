@@ -1,3 +1,4 @@
+
 // Import the types properly from the react-h5-audio-player package
 import AudioPlayer from 'react-h5-audio-player';
 
@@ -9,7 +10,8 @@ export const audioPlayerStyles = {
   boxShadow: 'none',
   width: '100%',
   '& .rhap_progress-bar': {
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    background: 'linear-gradient(to right, #8FBC8F, #3CB371)',
+    opacity: 0.7,
   },
   '& .rhap_progress-indicator': {
     backgroundColor: '#fff',
@@ -29,5 +31,8 @@ export const audioPlayerStyles = {
 };
 
 // Use the correct type for CustomUI modules
-export const defaultControlsSection: NonNullable<AudioPlayerProps['customControlsSection']> = ['MAIN_CONTROLS', 'VOLUME_CONTROLS'];
-export const defaultProgressBarSection: NonNullable<AudioPlayerProps['customProgressBarSection']> = ['PROGRESS_BAR', 'CURRENT_TIME', 'DURATION'];
+export const defaultControlsSection: NonNullable<AudioPlayerProps['customControlsSection']> = 
+  ['MAIN_CONTROLS', 'VOLUME_CONTROLS'] as NonNullable<AudioPlayerProps['customControlsSection']>;
+
+export const defaultProgressBarSection: NonNullable<AudioPlayerProps['customProgressBarSection']> = 
+  ['PROGRESS_BAR', 'CURRENT_TIME', 'DURATION'] as NonNullable<AudioPlayerProps['customProgressBarSection']>;
