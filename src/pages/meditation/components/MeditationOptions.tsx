@@ -43,22 +43,22 @@ const MeditationOptions = () => {
     {
       title: "Mindfulness Meditation",
       description: "Focus on the present moment through breath awareness",
-      image: "src/pages/images/MINDFULLNESS_MEDITATION.jpg"
+      image: "https://images.pexels.com/photos/31665863/pexels-photo-31665863/free-photo-of-yoga-practice-in-modern-office-setting.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     },
     {
       title: "Loving-Kindness Meditation",
       description: "Cultivate compassion and positive feelings towards others",
-      image: "src/pages/images/LOVING_KINDNESS.jpg"
+      image: "https://images.pexels.com/photos/31681184/pexels-photo-31681184/free-photo-of-solitude-by-the-lake-in-scenic-turkish-mountains.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     },
     {
       title: "Body Scan Meditation",
       description: "Progressive relaxation through body awareness",
-      image: "src/pages/images/BODY_SCAN.jpg"
+      image: "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     },
     {
       title: "Transcendental Meditation",
       description: "Silent mantra meditation for deep relaxation",
-      image: "src/pages/images/TRANSCEDENTAL.jpg"
+      image: "https://images.pexels.com/photos/6806641/pexels-photo-6806641.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     }
   ];
 
@@ -198,7 +198,7 @@ const MeditationOptions = () => {
               <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
                 <div className="flex gap-4">
                   <img 
-                    src="src/pages/images/TRACK_YOUR_PROGRESS.jpg"
+                    src="https://images.pexels.com/photos/5717413/pexels-photo-5717413.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="Meditation Tracker"
                     className="w-24 h-24 rounded-lg object-cover"
                   />
