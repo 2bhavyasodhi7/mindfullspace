@@ -30,7 +30,7 @@ const Index = () => {
   }, []);
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       <HeroSection />
       <WhatIsMindfulness />
       <GuruSection />
@@ -40,3 +40,4 @@ const Index = () => {
 };
 
 export default Index;
+
