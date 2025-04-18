@@ -91,17 +91,7 @@ const FAQSection = () => {
   const progressPercentage = (viewedFAQs.length / faqs.length) * 100;
   
   return (
-    <section className="py-16 bg-gradient-to-br from-mindful-lighter/50 to-white dark:bg-gray-900 relative" id="faq">
-      {/* Forest image banner with proper source */}
-      <div className="w-full mb-12 overflow-hidden">
-        <img 
-          src="/lovable-uploads/1d9cba46-3acc-491d-8d73-2b419c899dfe.png" 
-          alt="Mindfulness FAQ Banner"
-          className="w-full h-64 md:h-80 lg:h-96 object-cover object-center"
-          loading="lazy"
-        />
-      </div>
-      
+    <section className="bg-gradient-to-br from-mindful-lighter/50 to-white dark:bg-gray-900 relative" id="faq">
       <div className="container-custom">
         <div className="text-center mb-12">
           <h2 className="text-center mindful-heading mb-2">
