@@ -118,6 +118,7 @@ const MeditationOptions = () => {
   return (
     <>
       <section className="container mx-auto px-4 py-16 mb-32">
+        
         <h2 className="text-4xl font-bold text-mindful mb-12 text-center nike-headline">Begin Your Journey</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -351,18 +352,18 @@ const MeditationOptions = () => {
           </div>
         </div>
 
-        <div className="bg-white p-8 rounded-2xl shadow-lg mb-16">
-          <h2 className="text-2xl font-bold text-mindful-dark mb-8 nike-headline">Your Stats</h2>
-          <div className="h-80">
-            <ChartContainer
-              config={{
-                hours: {
-                  label: "Meditation Hours",
-                  color: "#73A580"
-                }
-              }}
-              className="mt-4"
-            >
+        
+        <div className="h-80 w-full">
+          <ChartContainer
+            config={{
+              hours: {
+                label: "Meditation Hours",
+                color: "#73A580"
+              }
+            }}
+            className="mt-4"
+          >
+            <ResponsiveContainer width="100%" height="100%">
               <BarChart data={meditationStats}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#E8F0EA" />
                 <XAxis dataKey="day" />
@@ -376,8 +377,8 @@ const MeditationOptions = () => {
                 />
                 <Bar dataKey="hours" fill="#73A580" />
               </BarChart>
-            </ChartContainer>
-          </div>
+            </ResponsiveContainer>
+          </ChartContainer>
         </div>
       </section>
     </>
