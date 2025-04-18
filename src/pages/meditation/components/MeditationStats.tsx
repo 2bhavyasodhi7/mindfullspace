@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircleClock, Brain, Target, Award } from 'lucide-react';
+import { Clock, Brain, Target, Award } from 'lucide-react';
 
 interface SemiCircleProps {
   percentage: number;
@@ -68,7 +68,7 @@ const MeditationStats = () => {
             color="#73A580"
             label="Day Streak"
             value={stats.streakDays}
-            icon={<CircleClock className="w-4 h-4" />}
+            icon={<Clock className="w-4 h-4" />}
           />
           <SemiCircle 
             percentage={(stats.totalHours / 30) * 100}
