@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
@@ -91,7 +90,7 @@ const Articles = () => {
                   <Badge variant="outline" className="mb-2 text-[#4CAF50] border-[#4CAF50]/30">
                     {article.category}
                   </Badge>
-                  <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] group-hover:from-[#9b87f5] group-hover:to-[#6E59A5] transition-all duration-300">
+                  <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#4CAF50] to-[#73A580] group-hover:from-[#73A580] group-hover:to-[#4CAF50] transition-all duration-300">
                     {article.title}
                   </h2>
                   <p className="text-gray-600 mt-2 line-clamp-3">
@@ -113,4 +112,3 @@ const Articles = () => {
 };
 
 export default Articles;
-

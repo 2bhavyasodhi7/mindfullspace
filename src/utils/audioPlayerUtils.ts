@@ -1,4 +1,3 @@
-
 // Import the types properly from the react-h5-audio-player package
 import type { H5AudioPlayer } from 'react-h5-audio-player';
 
