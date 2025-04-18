@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import ReactPlayer from 'react-player/lazy';
@@ -25,8 +24,8 @@ const HeroSection = () => {
   
   return (
     <section className="relative h-[90vh] w-full flex items-center justify-center text-white">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#9b87f5]/50 to-[#1A1F2C]/70"></div>
+      {/* Background gradient using colors from the text */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#8BA989]/50 to-[#F2C94C]/30"></div>
       
       <div className="container-custom text-center relative z-10">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight nike-headline">
