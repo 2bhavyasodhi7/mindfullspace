@@ -28,7 +28,7 @@ const WhatIsMindfulness = () => {
           <div className="relative animate-on-scroll">
             <div className="absolute -inset-4 bg-gradient-to-r from-mindful/10 to-amber-400/10 blur-lg rounded-xl"></div>
             <img 
-              src="https://www.istockphoto.com/video/group-practicing-yoga-outdoors-on-a-lush-green-field-gm2157555828-578237796" 
+              src="https://www.pexels.com/video/young-woman-enjoying-tea-5976239/" 
               alt="Person meditating" 
               className="relative rounded-xl shadow-xl w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-300"
             />
