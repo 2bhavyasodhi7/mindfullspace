@@ -27,6 +27,7 @@ import {
   SkipBack,
   SkipForward
 } from 'lucide-react';
+import { applyStressPageStyles } from './StressAndAnxietyStyles';
 
 const StressAndAnxiety = () => {
   const [activeTab, setActiveTab] = useState('stress');
@@ -140,8 +141,12 @@ const StressAndAnxiety = () => {
     </div>
   );
 
+  useEffect(() => {
+    applyStressPageStyles();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-mindful-lighter to-white">
+    <div className="min-h-screen stress-anxiety-page">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-mindful-dark flex items-center">

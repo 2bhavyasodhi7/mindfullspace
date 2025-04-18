@@ -6,7 +6,7 @@
 }
 
 .stressPageBackground {
-  background: linear-gradient(109.6deg, rgba(223,234,247,1) 11.2%, rgba(244,248,252,1) 91.1%);
+  background: linear-gradient(to bottom right, #8BA989/30 0%, #F2C94C/20 100%);
   min-height: 100vh;
   position: relative;
   overflow: hidden;
