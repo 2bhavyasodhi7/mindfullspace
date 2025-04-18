@@ -173,7 +173,7 @@ const StressAndAnxiety = () => {
             </div>
             <div className="md:w-1/2 mt-8 md:mt-0">
               <img 
-                src="src/pages/images/stress_page_first.jpg"
+                src="https://images.pexels.com/photos/6806390/pexels-photo-6806390.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="Peaceful meditation"
                 className="rounded-2xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-300"
               />
