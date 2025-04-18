@@ -6,37 +6,37 @@ export const audioFiles = {
       id: 1,
       title: "Peaceful Meadow Journey",
       duration: "15 min",
-      url: "/music/sleep-story-1.mp3"
+      url: "/music/sleep-stories/peaceful-meadow.mp3"
     },
     {
       id: 2,
       title: "Seaside Slumber",
       duration: "20 min",
-      url: "/music/sleep-story-2.mp3"
+      url: "/music/sleep-stories/seaside-slumber.mp3"
     },
     {
       id: 3,
       title: "Starry Night Visualization",
       duration: "18 min",
-      url: "/music/sleep-story-3.mp3"
+      url: "/music/sleep-stories/starry-night.mp3"
     },
     {
       id: 4,
       title: "Forest Canopy Dreams",
       duration: "22 min",
-      url: "/music/sleep-story-4.mp3"
+      url: "/music/sleep-stories/forest-dreams.mp3"
     },
     {
       id: 5,
       title: "Mountain Cabin Rest",
       duration: "25 min",
-      url: "/music/sleep-story-5.mp3"
+      url: "/music/sleep-stories/mountain-cabin.mp3"
     },
     {
       id: 6,
       title: "Desert Oasis Relaxation",
       duration: "17 min",
-      url: "/music/sleep-story-6.mp3"
+      url: "/music/sleep-stories/desert-oasis.mp3"
     }
   ],
   nsdr: [
@@ -44,63 +44,64 @@ export const audioFiles = {
       id: 1,
       title: "Basic NSDR Protocol",
       duration: "10 min",
-      url: "/music/nsdr-1.mp3"
+      url: "/music/nsdr/basic-protocol.mp3"
     },
     {
       id: 2,
       title: "Extended NSDR Session",
       duration: "20 min",
-      url: "/music/nsdr-2.mp3"
+      url: "/music/nsdr/extended-session.mp3"
     },
     {
       id: 3,
       title: "NSDR for Stress Relief",
       duration: "15 min",
-      url: "/music/nsdr-3.mp3"
+      url: "/music/nsdr/stress-relief.mp3"
     },
     {
       id: 4,
       title: "Morning NSDR Energizer",
       duration: "12 min",
-      url: "/music/nsdr-4.mp3"
+      url: "/music/nsdr/morning-energizer.mp3"
     }
   ],
   soundscapes: [
     {
       id: 1,
-      title: "Gentle Rain",
+      title: "Gentle Rain & Thunder",
       duration: "30 min",
-      url: "/music/rain.mp3"
+      url: "/music/soundscapes/rain-thunder.mp3"
     },
     {
       id: 2,
-      title: "Ocean Waves",
+      title: "Ocean Waves & Seabirds",
       duration: "30 min",
-      url: "/music/ocean.mp3"
+      url: "/music/soundscapes/ocean-seabirds.mp3"
     },
     {
       id: 3,
-      title: "Forest Sounds",
+      title: "Forest Morning Chorus",
       duration: "30 min",
-      url: "/music/forest.mp3"
+      url: "/music/soundscapes/forest-birds.mp3"
     },
     {
       id: 4,
-      title: "White Noise",
+      title: "Brown Noise Blend",
       duration: "30 min",
-      url: "/music/white-noise.mp3"
+      url: "/music/soundscapes/brown-noise.mp3"
     },
     {
       id: 5,
-      title: "Fan Sound",
+      title: "Mountain Stream",
       duration: "30 min",
-      url: "/music/fan.mp3"
+      url: "/music/soundscapes/mountain-stream.mp3"
     },
     {
       id: 6,
-      title: "Night Crickets",
+      title: "Night Crickets & Owls",
       duration: "30 min",
-      url: "/music/crickets.mp3"
+      url: "/music/soundscapes/night-nature.mp3"
     }
   ]
 };
+
