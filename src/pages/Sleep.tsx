@@ -178,33 +178,24 @@ const Sleep = () => {
   const renderMediaPlayer = () => {
     if (!selectedAudio) return null;
 
+    if (showVideo && selectedAudio.youtube_url) {
+      return <VideoPlayer url={selectedAudio.youtube_url} title={selectedAudio.title} />;
+    }
+
     return (
-      <div className="bg-white rounded-xl p-6 shadow-sm">
-        <h2 className="text-2xl font-semibold text-mindful-dark mb-2">{selectedAudio.title}</h2>
-        <p className="text-gray-500 mb-4">{selectedAudio.duration}</p>
-        
-        <MediaToggle showVideo={showVideo} onToggle={setShowVideo} />
-        
-        <div className="mt-4">
-          {showVideo ? (
-            <VideoPlayer url={selectedAudio.youtube_url} title={selectedAudio.title} />
-          ) : (
-            <div className="bg-mindful/5 rounded-xl p-4">
-              <AudioPlayer
-                src={selectedAudio.audio_url}
-                showJumpControls={true}
-                layout="stacked"
-                customControlsSection={defaultControlsSection}
-                customProgressBarSection={defaultProgressBarSection}
-                className="audio-player-custom rounded-lg shadow-inner"
-                style={{
-                  backgroundColor: 'transparent',
-                  borderRadius: '12px',
-                }}
-              />
-            </div>
-          )}
-        </div>
+      <div className="bg-mindful/5 rounded-xl p-4">
+        <AudioPlayer
+          src={selectedAudio.audio_url}
+          showJumpControls={true}
+          layout="stacked"
+          customControlsSection={defaultControlsSection}
+          customProgressBarSection={defaultProgressBarSection}
+          className="audio-player-custom rounded-lg shadow-inner"
+          style={{
+            backgroundColor: 'transparent',
+            borderRadius: '12px',
+          }}
+        />
       </div>
     );
   };
