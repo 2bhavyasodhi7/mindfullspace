@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Moon,
@@ -14,16 +13,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Slider } from '@/components/ui/slider';
-import { Progress } from '@/components/ui/progress';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
+import { defaultControlsSection, defaultProgressBarSection } from '@/utils/audioPlayerUtils';
 import { supabase } from '@/integrations/supabase/client';
+import MediaToggle from '@/components/sleep/MediaToggle';
+import VideoPlayer from '@/components/sleep/VideoPlayer';
 
 interface AudioResource {
-  id: string; // Changed from number to string to match Supabase's UUID format
+  id: string;
   title: string;
   duration: string;
   audio_url: string;
@@ -43,6 +42,7 @@ const Sleep = () => {
   const [selectedCategory, setSelectedCategory] = useState('sleepStories');
   const [audioFiles, setAudioFiles] = useState<AudioResource[]>([]);
   const [selectedAudio, setSelectedAudio] = useState<AudioResource | null>(null);
+  const [showVideo, setShowVideo] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [currentTime, setCurrentTime] = useState(0);
@@ -71,7 +71,6 @@ const Sleep = () => {
 
       setAudioFiles(data as AudioResource[]);
       
-      // Set initial selected audio if available
       if (data && data.length > 0) {
         setSelectedAudio(data[0] as AudioResource);
       }
@@ -176,6 +175,31 @@ const Sleep = () => {
     setSelectedCategory(category);
   };
 
+  const renderMediaPlayer = () => {
+    if (!selectedAudio) return null;
+
+    if (showVideo && selectedAudio.youtube_url) {
+      return <VideoPlayer url={selectedAudio.youtube_url} title={selectedAudio.title} />;
+    }
+
+    return (
+      <div className="bg-mindful/5 rounded-xl p-4">
+        <AudioPlayer
+          src={selectedAudio.audio_url}
+          showJumpControls={true}
+          layout="stacked"
+          customControlsSection={defaultControlsSection}
+          customProgressBarSection={defaultProgressBarSection}
+          className="audio-player-custom rounded-lg shadow-inner"
+          style={{
+            backgroundColor: 'transparent',
+            borderRadius: '12px',
+          }}
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#8BA989]/30 to-[#F2C94C]/20">
       <div className="container mx-auto py-12 px-4 md:px-8">
@@ -191,6 +215,7 @@ const Sleep = () => {
           </div>
           
           <div className="mt-6 md:mt-0 flex items-center gap-4">
+            <MediaToggle showVideo={showVideo} onToggle={setShowVideo} />
             <Button 
               onClick={() => toggleTimer()} 
               variant="secondary"
@@ -215,7 +240,6 @@ const Sleep = () => {
           className="w-full mb-8" 
           onValueChange={(value) => {
             setSelectedCategory(value);
-            // Filter audio files by category when tab changes
             const filteredAudios = audioFiles.filter(audio => audio.category === value);
             if (filteredAudios.length > 0) {
               setSelectedAudio(filteredAudios[0]);
@@ -248,20 +272,7 @@ const Sleep = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="bg-mindful/5 rounded-xl p-4">
-                      <AudioPlayer
-                        src={audio.audio_url}
-                        showJumpControls={true}
-                        layout="stacked"
-                        customControlsSection={defaultControlsSection}
-                        customProgressBarSection={defaultProgressBarSection}
-                        className="audio-player-custom rounded-lg shadow-inner"
-                        style={{
-                          backgroundColor: 'transparent',
-                          borderRadius: '12px',
-                        }}
-                      />
-                    </div>
+                    {renderMediaPlayer()}
                   </CardContent>
                 </Card>
               ))}
