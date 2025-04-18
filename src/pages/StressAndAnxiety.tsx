@@ -208,7 +208,7 @@ const StressAndAnxiety = () => {
                       <p className="text-gray-600">Instant calm through soothing sounds and guided relaxation.</p>
                     </div>
                     <img 
-                      src="src/pages/images/QUICK_RILIEF.jpg"
+                      src="https://images.pexels.com/photos/4971619/pexels-photo-4971619.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                       alt="Quick relief"
                       className="w-32 h-32 rounded-lg object-cover"
                     />
@@ -236,7 +236,7 @@ const StressAndAnxiety = () => {
                       <p className="text-gray-600">Master your breath to reduce stress and anxiety.</p>
                     </div>
                     <img 
-                      src="src/pages/images/BREATHING.jpg"
+                      src="https://images.pexels.com/photos/8940499/pexels-photo-8940499.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                       alt="Breathing"
                       className="w-32 h-32 rounded-lg object-cover"
                     />
@@ -264,7 +264,7 @@ const StressAndAnxiety = () => {
                       <p className="text-gray-600">Simple, effective techniques for daily stress management.</p>
                     </div>
                     <img 
-                      src="src/pages/images/PRACTICAL_WAYS.jpg"
+                      src="https://images.pexels.com/photos/317157/pexels-photo-317157.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                       alt="Practical ways"
                       className="w-32 h-32 rounded-lg object-cover"
                     />

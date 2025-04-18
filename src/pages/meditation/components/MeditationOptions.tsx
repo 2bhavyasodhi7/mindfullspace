@@ -292,7 +292,7 @@ const MeditationOptions = () => {
               <div className="opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-4 w-full bg-white p-6 rounded-xl shadow-xl transition-opacity duration-300 z-10">
                 <div className="flex gap-4">
                   <img 
-                    src="src/pages/images/LEARN_MEDITATION.jpg"
+                    src="https://images.pexels.com/photos/4908538/pexels-photo-4908538.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="Meditation Techniques"
                     className="w-24 h-24 rounded-lg object-cover"
                   />
