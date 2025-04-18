@@ -1,4 +1,6 @@
 
+import { CustomUIModule } from 'react-h5-audio-player/lib/src/interfaces';
+
 export const audioPlayerStyles = {
   background: 'transparent',
   boxShadow: 'none',
@@ -23,5 +25,6 @@ export const audioPlayerStyles = {
   },
 };
 
-export const defaultControlsSection = ['MAIN_CONTROLS', 'VOLUME_CONTROLS'];
-export const defaultProgressBarSection = ['PROGRESS_BAR', 'CURRENT_TIME', 'DURATION'];
+// Fix the typing issues by using proper CustomUIModule[] type
+export const defaultControlsSection: CustomUIModule[] = ['MAIN_CONTROLS', 'VOLUME_CONTROLS'];
+export const defaultProgressBarSection: CustomUIModule[] = ['PROGRESS_BAR', 'CURRENT_TIME', 'DURATION'];
