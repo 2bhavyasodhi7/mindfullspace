@@ -1,7 +1,6 @@
 
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Video, Music } from "lucide-react";
+import { Video } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface MediaToggleProps {
   showVideo: boolean;
@@ -10,18 +9,14 @@ interface MediaToggleProps {
 
 const MediaToggle = ({ showVideo, onToggle }: MediaToggleProps) => {
   return (
-    <div className="flex items-center space-x-2">
-      <Music className={`h-4 w-4 ${!showVideo ? 'text-mindful' : 'text-gray-400'}`} />
-      <Switch
-        checked={showVideo}
-        onCheckedChange={onToggle}
-        className="data-[state=checked]:bg-mindful"
-      />
-      <Video className={`h-4 w-4 ${showVideo ? 'text-mindful' : 'text-gray-400'}`} />
-      <Label className="text-sm text-gray-600">
-        {showVideo ? 'Video' : 'Audio'} mode
-      </Label>
-    </div>
+    <Button
+      variant="outline"
+      className="w-full bg-white/50 hover:bg-white/60 text-mindful border-mindful/20"
+      onClick={() => onToggle(!showVideo)}
+    >
+      <Video className="h-4 w-4 mr-2" />
+      Switch to {showVideo ? 'Audio' : 'Video'}
+    </Button>
   );
 };
 
