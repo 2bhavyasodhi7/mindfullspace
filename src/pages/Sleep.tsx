@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Moon,
@@ -22,11 +23,14 @@ import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } 
 import { supabase } from '@/integrations/supabase/client';
 
 interface AudioResource {
-  id: number;
+  id: string; // Changed from number to string to match Supabase's UUID format
   title: string;
   duration: string;
   audio_url: string;
   category: string;
+  created_at?: string;
+  youtube_url?: string;
+  section: string;
 }
 
 interface SleepTimer {
@@ -65,12 +69,11 @@ const Sleep = () => {
         return;
       }
 
-      const typedData = data as AudioResource[];
-      setAudioFiles(typedData);
+      setAudioFiles(data as AudioResource[]);
       
       // Set initial selected audio if available
-      if (typedData.length > 0) {
-        setSelectedAudio(typedData[0]);
+      if (data && data.length > 0) {
+        setSelectedAudio(data[0] as AudioResource);
       }
     };
 
