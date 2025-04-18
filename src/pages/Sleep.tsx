@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Moon,
@@ -43,6 +44,11 @@ const Sleep = () => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number | null>(null);
+
+  // Update selected audio when category changes
+  useEffect(() => {
+    setSelectedAudio(audioFiles[selectedCategory as keyof typeof audioFiles][0]);
+  }, [selectedCategory]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -136,6 +142,10 @@ const Sleep = () => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#8BA989]/30 to-[#F2C94C]/20">
       <div className="container mx-auto py-12 px-4 md:px-8">
@@ -170,7 +180,7 @@ const Sleep = () => {
           </div>
         </div>
         
-        <Tabs defaultValue="sleepStories" className="w-full mb-8">
+        <Tabs defaultValue="sleepStories" className="w-full mb-8" onValueChange={handleCategoryChange}>
           <TabsList className="grid grid-cols-3 mb-8 bg-white/50 backdrop-blur-sm">
             <TabsTrigger value="sleepStories">Sleep Stories</TabsTrigger>
             <TabsTrigger value="nsdr">NSDR</TabsTrigger>
