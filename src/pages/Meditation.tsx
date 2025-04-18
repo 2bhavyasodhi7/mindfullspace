@@ -2,6 +2,7 @@
 import React from 'react';
 import MeditationHeader from './meditation/components/MeditationHeader';
 import MeditationOptions from './meditation/components/MeditationOptions';
+import MeditationStats from './meditation/components/MeditationStats';
 
 function Meditation() {
   return (
@@ -17,7 +18,10 @@ function Meditation() {
             </p>
           </div>
         </div>
-        <MeditationOptions />
+        <MeditationStats />
+        <div className="mt-12">
+          <MeditationOptions />
+        </div>
       </div>
     </div>
   );
