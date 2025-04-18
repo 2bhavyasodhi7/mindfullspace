@@ -1,5 +1,5 @@
 
-import { CustomUIModules } from 'react-h5-audio-player';
+import { AudioPlayerProps } from 'react-h5-audio-player';
 
 export const audioPlayerStyles = {
   background: 'transparent',
@@ -25,6 +25,6 @@ export const audioPlayerStyles = {
   },
 };
 
-// Update the type to use CustomUIModules instead of CustomUIModule[]
-export const defaultControlsSection: CustomUIModules = ['MAIN_CONTROLS', 'VOLUME_CONTROLS'];
-export const defaultProgressBarSection: CustomUIModules = ['PROGRESS_BAR', 'CURRENT_TIME', 'DURATION'];
+// Use the correct type for CustomUI modules
+export const defaultControlsSection: NonNullable<AudioPlayerProps['customControlsSection']> = ['MAIN_CONTROLS', 'VOLUME_CONTROLS'];
+export const defaultProgressBarSection: NonNullable<AudioPlayerProps['customProgressBarSection']> = ['PROGRESS_BAR', 'CURRENT_TIME', 'DURATION'];
