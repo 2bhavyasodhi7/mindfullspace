@@ -25,15 +25,8 @@ const HeroSection = () => {
   
   return (
     <section className="relative h-[90vh] w-full flex items-center justify-center text-white">
-      {/* Full-width, full-height background image */}
-      <div className="absolute inset-0 w-full h-full">
-        <img 
-          src="/images/scenery.jpg" 
-          alt="Meditation background" 
-          className="w-full h-full object-cover brightness-[0.6]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-      </div>
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#9b87f5]/50 to-[#1A1F2C]/70"></div>
       
       <div className="container-custom text-center relative z-10">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight nike-headline">
