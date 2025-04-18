@@ -110,7 +110,7 @@ const GuruSection = () => {
                 className="rounded-xl overflow-hidden shadow-lg"
               >
                 <img 
-                  src="/images/TRACK_YOUR_PROGRESS.jpg" 
+                  src="https://images.pexels.com/photos/18069424/pexels-photo-18069424/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-depicts-how-ai-could-assist-in-genomic-studies-and-its-applications-it-was-created-by-artist-nidia-dias-as-part-of-the.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
                   alt="Scientific evidence of meditation" 
                   className="w-full h-auto object-cover"
                 />
