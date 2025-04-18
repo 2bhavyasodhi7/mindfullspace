@@ -24,7 +24,7 @@ const TypingIndicator = () => (
 // Quick reply button component
 const QuickReplyButton = ({ text, onClick }: { text: string; onClick: () => void }) => (
   <button 
-    className="bg-green-light text-white border-none rounded-[18px] px-[18px] py-2 text-base font-normal cursor-pointer shadow-md transition-all hover:bg-gold hover:text-green-dark"
+    className="bg-gray-800 text-white border-none rounded-[18px] px-[18px] py-2 text-base font-normal cursor-pointer shadow-md transition-all hover:bg-gray-700"
     onClick={onClick}
   >
     {text}
