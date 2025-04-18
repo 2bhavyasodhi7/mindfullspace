@@ -19,7 +19,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { audioFiles } from '../pages/audioData';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
 
 interface SleepTimer {
   isRunning: boolean;
@@ -137,32 +136,33 @@ const Sleep = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-mindful-lighter to-white">
-      <div className="container mx-auto py-8 px-4 md:px-8">
-        <div className="flex flex-col md:flex-row items-start justify-between mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#8BA989]/30 to-[#F2C94C]/20">
+      <div className="container mx-auto py-12 px-4 md:px-8">
+        <div className="flex flex-col md:flex-row items-start justify-between mb-12">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-mindful-dark flex items-center">
-              <Moon className="mr-2 text-mindful" /> Sleep Better
+            <h1 className="text-4xl md:text-5xl font-bold text-mindful-dark flex items-center">
+              <Moon className="mr-3 text-mindful h-8 w-8 md:h-10 md:w-10" /> 
+              Sleep Better
             </h1>
-            <p className="text-gray-600 mt-2 max-w-2xl">
+            <p className="text-gray-600 mt-3 max-w-2xl text-lg">
               Improve your sleep quality with our collection of sleep stories, soundscapes, and non-sleep deep rest (NSDR) sessions.
             </p>
           </div>
           
-          <div className="mt-4 md:mt-0 flex items-center">
+          <div className="mt-6 md:mt-0 flex items-center gap-4">
             <Button 
               onClick={() => toggleTimer()} 
-              variant="outline" 
-              className="mr-2 bg-white"
+              variant="secondary"
+              className="shadow-md hover:shadow-lg transition-all"
             >
               <Clock className="mr-2 h-4 w-4" />
               {sleepTimer.isRunning ? 'Stop Timer' : 'Start Sleep Timer'}
             </Button>
             
             <Button 
-              variant="outline" 
-              className="bg-white"
+              variant="outline"
               onClick={() => setShowStats(true)}
+              className="shadow-md hover:shadow-lg transition-all"
             >
               View Sleep Stats
             </Button>
@@ -170,32 +170,44 @@ const Sleep = () => {
         </div>
         
         <Tabs defaultValue="sleepStories" className="w-full mb-8">
-          <TabsList className="grid grid-cols-3">
-            <TabsTrigger value="sleepStories" onClick={() => setSelectedCategory('sleepStories')}>Sleep Stories</TabsTrigger>
-            <TabsTrigger value="nsdr" onClick={() => setSelectedCategory('nsdr')}>NSDR</TabsTrigger>
-            <TabsTrigger value="soundscapes" onClick={() => setSelectedCategory('soundscapes')}>Soundscapes</TabsTrigger>
+          <TabsList className="grid grid-cols-3 mb-8 bg-white/50 backdrop-blur-sm">
+            <TabsTrigger value="sleepStories">Sleep Stories</TabsTrigger>
+            <TabsTrigger value="nsdr">NSDR</TabsTrigger>
+            <TabsTrigger value="soundscapes">Soundscapes</TabsTrigger>
           </TabsList>
           
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {audioFiles[selectedCategory as keyof typeof audioFiles].map((audio) => (
-              <Card key={audio.id} 
-                onClick={() => setSelectedAudio(audio)} 
-                className={`cursor-pointer hover:shadow-md transition-shadow duration-300 ${selectedAudio.id === audio.id ? 'border-2 border-mindful' : ''}`}
+              <Card 
+                key={audio.id} 
+                onClick={() => setSelectedAudio(audio)}
+                className={`transform transition-all duration-300 hover:scale-[1.02] cursor-pointer
+                  ${selectedAudio.id === audio.id 
+                    ? 'border-2 border-mindful shadow-xl bg-gradient-to-br from-mindful-lighter to-white' 
+                    : 'border border-mindful/20 shadow-md hover:shadow-xl bg-white/80 backdrop-blur-sm'
+                  }`}
               >
-                <CardHeader>
-                  <CardTitle>{audio.title}</CardTitle>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center justify-between">
+                    <span className="text-mindful-dark font-semibold">{audio.title}</span>
+                    <span className="text-sm text-gray-500">{audio.duration}</span>
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-500 mb-4">Duration: {audio.duration}</p>
-                  <AudioPlayer
-                    src={audio.url}
-                    showJumpControls={true}
-                    layout="stacked"
-                    customControlsSection={defaultControlsSection}
-                    customProgressBarSection={defaultProgressBarSection}
-                    className="audio-player-custom rounded-md"
-                    style={audioPlayerStyles}
-                  />
+                  <div className="bg-mindful/5 rounded-xl p-4">
+                    <AudioPlayer
+                      src={audio.url}
+                      showJumpControls={true}
+                      layout="stacked"
+                      customControlsSection={defaultControlsSection}
+                      customProgressBarSection={defaultProgressBarSection}
+                      className="audio-player-custom rounded-lg shadow-inner"
+                      style={{
+                        backgroundColor: 'transparent',
+                        borderRadius: '12px',
+                      }}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -203,9 +215,9 @@ const Sleep = () => {
         </Tabs>
 
         <Sheet open={showStats} onOpenChange={setShowStats}>
-          <SheetContent>
+          <SheetContent className="bg-white/95 backdrop-blur-sm border-l border-mindful/20">
             <SheetHeader>
-              <SheetTitle>Sleep Statistics</SheetTitle>
+              <SheetTitle className="text-mindful-dark">Sleep Statistics</SheetTitle>
             </SheetHeader>
             <div className="mt-4">
               <p>Here you can view your sleep statistics.</p>
