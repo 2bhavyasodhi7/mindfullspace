@@ -1,5 +1,9 @@
 
-import { AudioPlayerProps } from 'react-h5-audio-player';
+// Import the types properly from the react-h5-audio-player package
+import type { H5AudioPlayer } from 'react-h5-audio-player';
+
+// Extract the prop types from the component type
+type AudioPlayerProps = React.ComponentProps<typeof H5AudioPlayer>;
 
 export const audioPlayerStyles = {
   background: 'transparent',
