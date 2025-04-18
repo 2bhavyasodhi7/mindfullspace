@@ -191,7 +191,7 @@ const StressAndAnxiety = () => {
               <div className="relative group">
                 <button
                   onClick={() => setActiveSection(activeSection === 'quick-relief' ? null : 'quick-relief')}
-                  className="w-full bg-gradient-to-br from-mindful to-mindful-light text-white p-6 rounded-xl shadow-lg
+                  className="w-full bg-[#8BA989] text-white p-6 rounded-xl shadow-lg
                     transform transition-all duration-200 hover:scale-105 hover:shadow-xl
                     flex flex-col items-center space-y-3"
                 >
@@ -219,7 +219,7 @@ const StressAndAnxiety = () => {
               <div className="relative group">
                 <button
                   onClick={() => setActiveSection(activeSection === 'breathing' ? null : 'breathing')}
-                  className="w-full bg-gradient-to-br from-mindful to-mindful-light text-white p-6 rounded-xl shadow-lg
+                  className="w-full bg-[#8BA989] text-white p-6 rounded-xl shadow-lg
                     transform transition-all duration-200 hover:scale-105 hover:shadow-xl
                     flex flex-col items-center space-y-3"
                 >
@@ -247,7 +247,7 @@ const StressAndAnxiety = () => {
               <div className="relative group">
                 <button
                   onClick={() => setActiveSection(activeSection === 'practical' ? null : 'practical')}
-                  className="w-full bg-gradient-to-br from-mindful to-mindful-light text-white p-6 rounded-xl shadow-lg
+                  className="w-full bg-[#8BA989] text-white p-6 rounded-xl shadow-lg
                     transform transition-all duration-200 hover:scale-105 hover:shadow-xl
                     flex flex-col items-center space-y-3"
                 >
