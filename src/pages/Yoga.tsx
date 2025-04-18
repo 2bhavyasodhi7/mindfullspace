@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 import { 
@@ -556,8 +557,8 @@ const Yoga = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Journal Your Practice</CardTitle>
-                <CardDescription>Reflect on your yoga journey</CardHeader>
-              </CardContent>
+                <CardDescription>Reflect on your yoga journey</CardDescription>
+              </CardHeader>
               <CardContent>
                 <div className="bg-mindful-lighter p-4 rounded-lg mb-4">
                   <h3 className="font-medium mb-2">How did you feel after today's session?</h3>
@@ -628,3 +629,33 @@ const Yoga = () => {
             <Card>
               <div className="h-48 overflow-hidden">
                 <img
+                  src="src/pages/images/INSTRUCTOR_3.jpg"
+                  alt="Instructor-3"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <CardHeader>
+                <CardTitle>Emma</CardTitle>
+                <CardDescription>Yin & Restorative Specialist</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                  Emma creates a peaceful environment for her classes, focusing on deep stretches and mindful breathing for stress reduction.
+                </p>
+                <div className="flex space-x-2">
+                  <Badge variant="outline">Yin</Badge>
+                  <Badge variant="outline">Restorative</Badge>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button variant="outline" className="w-full">View Schedule</Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+};
+
+export default Yoga;
