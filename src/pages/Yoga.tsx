@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 import { 
@@ -583,12 +582,12 @@ const Yoga = () => {
                 />
               </div>
               <CardHeader>
-                <CardTitle>Sarah</CardTitle>
+                <CardTitle>Bhavya</CardTitle>
                 <CardDescription>Hatha & Vinyasa Specialist</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  Sarah brings 10 years of experience and a calming presence to her classes, specializing in helping beginners build a strong foundation.
+                  Bhavya brings 10 years of experience and a calming presence to her classes, specializing in helping beginners build a strong foundation.
                 </p>
                 <div className="flex space-x-2">
                   <Badge variant="outline">Hatha</Badge>
@@ -609,12 +608,12 @@ const Yoga = () => {
                 />
               </div>
               <CardHeader>
-                <CardTitle>Michael</CardTitle>
+                <CardTitle>Ayush</CardTitle>
                 <CardDescription>Power Yoga Expert</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  Michael's energetic classes focus on building strength and flexibility through dynamic sequences and mindful transitions.
+                  Ayush's energetic classes focus on building strength and flexibility through dynamic sequences and mindful transitions.
                 </p>
                 <div className="flex space-x-2">
                   <Badge variant="outline">Power</Badge>
@@ -635,12 +634,12 @@ const Yoga = () => {
                 />
               </div>
               <CardHeader>
-                <CardTitle>Emma</CardTitle>
+                <CardTitle>Prathmesh</CardTitle>
                 <CardDescription>Yin & Restorative Specialist</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  Emma creates a peaceful environment for her classes, focusing on deep stretches and mindful breathing for stress reduction.
+                  Prathmesh creates a peaceful environment for his classes, focusing on deep stretches and mindful breathing for stress reduction.
                 </p>
                 <div className="flex space-x-2">
                   <Badge variant="outline">Yin</Badge>
