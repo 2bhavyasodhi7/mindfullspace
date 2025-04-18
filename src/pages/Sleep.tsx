@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Moon,
@@ -17,10 +16,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Progress } from '@/components/ui/progress';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { audioFiles } from '../pages/audioData';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
+import { supabase } from '@/integrations/supabase/client';
+
+interface AudioResource {
+  id: number;
+  title: string;
+  duration: string;
+  audio_url: string;
+  category: string;
+}
 
 interface SleepTimer {
   isRunning: boolean;
@@ -30,7 +37,8 @@ interface SleepTimer {
 
 const Sleep = () => {
   const [selectedCategory, setSelectedCategory] = useState('sleepStories');
-  const [selectedAudio, setSelectedAudio] = useState(audioFiles.sleepStories[0]);
+  const [audioFiles, setAudioFiles] = useState<AudioResource[]>([]);
+  const [selectedAudio, setSelectedAudio] = useState<AudioResource | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [currentTime, setCurrentTime] = useState(0);
@@ -45,10 +53,29 @@ const Sleep = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number | null>(null);
 
-  // Update selected audio when category changes
   useEffect(() => {
-    setSelectedAudio(audioFiles[selectedCategory as keyof typeof audioFiles][0]);
-  }, [selectedCategory]);
+    const fetchAudioResources = async () => {
+      const { data, error } = await supabase
+        .from('media_resources')
+        .select('*')
+        .eq('section', 'sleep');
+
+      if (error) {
+        console.error('Error fetching audio resources:', error);
+        return;
+      }
+
+      const typedData = data as AudioResource[];
+      setAudioFiles(typedData);
+      
+      // Set initial selected audio if available
+      if (typedData.length > 0) {
+        setSelectedAudio(typedData[0]);
+      }
+    };
+
+    fetchAudioResources();
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -180,7 +207,18 @@ const Sleep = () => {
           </div>
         </div>
         
-        <Tabs defaultValue="sleepStories" className="w-full mb-8" onValueChange={handleCategoryChange}>
+        <Tabs 
+          defaultValue="sleepStories" 
+          className="w-full mb-8" 
+          onValueChange={(value) => {
+            setSelectedCategory(value);
+            // Filter audio files by category when tab changes
+            const filteredAudios = audioFiles.filter(audio => audio.category === value);
+            if (filteredAudios.length > 0) {
+              setSelectedAudio(filteredAudios[0]);
+            }
+          }}
+        >
           <TabsList className="grid grid-cols-3 mb-8 bg-white/50 backdrop-blur-sm">
             <TabsTrigger value="sleepStories">Sleep Stories</TabsTrigger>
             <TabsTrigger value="nsdr">NSDR</TabsTrigger>
@@ -188,40 +226,42 @@ const Sleep = () => {
           </TabsList>
           
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {audioFiles[selectedCategory as keyof typeof audioFiles].map((audio) => (
-              <Card 
-                key={audio.id} 
-                onClick={() => setSelectedAudio(audio)}
-                className={`transform transition-all duration-300 hover:scale-[1.02] cursor-pointer
-                  ${selectedAudio.id === audio.id 
-                    ? 'border-2 border-mindful shadow-xl bg-gradient-to-br from-mindful-lighter to-white' 
-                    : 'border border-mindful/20 shadow-md hover:shadow-xl bg-white/80 backdrop-blur-sm'
-                  }`}
-              >
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center justify-between">
-                    <span className="text-mindful-dark font-semibold">{audio.title}</span>
-                    <span className="text-sm text-gray-500">{audio.duration}</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="bg-mindful/5 rounded-xl p-4">
-                    <AudioPlayer
-                      src={audio.url}
-                      showJumpControls={true}
-                      layout="stacked"
-                      customControlsSection={defaultControlsSection}
-                      customProgressBarSection={defaultProgressBarSection}
-                      className="audio-player-custom rounded-lg shadow-inner"
-                      style={{
-                        backgroundColor: 'transparent',
-                        borderRadius: '12px',
-                      }}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {audioFiles
+              .filter(audio => audio.category === selectedCategory)
+              .map((audio) => (
+                <Card 
+                  key={audio.id} 
+                  onClick={() => setSelectedAudio(audio)}
+                  className={`transform transition-all duration-300 hover:scale-[1.02] cursor-pointer
+                    ${selectedAudio?.id === audio.id 
+                      ? 'border-2 border-mindful shadow-xl bg-gradient-to-br from-mindful-lighter to-white' 
+                      : 'border border-mindful/20 shadow-md hover:shadow-xl bg-white/80 backdrop-blur-sm'
+                    }`}
+                >
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center justify-between">
+                      <span className="text-mindful-dark font-semibold">{audio.title}</span>
+                      <span className="text-sm text-gray-500">{audio.duration}</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="bg-mindful/5 rounded-xl p-4">
+                      <AudioPlayer
+                        src={audio.audio_url}
+                        showJumpControls={true}
+                        layout="stacked"
+                        customControlsSection={defaultControlsSection}
+                        customProgressBarSection={defaultProgressBarSection}
+                        className="audio-player-custom rounded-lg shadow-inner"
+                        style={{
+                          backgroundColor: 'transparent',
+                          borderRadius: '12px',
+                        }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
           </div>
         </Tabs>
 
