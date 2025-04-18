@@ -18,10 +18,7 @@ function Meditation() {
             </p>
           </div>
         </div>
-        <MeditationStats />
-        <div className="mt-12">
-          <MeditationOptions />
-        </div>
+        <MeditationOptions />
       </div>
     </div>
   );

@@ -1,99 +1,76 @@
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Brain, Target, Award } from 'lucide-react';
-
-interface SemiCircleProps {
-  percentage: number;
-  color: string;
-  label: string;
-  value: string | number;
-  icon?: React.ReactNode;
-}
-
-const SemiCircle: React.FC<SemiCircleProps> = ({ percentage, color, label, value, icon }) => {
-  const rotation = percentage * 1.8; // 180 degrees * percentage/100
-
-  return (
-    <div className="flex flex-col items-center text-center">
-      <div className="relative w-32 h-16 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full rounded-t-full bg-mindful-lighter"></div>
-        <div 
-          className="absolute top-0 left-0 w-full h-full rounded-t-full origin-bottom transition-all duration-500" 
-          style={{ 
-            backgroundColor: color,
-            transform: `rotate(${-90 + rotation}deg)`,
-            opacity: 0.85
-          }}
-        ></div>
-        <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center">
-          <span className="font-bold text-2xl text-mindful-dark">{value}</span>
-          {icon && <span className="text-mindful-dark mt-1">{icon}</span>}
-        </div>
-      </div>
-      <p className="text-sm font-medium text-mindful-dark mt-2">{label}</p>
-    </div>
-  );
-};
+import { ChartContainer, ChartLegend, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { weeklyStats } from '../../audioData1';
 
 const MeditationStats = () => {
-  const [stats, setStats] = useState({
-    streakDays: 0,
-    totalHours: 0,
-    completedSessions: 0,
-    focusScore: 0
-  });
+  const [meditationStats, setMeditationStats] = useState([
+    { day: 'Mon', hours: 0 },
+    { day: 'Tue', hours: 0 },
+    { day: 'Wed', hours: 0 },
+    { day: 'Thu', hours: 0 },
+    { day: 'Fri', hours: 0 },
+    { day: 'Sat', hours: 0 },
+    { day: 'Sun', hours: 0 },
+  ]);
 
   useEffect(() => {
-    // Simulated data - in a real app, this would come from an API or local storage
-    setStats({
-      streakDays: 7,
-      totalHours: 24,
-      completedSessions: 15,
-      focusScore: 85
-    });
+    setMeditationStats(weeklyStats);
   }, []);
 
   return (
-    <Card className="bg-white shadow-lg rounded-xl overflow-hidden border-mindful-light">
-      <CardHeader className="bg-gradient-to-r from-mindful-lighter to-mindful-light/30 pb-6">
-        <CardTitle className="text-2xl font-bold text-mindful-dark text-center">
-          Your Meditation Progress
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <SemiCircle 
-            percentage={(stats.streakDays / 10) * 100}
-            color="#73A580"
-            label="Day Streak"
-            value={stats.streakDays}
-            icon={<Clock className="w-4 h-4" />}
-          />
-          <SemiCircle 
-            percentage={(stats.totalHours / 30) * 100}
-            color="#86EFAC"
-            label="Total Hours"
-            value={stats.totalHours}
-            icon={<Brain className="w-4 h-4" />}
-          />
-          <SemiCircle 
-            percentage={(stats.completedSessions / 20) * 100}
-            color="#A5F3FC"
-            label="Sessions"
-            value={stats.completedSessions}
-            icon={<Target className="w-4 h-4" />}
-          />
-          <SemiCircle 
-            percentage={stats.focusScore}
-            color="#BAE6FD"
-            label="Focus Score"
-            value={`${stats.focusScore}%`}
-            icon={<Award className="w-4 h-4" />}
-          />
+    <div 
+      className="bg-cover bg-center bg-no-repeat rounded-2xl overflow-hidden shadow-lg"
+      style={{ 
+        backgroundImage: `url('/lovable-uploads/3a0d229f-22c2-46f9-9aec-6cf2e97f5d1f.png')`,
+        backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgba(255,255,255,0.2)'
+      }}
+    >
+      <div className="p-8">
+        <h2 className="text-2xl font-bold text-white mb-6 drop-shadow-lg">Your Meditation Progress</h2>
+        <div className="h-80">
+          <ChartContainer
+            config={{
+              hours: {
+                label: "Meditation Hours",
+                color: "#73A580"
+              }
+            }}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={meditationStats}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff40" />
+                <XAxis 
+                  dataKey="day" 
+                  tick={{ fill: 'white' }} 
+                  axisLine={{ stroke: 'white' }}
+                />
+                <YAxis 
+                  label={{ 
+                    value: 'Hours', 
+                    angle: -90, 
+                    position: 'insideLeft', 
+                    fill: 'white' 
+                  }} 
+                  tick={{ fill: 'white' }}
+                  axisLine={{ stroke: 'white' }}
+                />
+                <ChartTooltip 
+                  content={
+                    <ChartTooltipContent 
+                      labelFormatter={(value) => `${value} Hours`}
+                    />
+                  }
+                />
+                <Bar dataKey="hours" fill="#73A580" />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
