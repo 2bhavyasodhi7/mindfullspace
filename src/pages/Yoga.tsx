@@ -106,7 +106,7 @@ const Yoga = () => {
       type: "Power", 
       duration: "60 min", 
       difficulty: "Advanced", 
-      videoUrl: "https://www.youtube.com/watch?v=Zz6eOVaaelI"
+      videoUrl: "https://youtu.be/SS3WT91y48I?si=A_2HIdj1kGiGpsuw"
     },
     { id: "r4", title: "Gentle Stretch", instructor: "D", type: "Yin", duration: "40 min", difficulty: "Beginner", videoUrl: "https://www.youtube.com/watch?v=4pKly2JojMw" },
     { id: "r5", title: "Balance & Strength", instructor: "E", type: "Hatha", duration: "50 min", difficulty: "Intermediate", videoUrl: "https://www.youtube.com/watch?v=7kgZnJqzNaU&t=900s" },
