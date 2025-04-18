@@ -53,7 +53,7 @@ const StressAndAnxiety = () => {
 
   const breathingAudios = [
     { id: 1, title: '4-7-8 Breathing', duration: '8:00', url: '/music/breathing/478-breathing.mp3' },
-    { id: 2, title: 'Box Breathing', duration: '10:00', url: '/music/breathing/box-breathing.mp3' },
+    { id: 2, title: 'Box Breathing', duration: '10:00', url: 'https://youtu.be/tEmt1Znux58?si=YxZCijMKcPI-bAUH' },
     { id: 3, title: 'Deep Breathing', duration: '7:30', url: '/music/breathing/deep-breathing.mp3' },
     { id: 4, title: 'Calm Breath', duration: '6:45', url: '/music/breathing/calm-breath.mp3' },
     { id: 5, title: 'Energy Breath', duration: '5:30', url: '/music/breathing/energy-breath.mp3' },
