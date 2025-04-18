@@ -88,7 +88,7 @@ const Yoga = () => {
       type: "Vinyasa", 
       duration: "45 min", 
       difficulty: "Beginner", 
-      videoUrl: "https://www.youtube.com/watch?v=ls6i4OS1zY0"  // Sample yoga video
+      videoUrl: "https://www.youtube.com/watch?v=7kgZnJqzNaU"  // Sample yoga video
     },
     { 
       id: "r2", 
@@ -97,7 +97,7 @@ const Yoga = () => {
       type: "Restorative", 
       duration: "30 min", 
       difficulty: "Beginner", 
-      videoUrl: "https://www.youtube.com/watch?v=sTANio_2E0Q"
+      videoUrl: "https://www.youtube.com/watch?v=6p_yaNFSYao"
     },
     { 
       id: "r3", 
@@ -106,10 +106,10 @@ const Yoga = () => {
       type: "Power", 
       duration: "60 min", 
       difficulty: "Advanced", 
-      videoUrl: "https://www.youtube.com/watch?v=9kOCY0KNByw"
+      videoUrl: "https://www.youtube.com/watch?v=Zz6eOVaaelI"
     },
-    { id: "r4", title: "Gentle Stretch", instructor: "D", type: "Yin", duration: "40 min", difficulty: "Beginner", videoUrl: "https://www.youtube.com/watch?v=sTANio_2E0Q" },
-    { id: "r5", title: "Balance & Strength", instructor: "E", type: "Hatha", duration: "50 min", difficulty: "Intermediate", videoUrl: "https://www.youtube.com/watch?v=ls6i4OS1zY0" },
+    { id: "r4", title: "Gentle Stretch", instructor: "D", type: "Yin", duration: "40 min", difficulty: "Beginner", videoUrl: "https://www.youtube.com/watch?v=4pKly2JojMw" },
+    { id: "r5", title: "Balance & Strength", instructor: "E", type: "Hatha", duration: "50 min", difficulty: "Intermediate", videoUrl: "https://www.youtube.com/watch?v=7kgZnJqzNaU&t=900s" },
     { id: "r6", title: "Mindful Movement", instructor: "F", type: "Vinyasa", duration: "45 min", difficulty: "Intermediate", videoUrl: "https://www.youtube.com/watch?v=9kOCY0KNByw" },
   ];
 
