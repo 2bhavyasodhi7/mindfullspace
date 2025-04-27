@@ -1,25 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  Moon,
-  Volume2,
-  VolumeX,
-  Clock,
-  Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-  X,
-} from 'lucide-react';
+
+import React, { useState, useEffect } from 'react';
+import { Moon, Clock, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import AudioPlayer from 'react-h5-audio-player';
-import 'react-h5-audio-player/lib/styles.css';
-import { defaultControlsSection, defaultProgressBarSection } from '@/utils/audioPlayerUtils';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import MediaToggle from '@/components/sleep/MediaToggle';
 import VideoPlayer from '@/components/sleep/VideoPlayer';
+import AudioCard from '@/components/sleep/AudioCard';
+import { audioFiles } from './audioData';
 
 interface AudioResource {
   id: string;
@@ -40,13 +31,9 @@ interface SleepTimer {
 
 const Sleep = () => {
   const [selectedCategory, setSelectedCategory] = useState('sleepStories');
-  const [audioFiles, setAudioFiles] = useState<AudioResource[]>([]);
+  const [audioResources, setAudioResources] = useState<AudioResource[]>([]);
   const [selectedAudio, setSelectedAudio] = useState<AudioResource | null>(null);
   const [showVideo, setShowVideo] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [showStats, setShowStats] = useState(false);
   const [sleepTimer, setSleepTimer] = useState<SleepTimer>({
     isRunning: false,
@@ -54,67 +41,77 @@ const Sleep = () => {
     elapsedTime: 0,
   });
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const animationRef = useRef<number | null>(null);
-
+  // Fetch audio resources from Supabase
   useEffect(() => {
     const fetchAudioResources = async () => {
+      // Try to get resources from Supabase
       const { data, error } = await supabase
         .from('media_resources')
         .select('*')
         .eq('section', 'sleep');
 
-      if (error) {
-        console.error('Error fetching audio resources:', error);
-        return;
-      }
-
-      setAudioFiles(data as AudioResource[]);
-      
-      if (data && data.length > 0) {
-        setSelectedAudio(data[0] as AudioResource);
+      if (error || !data || data.length === 0) {
+        console.log("Using local audio data instead of Supabase", error);
+        // Use local audio data as fallback
+        const localData = mapLocalAudioToResources(selectedCategory);
+        setAudioResources(localData);
+        
+        if (localData.length > 0) {
+          setSelectedAudio(localData[0]);
+        }
+      } else {
+        // Use Supabase data
+        setAudioResources(data as AudioResource[]);
+        
+        if (data && data.length > 0) {
+          setSelectedAudio(data[0] as AudioResource);
+        }
       }
     };
 
     fetchAudioResources();
   }, []);
 
+  // Map local audio data to match the AudioResource format
+  const mapLocalAudioToResources = (category: string): AudioResource[] => {
+    const categoryData = audioFiles[category as keyof typeof audioFiles] || [];
+    
+    return categoryData.map(audio => ({
+      id: audio.id.toString(),
+      title: audio.title,
+      duration: audio.duration,
+      audio_url: audio.url,
+      category: category,
+      section: 'sleep',
+      youtube_url: undefined
+    }));
+  };
+
+  // Filter audio resources when category changes
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-      if (isPlaying) {
-        audioRef.current.play();
-        animationRef.current = requestAnimationFrame(whilePlaying);
-      } else {
-        audioRef.current.pause();
-        if (animationRef.current) {
-          cancelAnimationFrame(animationRef.current);
-          animationRef.current = null;
-        }
+    // Check if we're using Supabase data (by checking if id is a string that looks like a UUID)
+    const isUsingSupabase = audioResources.length > 0 && 
+      typeof audioResources[0].id === 'string' && 
+      audioResources[0].id.includes('-');
+    
+    if (isUsingSupabase) {
+      // Filter Supabase resources by category
+      const filteredResources = audioResources.filter(audio => audio.category === selectedCategory);
+      if (filteredResources.length > 0 && (!selectedAudio || selectedAudio.category !== selectedCategory)) {
+        setSelectedAudio(filteredResources[0]);
+      }
+    } else {
+      // Use local audio data
+      const localData = mapLocalAudioToResources(selectedCategory);
+      setAudioResources(localData);
+      
+      if (localData.length > 0) {
+        setSelectedAudio(localData[0]);
       }
     }
-  }, [isPlaying, volume, selectedAudio]);
+  }, [selectedCategory]);
 
-  useEffect(() => {
-    if (audioRef.current) {
-      const handleLoadedMetadata = () => {
-        setDuration(audioRef.current ? audioRef.current.duration : 0);
-      };
-
-      const handleTimeUpdate = () => {
-        setCurrentTime(audioRef.current ? audioRef.current.currentTime : 0);
-      };
-
-      audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
-      audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
-
-      return () => {
-        audioRef.current?.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        audioRef.current?.removeEventListener('timeupdate', handleTimeUpdate);
-      };
-    }
-  }, [selectedAudio]);
-
+  // Handle sleep timer
   useEffect(() => {
     if (sleepTimer.isRunning) {
       const intervalId = setInterval(() => {
@@ -128,46 +125,19 @@ const Sleep = () => {
     }
   }, [sleepTimer.isRunning]);
 
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
-
   const toggleTimer = () => {
     if (sleepTimer.isRunning) {
       setSleepTimer({ isRunning: false, startTime: null, elapsedTime: 0 });
+      toast.info("Sleep timer stopped");
     } else {
       setSleepTimer({ isRunning: true, startTime: new Date(), elapsedTime: 0 });
-    }
-  };
-
-  const whilePlaying = () => {
-    if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-    }
-    animationRef.current = requestAnimationFrame(whilePlaying);
-  };
-
-  const handleVolumeChange = (value: number[]) => {
-    setVolume(value[0] / 100);
-  };
-
-  const skipForward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime += 10;
-      setCurrentTime(audioRef.current.currentTime);
-    }
-  };
-
-  const skipBackward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime -= 10;
-      setCurrentTime(audioRef.current.currentTime);
+      toast.success("Sleep timer started");
     }
   };
 
   const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
+    const minutes = Math.floor(time / 60000);
+    const seconds = Math.floor((time % 60000) / 1000);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
@@ -182,22 +152,7 @@ const Sleep = () => {
       return <VideoPlayer url={selectedAudio.youtube_url} title={selectedAudio.title} />;
     }
 
-    return (
-      <div className="bg-mindful/5 rounded-xl p-4">
-        <AudioPlayer
-          src={selectedAudio.audio_url}
-          showJumpControls={true}
-          layout="stacked"
-          customControlsSection={defaultControlsSection}
-          customProgressBarSection={defaultProgressBarSection}
-          className="audio-player-custom rounded-lg shadow-inner"
-          style={{
-            backgroundColor: 'transparent',
-            borderRadius: '12px',
-          }}
-        />
-      </div>
-    );
+    return null; // The audio player is now in AudioCard component
   };
 
   return (
@@ -217,7 +172,7 @@ const Sleep = () => {
           <div className="mt-6 md:mt-0 flex items-center gap-4">
             <MediaToggle showVideo={showVideo} onToggle={setShowVideo} />
             <Button 
-              onClick={() => toggleTimer()} 
+              onClick={toggleTimer} 
               variant="secondary"
               className="shadow-md hover:shadow-lg transition-all"
             >
@@ -235,16 +190,16 @@ const Sleep = () => {
           </div>
         </div>
         
+        {sleepTimer.isRunning && (
+          <div className="mb-8 p-3 bg-mindful/10 rounded-lg inline-block">
+            <span className="font-mono font-medium">Sleep timer: {formatTime(sleepTimer.elapsedTime)}</span>
+          </div>
+        )}
+        
         <Tabs 
           defaultValue="sleepStories" 
           className="w-full mb-8" 
-          onValueChange={(value) => {
-            setSelectedCategory(value);
-            const filteredAudios = audioFiles.filter(audio => audio.category === value);
-            if (filteredAudios.length > 0) {
-              setSelectedAudio(filteredAudios[0]);
-            }
-          }}
+          onValueChange={handleCategoryChange}
         >
           <TabsList className="grid grid-cols-3 mb-8 bg-white/50 backdrop-blur-sm">
             <TabsTrigger value="sleepStories">Sleep Stories</TabsTrigger>
@@ -253,29 +208,26 @@ const Sleep = () => {
           </TabsList>
           
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {audioFiles
-              .filter(audio => audio.category === selectedCategory)
-              .map((audio) => (
-                <Card 
-                  key={audio.id} 
-                  onClick={() => setSelectedAudio(audio)}
-                  className={`transform transition-all duration-300 hover:scale-[1.02] cursor-pointer
-                    ${selectedAudio?.id === audio.id 
-                      ? 'border-2 border-mindful shadow-xl bg-gradient-to-br from-mindful-lighter to-white' 
-                      : 'border border-mindful/20 shadow-md hover:shadow-xl bg-white/80 backdrop-blur-sm'
-                    }`}
-                >
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center justify-between">
-                      <span className="text-mindful-dark font-semibold">{audio.title}</span>
-                      <span className="text-sm text-gray-500">{audio.duration}</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {renderMediaPlayer()}
-                  </CardContent>
-                </Card>
-              ))}
+            {renderMediaPlayer()}
+            
+            {/* Local data fallback */}
+            {audioFiles[selectedCategory as keyof typeof audioFiles].map((audio) => (
+              <AudioCard
+                key={audio.id}
+                title={audio.title}
+                duration={audio.duration}
+                audioUrl={audio.url}
+                isSelected={selectedAudio?.id === audio.id.toString()}
+                onSelect={() => setSelectedAudio({
+                  id: audio.id.toString(),
+                  title: audio.title,
+                  duration: audio.duration,
+                  audio_url: audio.url,
+                  category: selectedCategory,
+                  section: 'sleep'
+                })}
+              />
+            ))}
           </div>
         </Tabs>
 
