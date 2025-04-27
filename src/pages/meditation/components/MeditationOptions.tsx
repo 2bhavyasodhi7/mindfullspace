@@ -6,7 +6,6 @@ import { weeklyStats } from '../../audioData1';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { defaultControlsSection, defaultProgressBarSection, audioPlayerStyles } from '@/utils/audioPlayerUtils';
-import { toast } from '@/components/ui/use-toast';
 
 const MeditationOptions = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,12 +31,12 @@ const MeditationOptions = () => {
   const clockRef = useRef<NodeJS.Timeout>();
 
   const guidedMeditations = [
-    { title: "Morning Meditation", duration: "10:00", url: "/music1/1-Minute Nature Background Sound.mp3"},
-    { title: "Stress Relief", duration: "15:00", url: "/music1/10 Minutes of Rain and Thunderstorm Sounds For Focus, Relaxing and Sleep ⛈️ Epidemic ASMR.mp3" },
-    { title: "Deep Sleep", duration: "20:00", url: "/music1/cricket on a summer night _ Cricket sound effects _ Copyright Free Nature sounds.mp3" },
-    { title: "Anxiety Relief", duration: "12:00", url: "/music1/Nature Sounds Without Music - 10-Minutes of a Mountain Stream.mp3" },
-    { title: "Focus Enhancement", duration: "8:00", url: "/music1/1 minute of Brown Noise - Relaxation, Sleep, Studying and Tinnitus.mp3" },
-    { title: "Gratitude Practice", duration: "10:00", url: "/music1/1-Minute Nature Background Sound.mp3" }
+    { title: "Morning Meditation", duration: "10:00", url: "/music/guided meditaion/4-Minute Guided Mindfulness Meditation [TubeRipper.com].mp3"},
+    { title: "Stress Relief", duration: "15:00", url: "/music/sample-audio.mp3" },
+    { title: "Deep Sleep", duration: "20:00", url: "/music/sample-audio.mp3" },
+    { title: "Anxiety Relief", duration: "12:00", url: "/music/sample-audio.mp3" },
+    { title: "Focus Enhancement", duration: "8:00", url: "/music/sample-audio.mp3" },
+    { title: "Gratitude Practice", duration: "10:00", url: "/music/sample-audio.mp3" }
   ];
 
   const meditationTechniques = [

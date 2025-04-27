@@ -43,21 +43,21 @@ const StressAndAnxiety = () => {
   };
 
   const quickReliefAudios = [
-    { id: 1, title: 'Ocean Waves', duration: '5:30', url: '/music1/1-Minute Nature Background Sound.mp3' },
-    { id: 2, title: 'Rain Sounds', duration: '6:15', url: '/music1/10 Minutes of Rain and Thunderstorm Sounds For Focus, Relaxing and Sleep ⛈️ Epidemic ASMR.mp3' },
-    { id: 3, title: 'Forest Ambience', duration: '4:45', url: '/music1/Nature Sounds Without Music - 10-Minutes of a Mountain Stream.mp3' },
-    { id: 4, title: 'Gentle Stream', duration: '5:00', url: '/music1/Nature Sounds Without Music - 10-Minutes of a Mountain Stream.mp3' },
-    { id: 5, title: 'Wind Chimes', duration: '4:30', url: '/music1/cricket on a summer night _ Cricket sound effects _ Copyright Free Nature sounds.mp3' },
-    { id: 6, title: 'Bird Songs', duration: '5:15', url: '/music1/1-Minute Nature Background Sound.mp3' }
+    { id: 1, title: 'Ocean Waves', duration: '5:30', url: '/music/ocean-waves.mp3' },
+    { id: 2, title: 'Rain Sounds', duration: '6:15', url: '/music/rain-sounds.mp3' },
+    { id: 3, title: 'Forest Ambience', duration: '4:45', url: '/music/forest-ambience.mp3' },
+    { id: 4, title: 'Gentle Stream', duration: '5:00', url: '/music/gentle-stream.mp3' },
+    { id: 5, title: 'Wind Chimes', duration: '4:30', url: '/music/wind-chimes.mp3' },
+    { id: 6, title: 'Bird Songs', duration: '5:15', url: '/music/bird-songs.mp3' }
   ];
 
   const breathingAudios = [
-    { id: 1, title: '4-7-8 Breathing', duration: '8:00', url: '/music1/1 minute of Brown Noise - Relaxation, Sleep, Studying and Tinnitus.mp3' },
-    { id: 2, title: 'Box Breathing', duration: '10:00', url: '/music1/1-Minute Nature Background Sound.mp3' },
-    { id: 3, title: 'Deep Breathing', duration: '7:30', url: '/music1/Nature Sounds Without Music - 10-Minutes of a Mountain Stream.mp3' },
-    { id: 4, title: 'Calm Breath', duration: '6:45', url: '/music1/cricket on a summer night _ Cricket sound effects _ Copyright Free Nature sounds.mp3' },
-    { id: 5, title: 'Energy Breath', duration: '5:30', url: '/music1/1-Minute Nature Background Sound.mp3' },
-    { id: 6, title: 'Sleep Breath', duration: '9:15', url: '/music1/10 Minutes of Rain and Thunderstorm Sounds For Focus, Relaxing and Sleep ⛈️ Epidemic ASMR.mp3' }
+    { id: 1, title: '4-7-8 Breathing', duration: '8:00', url: '/music/breathing/478-breathing.mp3' },
+    { id: 2, title: 'Box Breathing', duration: '10:00', url: 'https://youtu.be/tEmt1Znux58?si=YxZCijMKcPI-bAUH' },
+    { id: 3, title: 'Deep Breathing', duration: '7:30', url: '/music/breathing/deep-breathing.mp3' },
+    { id: 4, title: 'Calm Breath', duration: '6:45', url: '/music/breathing/calm-breath.mp3' },
+    { id: 5, title: 'Energy Breath', duration: '5:30', url: '/music/breathing/energy-breath.mp3' },
+    { id: 6, title: 'Sleep Breath', duration: '9:15', url: '/music/breathing/sleep-breath.mp3' }
   ];
 
   const practicalWays = [
