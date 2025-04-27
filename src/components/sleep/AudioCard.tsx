@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import SleepControls from './SleepControls';
+import { toast } from '@/components/ui/use-toast';
 
 interface AudioCardProps {
   title: string;
@@ -20,38 +21,69 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number | null>(null);
 
+  // Update audio when URL changes or component mounts
   useEffect(() => {
-    // Create audio element
-    if (!audioRef.current) {
-      audioRef.current = new Audio(audioUrl);
-      audioRef.current.volume = volume;
-      
-      audioRef.current.addEventListener('loadedmetadata', () => {
-        setAudioDuration(audioRef.current?.duration || 0);
-        console.log("Audio loaded successfully:", audioUrl);
-      });
-      
-      audioRef.current.addEventListener('timeupdate', () => {
-        setCurrentTime(audioRef.current?.currentTime || 0);
-      });
-      
-      audioRef.current.addEventListener('ended', () => {
-        setIsPlaying(false);
-      });
-
-      audioRef.current.addEventListener('error', (e) => {
-        console.error("Audio loading error:", e);
-        setAudioError(true);
-      });
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
     }
+    
+    // Create audio element with error handling
+    const audio = new Audio();
+    
+    // Set up event listeners
+    audio.addEventListener('loadedmetadata', () => {
+      setAudioDuration(audio.duration || 0);
+      setAudioError(false);
+      console.log("Audio loaded successfully:", audioUrl);
+    });
+    
+    audio.addEventListener('timeupdate', () => {
+      setCurrentTime(audio.currentTime || 0);
+    });
+    
+    audio.addEventListener('ended', () => {
+      setIsPlaying(false);
+    });
+    
+    audio.addEventListener('canplay', () => {
+      setAudioError(false);
+    });
 
+    audio.addEventListener('error', (e) => {
+      console.error("Audio loading error for URL:", audioUrl, e);
+      setAudioError(true);
+      toast({
+        title: "Audio Error",
+        description: "Could not load audio. Trying alternative source.",
+        variant: "destructive"
+      });
+      
+      // Try to use a fallback URL if provided URL fails
+      if (!audioUrl.includes('music1')) {
+        const fallbackUrl = '/music1/1-Minute Nature Background Sound.mp3';
+        console.log("Trying fallback URL:", fallbackUrl);
+        audio.src = fallbackUrl;
+        audio.load();
+      }
+    });
+    
+    // Set initial properties
+    audio.volume = volume;
+    audio.src = audioUrl;
+    audio.load();
+    
+    audioRef.current = audio;
+    
     return () => {
+      // Clean up all event listeners
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.removeEventListener('loadedmetadata', () => {});
         audioRef.current.removeEventListener('timeupdate', () => {});
         audioRef.current.removeEventListener('ended', () => {});
         audioRef.current.removeEventListener('error', () => {});
+        audioRef.current.removeEventListener('canplay', () => {});
       }
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
@@ -59,35 +91,25 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
     };
   }, [audioUrl]);
 
-  // Update audio element when URL changes
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.src = audioUrl;
-      audioRef.current.load();
-      setAudioError(false);
-      if (isPlaying) {
-        audioRef.current.play().catch(err => {
-          console.error("Failed to play:", err);
-          setAudioError(true);
-          setIsPlaying(false);
-        });
-      }
-    }
-  }, [audioUrl]);
-
+  // Update volume when changed
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
     }
   }, [volume]);
 
+  // Handle play/pause state changes
   useEffect(() => {
     if (isPlaying) {
-      audioRef.current?.play().catch(err => {
-        console.error("Failed to play:", err);
-        setAudioError(true);
-        setIsPlaying(false);
-      });
+      if (audioRef.current) {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.error("Play failed:", err);
+            setIsPlaying(false);
+          });
+        }
+      }
     } else {
       audioRef.current?.pause();
     }
@@ -143,7 +165,7 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
         <div className="bg-mindful/5 rounded-xl p-3">
           {audioError && (
             <div className="mb-2 text-xs text-red-500 text-center">
-              Error loading audio. Please check the URL or try another track.
+              Error loading audio. Trying alternative source.
             </div>
           )}
           <div className="mb-2 h-1.5 bg-gray-200 rounded-full overflow-hidden">
