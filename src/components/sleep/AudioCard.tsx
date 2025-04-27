@@ -19,16 +19,21 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
   const [audioError, setAudioError] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number | null>(null);
+  
+  // Fallback audio URL for when the main URL fails
+  const fallbackAudioUrl = "/music/Forest Canopy Dreams.mp3";
 
   useEffect(() => {
     // Create audio element
     if (!audioRef.current) {
-      audioRef.current = new Audio(audioUrl);
+      const url = audioUrl || fallbackAudioUrl;
+      audioRef.current = new Audio(url);
       audioRef.current.volume = volume;
       
       audioRef.current.addEventListener('loadedmetadata', () => {
         setAudioDuration(audioRef.current?.duration || 0);
-        console.log("Audio loaded successfully:", audioUrl);
+        console.log("Audio loaded successfully:", url);
+        setAudioError(false);
       });
       
       audioRef.current.addEventListener('timeupdate', () => {
@@ -42,6 +47,16 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
       audioRef.current.addEventListener('error', (e) => {
         console.error("Audio loading error:", e);
         setAudioError(true);
+        
+        // Try fallback if main URL fails and it's not already the fallback
+        if (audioUrl !== fallbackAudioUrl && audioRef.current) {
+          console.log("Trying fallback audio:", fallbackAudioUrl);
+          audioRef.current.src = fallbackAudioUrl;
+          audioRef.current.load();
+          audioRef.current.play().catch(err => {
+            console.error("Fallback audio also failed:", err);
+          });
+        }
       });
     }
 
@@ -57,12 +72,12 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [audioUrl]);
+  }, [audioUrl, fallbackAudioUrl]);
 
   // Update audio element when URL changes
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.src = audioUrl;
+      audioRef.current.src = audioUrl || fallbackAudioUrl;
       audioRef.current.load();
       setAudioError(false);
       if (isPlaying) {
@@ -70,10 +85,20 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
           console.error("Failed to play:", err);
           setAudioError(true);
           setIsPlaying(false);
+          
+          // Try fallback if main URL fails
+          if (audioUrl !== fallbackAudioUrl) {
+            console.log("Trying fallback audio after play failure:", fallbackAudioUrl);
+            audioRef.current!.src = fallbackAudioUrl;
+            audioRef.current!.load();
+            audioRef.current!.play().catch(fallbackErr => {
+              console.error("Fallback audio play failed:", fallbackErr);
+            });
+          }
         });
       }
     }
-  }, [audioUrl]);
+  }, [audioUrl, fallbackAudioUrl]);
 
   useEffect(() => {
     if (audioRef.current) {

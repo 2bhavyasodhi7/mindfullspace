@@ -31,12 +31,12 @@ const MeditationOptions = () => {
   const clockRef = useRef<NodeJS.Timeout>();
 
   const guidedMeditations = [
-    { title: "Morning Meditation", duration: "10:00", url: "/music/guided meditaion/4-Minute Guided Mindfulness Meditation [TubeRipper.com].mp3"},
-    { title: "Stress Relief", duration: "15:00", url: "/music/sample-audio.mp3" },
-    { title: "Deep Sleep", duration: "20:00", url: "/music/sample-audio.mp3" },
-    { title: "Anxiety Relief", duration: "12:00", url: "/music/sample-audio.mp3" },
-    { title: "Focus Enhancement", duration: "8:00", url: "/music/sample-audio.mp3" },
-    { title: "Gratitude Practice", duration: "10:00", url: "/music/sample-audio.mp3" }
+    { title: "Morning Meditation", duration: "10:00", url: "/music/10 Minute Non-Sleep Deep Rest (NSDR) to Restore Mental & Physical Energy _ Dr. Andrew Huberman.mp3"},
+    { title: "Stress Relief", duration: "15:00", url: "/music1/10 Minutes of Rain and Thunderstorm Sounds For Focus, Relaxing and Sleep ⛈️ Epidemic ASMR.mp3" },
+    { title: "Deep Sleep", duration: "20:00", url: "/music/A Cozy Cottage Sleep Story _ 10 Minute Guided Sleep Story.mp3" },
+    { title: "Anxiety Relief", duration: "12:00", url: "/music/DESERT OASIS A Guided Meditation for Stress Relief & Sleep with Jason Stephenson.mp3" },
+    { title: "Focus Enhancement", duration: "8:00", url: "/music/ADHD 10 min Study Focus Timer with Brown Noise #adhd Pomodoro Focus Timer.mp3" },
+    { title: "Gratitude Practice", duration: "10:00", url: "/music/Vincent Van Gogh's The Starry Night_ Great Art Explained.mp3" }
   ];
 
   const meditationTechniques = [
