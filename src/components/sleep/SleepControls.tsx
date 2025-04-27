@@ -22,11 +22,21 @@ const SleepControls = ({
 }: SleepControlsProps) => {
   return (
     <div className="flex items-center justify-center space-x-4 my-3">
-      <Button variant="ghost" size="sm" onClick={skipBackward}>
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        onClick={skipBackward}
+        className="hover:bg-mindful/10"
+      >
         <SkipBack className="h-5 w-5" />
       </Button>
       
-      <Button variant="default" size="lg" className="rounded-full" onClick={togglePlay}>
+      <Button 
+        variant="default" 
+        size="lg" 
+        className="rounded-full" 
+        onClick={togglePlay}
+      >
         {isPlaying ? (
           <Pause className="h-6 w-6" />
         ) : (
@@ -34,7 +44,12 @@ const SleepControls = ({
         )}
       </Button>
       
-      <Button variant="ghost" size="sm" onClick={skipForward}>
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        onClick={skipForward}
+        className="hover:bg-mindful/10"
+      >
         <SkipForward className="h-5 w-5" />
       </Button>
 
@@ -43,6 +58,7 @@ const SleepControls = ({
           variant="ghost" 
           size="sm" 
           onClick={() => handleVolumeChange(volume === 0 ? 0.5 : 0)}
+          className="hover:bg-mindful/10"
         >
           {volume === 0 ? (
             <VolumeX className="h-5 w-5 text-gray-500" />

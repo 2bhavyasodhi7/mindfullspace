@@ -44,11 +44,14 @@ const Sleep = () => {
   // Fetch audio resources from Supabase
   useEffect(() => {
     const fetchAudioResources = async () => {
+      console.log("Fetching audio resources from Supabase");
       // Try to get resources from Supabase
       const { data, error } = await supabase
         .from('media_resources')
         .select('*')
         .eq('section', 'sleep');
+
+      console.log("Supabase response:", { data, error });
 
       if (error || !data || data.length === 0) {
         console.log("Using local audio data instead of Supabase", error);
@@ -61,6 +64,7 @@ const Sleep = () => {
         }
       } else {
         // Use Supabase data
+        console.log("Using Supabase data:", data);
         setAudioResources(data as AudioResource[]);
         
         if (data && data.length > 0) {
@@ -82,30 +86,38 @@ const Sleep = () => {
       duration: audio.duration,
       audio_url: audio.url,
       category: category,
-      section: 'sleep',
-      youtube_url: undefined
+      section: 'sleep'
     }));
   };
 
   // Filter audio resources when category changes
   useEffect(() => {
+    console.log("Category changed to:", selectedCategory);
+    console.log("Current audioResources:", audioResources);
+    
     // Check if we're using Supabase data (by checking if id is a string that looks like a UUID)
     const isUsingSupabase = audioResources.length > 0 && 
       typeof audioResources[0].id === 'string' && 
       audioResources[0].id.includes('-');
     
     if (isUsingSupabase) {
+      console.log("Filtering Supabase resources by category:", selectedCategory);
       // Filter Supabase resources by category
       const filteredResources = audioResources.filter(audio => audio.category === selectedCategory);
+      console.log("Filtered resources:", filteredResources);
+      
       if (filteredResources.length > 0 && (!selectedAudio || selectedAudio.category !== selectedCategory)) {
+        console.log("Setting selected audio to:", filteredResources[0]);
         setSelectedAudio(filteredResources[0]);
       }
     } else {
+      console.log("Using local audio data for category:", selectedCategory);
       // Use local audio data
       const localData = mapLocalAudioToResources(selectedCategory);
       setAudioResources(localData);
       
       if (localData.length > 0) {
+        console.log("Setting selected audio to local data:", localData[0]);
         setSelectedAudio(localData[0]);
       }
     }
@@ -210,24 +222,42 @@ const Sleep = () => {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderMediaPlayer()}
             
+            {/* Display Supabase data if available */}
+            {audioResources.length > 0 && audioResources[0].id.includes('-') && 
+              audioResources
+                .filter(audio => audio.category === selectedCategory)
+                .map((audio) => (
+                  <AudioCard
+                    key={audio.id}
+                    title={audio.title}
+                    duration={audio.duration || "Unknown"}
+                    audioUrl={audio.audio_url || ""}
+                    isSelected={selectedAudio?.id === audio.id}
+                    onSelect={() => setSelectedAudio(audio)}
+                  />
+                ))
+            }
+            
             {/* Local data fallback */}
-            {audioFiles[selectedCategory as keyof typeof audioFiles].map((audio) => (
-              <AudioCard
-                key={audio.id}
-                title={audio.title}
-                duration={audio.duration}
-                audioUrl={audio.url}
-                isSelected={selectedAudio?.id === audio.id.toString()}
-                onSelect={() => setSelectedAudio({
-                  id: audio.id.toString(),
-                  title: audio.title,
-                  duration: audio.duration,
-                  audio_url: audio.url,
-                  category: selectedCategory,
-                  section: 'sleep'
-                })}
-              />
-            ))}
+            {(!audioResources.length || !audioResources[0].id.includes('-')) && 
+              audioFiles[selectedCategory as keyof typeof audioFiles].map((audio) => (
+                <AudioCard
+                  key={audio.id}
+                  title={audio.title}
+                  duration={audio.duration}
+                  audioUrl={audio.url}
+                  isSelected={selectedAudio?.id === audio.id.toString()}
+                  onSelect={() => setSelectedAudio({
+                    id: audio.id.toString(),
+                    title: audio.title,
+                    duration: audio.duration,
+                    audio_url: audio.url,
+                    category: selectedCategory,
+                    section: 'sleep'
+                  })}
+                />
+              ))
+            }
           </div>
         </Tabs>
 
