@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
@@ -24,7 +25,7 @@ const Articles = () => {
     },
     {
       id: 3,
-      title: 'The Benefits of Yoga for Mental Health',
+      title: 'Rewire Your Brain: The Power of Neuroplasticity',
       category: 'Yoga',
       excerpt: 'Learn how yoga can improve your mental well-being and reduce stress.',
       image: 'https://images.pexels.com/photos/5992871/pexels-photo-5992871.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
