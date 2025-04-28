@@ -3,8 +3,12 @@ import React from 'react';
 import MeditationHeader from './meditation/components/MeditationHeader';
 import MeditationOptions from './meditation/components/MeditationOptions';
 import MeditationStats from './meditation/components/MeditationStats';
+import { useScreenTimeTracking } from '@/hooks/useScreenTimeTracking';
 
 function Meditation() {
+  // Track screen time for the meditation section
+  useScreenTimeTracking('meditation');
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#8BA989]/30 to-[#F2C94C]/20">
       <div className="container mx-auto py-12 px-4 md:px-8">

@@ -42,9 +42,48 @@ export type Database = {
         }
         Relationships: []
       }
+      screen_time: {
+        Row: {
+          created_at: string
+          duration_seconds: number | null
+          end_time: string | null
+          id: string
+          section: string
+          start_time: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          duration_seconds?: number | null
+          end_time?: string | null
+          id?: string
+          section: string
+          start_time?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          duration_seconds?: number | null
+          end_time?: string | null
+          id?: string
+          section?: string
+          start_time?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      user_section_summary: {
+        Row: {
+          avg_minutes_per_visit: number | null
+          section: string | null
+          total_minutes: number | null
+          user_id: string | null
+          visit_count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

@@ -13,11 +13,15 @@ import JournalArchive from '@/components/journaling/JournalArchive';
 import JournalPrompts from '@/components/journaling/JournalPrompts';
 import MoodTracker from '@/components/journaling/MoodTracker';
 import { Bell, BookOpen } from 'lucide-react';
+import { useScreenTimeTracking } from '@/hooks/useScreenTimeTracking';
 
 const Journaling = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("daily-journal");
   const [journalStreak, setJournalStreak] = useState(0);
+
+  // Track screen time for the journaling section
+  useScreenTimeTracking('journaling');
 
   // Check journal streak on component mount
   useEffect(() => {

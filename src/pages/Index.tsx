@@ -4,8 +4,12 @@ import HeroSection from '@/components/HeroSection';
 import WhatIsMindfulness from '@/components/WhatIsMindfulness';
 import GuruSection from '@/components/GuruSection';
 import FAQSection from '@/components/FAQSection';
+import { useScreenTimeTracking } from '@/hooks/useScreenTimeTracking';
 
 const Index = () => {
+  // Track screen time for the home section
+  useScreenTimeTracking('home');
+  
   useEffect(() => {
     // Animation for elements when they come into view
     const observer = new IntersectionObserver((entries) => {
@@ -40,4 +44,3 @@ const Index = () => {
 };
 
 export default Index;
-

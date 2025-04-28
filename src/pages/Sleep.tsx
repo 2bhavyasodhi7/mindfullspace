@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Moon, Clock, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,6 +10,8 @@ import MediaToggle from '@/components/sleep/MediaToggle';
 import VideoPlayer from '@/components/sleep/VideoPlayer';
 import AudioCard from '@/components/sleep/AudioCard';
 import { audioFiles } from './audioData';
+import { useScreenTimeTracking } from '@/hooks/useScreenTimeTracking';
+import { getScreenTimeStats } from '@/utils/screenTimeTracker';
 
 interface AudioResource {
   id: string;
@@ -40,12 +41,13 @@ const Sleep = () => {
     startTime: null,
     elapsedTime: 0,
   });
+  const [screenTimeStats, setScreenTimeStats] = useState<any[]>([]);
 
-  // Fetch audio resources from Supabase
+  useScreenTimeTracking('sleep');
+
   useEffect(() => {
     const fetchAudioResources = async () => {
       console.log("Fetching audio resources from Supabase");
-      // Try to get resources from Supabase
       const { data, error } = await supabase
         .from('media_resources')
         .select('*')
@@ -55,7 +57,6 @@ const Sleep = () => {
 
       if (error || !data || data.length === 0) {
         console.log("Using local audio data instead of Supabase", error);
-        // Use local audio data as fallback
         const localData = mapLocalAudioToResources(selectedCategory);
         setAudioResources(localData);
         
@@ -63,7 +64,6 @@ const Sleep = () => {
           setSelectedAudio(localData[0]);
         }
       } else {
-        // Use Supabase data
         console.log("Using Supabase data:", data);
         setAudioResources(data as AudioResource[]);
         
@@ -76,7 +76,6 @@ const Sleep = () => {
     fetchAudioResources();
   }, []);
 
-  // Map local audio data to match the AudioResource format
   const mapLocalAudioToResources = (category: string): AudioResource[] => {
     const categoryData = audioFiles[category as keyof typeof audioFiles] || [];
     
@@ -90,19 +89,16 @@ const Sleep = () => {
     }));
   };
 
-  // Filter audio resources when category changes
   useEffect(() => {
     console.log("Category changed to:", selectedCategory);
     console.log("Current audioResources:", audioResources);
     
-    // Check if we're using Supabase data (by checking if id is a string that looks like a UUID)
     const isUsingSupabase = audioResources.length > 0 && 
       typeof audioResources[0].id === 'string' && 
       audioResources[0].id.includes('-');
     
     if (isUsingSupabase) {
       console.log("Filtering Supabase resources by category:", selectedCategory);
-      // Filter Supabase resources by category
       const filteredResources = audioResources.filter(audio => audio.category === selectedCategory);
       console.log("Filtered resources:", filteredResources);
       
@@ -112,7 +108,6 @@ const Sleep = () => {
       }
     } else {
       console.log("Using local audio data for category:", selectedCategory);
-      // Use local audio data
       const localData = mapLocalAudioToResources(selectedCategory);
       setAudioResources(localData);
       
@@ -123,7 +118,6 @@ const Sleep = () => {
     }
   }, [selectedCategory]);
 
-  // Handle sleep timer
   useEffect(() => {
     if (sleepTimer.isRunning) {
       const intervalId = setInterval(() => {
@@ -164,8 +158,21 @@ const Sleep = () => {
       return <VideoPlayer url={selectedAudio.youtube_url} title={selectedAudio.title} />;
     }
 
-    return null; // The audio player is now in AudioCard component
+    return null;
   };
+
+  useEffect(() => {
+    if (showStats) {
+      const loadStats = async () => {
+        const stats = await getScreenTimeStats();
+        if (stats) {
+          setScreenTimeStats(stats);
+        }
+      };
+      
+      loadStats();
+    }
+  }, [showStats]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#8BA989]/30 to-[#F2C94C]/20">
@@ -222,7 +229,6 @@ const Sleep = () => {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderMediaPlayer()}
             
-            {/* Display Supabase data if available */}
             {audioResources.length > 0 && audioResources[0].id.includes('-') && 
               audioResources
                 .filter(audio => audio.category === selectedCategory)
@@ -238,7 +244,6 @@ const Sleep = () => {
                 ))
             }
             
-            {/* Local data fallback */}
             {(!audioResources.length || !audioResources[0].id.includes('-')) && 
               audioFiles[selectedCategory as keyof typeof audioFiles].map((audio) => (
                 <AudioCard
@@ -267,7 +272,33 @@ const Sleep = () => {
               <SheetTitle className="text-mindful-dark">Sleep Statistics</SheetTitle>
             </SheetHeader>
             <div className="mt-4">
-              <p>Here you can view your sleep statistics.</p>
+              <h3 className="font-medium text-lg mb-2">Your App Usage</h3>
+              
+              {screenTimeStats.length > 0 ? (
+                <div className="space-y-4">
+                  {screenTimeStats.map((stat, index) => (
+                    <div key={index} className="bg-white/80 p-4 rounded-lg shadow-sm">
+                      <h4 className="font-medium capitalize">{stat.section}</h4>
+                      <div className="grid grid-cols-2 gap-2 mt-2 text-sm">
+                        <div>
+                          <p className="text-gray-500">Total Time</p>
+                          <p className="font-medium">{Math.round(stat.total_minutes)} minutes</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Visit Count</p>
+                          <p className="font-medium">{stat.visit_count} sessions</p>
+                        </div>
+                        <div className="col-span-2">
+                          <p className="text-gray-500">Average Session</p>
+                          <p className="font-medium">{Math.round(stat.avg_minutes_per_visit)} minutes</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500">No usage statistics available yet. Continue using the app to build your stats!</p>
+              )}
             </div>
           </SheetContent>
         </Sheet>
