@@ -29,6 +29,8 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
       const url = audioUrl || fallbackAudioUrl;
       audioRef.current = new Audio(url);
       audioRef.current.volume = volume;
+      // Set autoplay to false explicitly
+      audioRef.current.autoplay = false;
       
       audioRef.current.addEventListener('loadedmetadata', () => {
         setAudioDuration(audioRef.current?.duration || 0);
@@ -53,9 +55,7 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
           console.log("Trying fallback audio:", fallbackAudioUrl);
           audioRef.current.src = fallbackAudioUrl;
           audioRef.current.load();
-          audioRef.current.play().catch(err => {
-            console.error("Fallback audio also failed:", err);
-          });
+          // Don't auto-play the fallback either
         }
       });
     }
@@ -80,6 +80,8 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
       audioRef.current.src = audioUrl || fallbackAudioUrl;
       audioRef.current.load();
       setAudioError(false);
+      // Don't automatically play when URL changes
+      // Only play if user has explicitly clicked play
       if (isPlaying) {
         audioRef.current.play().catch(err => {
           console.error("Failed to play:", err);
@@ -91,9 +93,7 @@ const AudioCard = ({ title, duration, audioUrl, isSelected, onSelect }: AudioCar
             console.log("Trying fallback audio after play failure:", fallbackAudioUrl);
             audioRef.current!.src = fallbackAudioUrl;
             audioRef.current!.load();
-            audioRef.current!.play().catch(fallbackErr => {
-              console.error("Fallback audio play failed:", fallbackErr);
-            });
+            // Don't auto-play the fallback
           }
         });
       }
